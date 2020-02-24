@@ -1,0 +1,25 @@
+{
+    "name": "wunschscript-color",
+    "displayName": "WunschScript-Color",
+    "description": "Colorize codes in WunschScript",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.42.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ws",
+            "aliases": ["WunschScript", "ws"],
+            "extensions": [".ws"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ws",
+            "scopeName": "source.ws",
+            "path": "./syntaxes/ws.tmLanguage.json"
+        }]
+    }
+}

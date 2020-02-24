@@ -1,0 +1,150 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "WunschScript",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#paren"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#funcname"
+		},
+		{
+			"include": "#propname"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.ws",
+				"match": "\\b(if|else|while|in|for|return)\\b"
+			}]
+		},
+		"paren": {
+			"begin": "\\(",
+			"end": "\\)",
+			"patterns": [
+				{"include": "$self"}
+			],
+			"beginCaptures": {
+			  "0": { "name": "punctuation.paren.open" }
+			},
+			"endCaptures": {
+			  "0": { "name": "punctuation.paren.close" }
+			}
+		},
+		"strings": {
+			"name": "string.quoted.double.ws",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ws",
+					"match": "\\\\."
+				}
+			]
+		},
+		"number" : {
+			"name" : "constant.numeric",
+			"patterns" : [
+				{
+					"name" : "constant.numeric.float",
+					"match" : "\\b(0|[1-9]([0-9])*)\\.[0-9]*(e[+-]?(0|[1-9]([0-9])*))?\\b"
+				},
+				{
+					"name" : "constant.numeric.decimal",
+					"match" : "\\b[1-9]([0-9])*\\b"
+				},
+				{
+					"name" : "constant.numeric.octal",
+					"match" : "\\b0([0-7])*\\b"
+				},
+				{
+					"name" : "constant.numeric.hex",
+					"match" : "\\b0x([0-9]|[a-f]|[A-F])+\\b"
+				},
+				{
+					"name" : "constant.language.ws",
+					"match": "\\b(true|false|nil)\\b"
+				}
+			]
+		},
+		"comment" : {
+			"name" : "comment.line.ws",
+			"match" : "#.*$"
+		},
+		"funcname" : {
+			"begin": "\\b((_|[a-z]|[A-Z])(_|[a-z]|[A-Z]|[0-9])*)(\\()",
+			"end": "(\\))",
+			"beginCaptures": {
+				"1" : {"name" : "entity.name.function.ws"}
+			},
+			"patterns": [
+				{"include": "$self"}
+			]
+		},
+		"propname" : {
+			"patterns" : [ 
+				{
+					"match" : "\\b((_|[a-z]|[A-Z])(_|[a-z]|[A-Z]|[0-9])*)(\\s*:)",
+					"captures" : {
+						"1" : {
+							"name" : "variable.other.propname.ws"
+						}
+					}
+				},
+				{
+					"match" : "\\b((_|[a-z]|[A-Z])(_|[a-z]|[A-Z]|[0-9])*)(\\s*\\.)",
+					"captures" : {
+						"1" : {
+							"name" : "variable.other.propname.ws"
+						}
+					}
+				},
+				{
+					"begin" : "\\b((_|[a-z]|[A-Z])(_|[a-z]|[A-Z]|[0-9])*)(\\s*\\[)",
+					"end": "\\]",
+					"beginCaptures" : {
+						"1" : {
+							"name" : "variable.other.propname.ws"
+						}
+					},
+					"patterns": [
+						{"include": "$self"}
+					]
+				},
+				{
+					"match" : "\\b(var\\s+)((_|[a-z]|[A-Z])(_|[a-z]|[A-Z]|[0-9])*)",
+					"captures" : {
+						"1" : {
+							"name" : "keyword.other.ws"
+						},
+						"2" : {
+							"name" : "variable.other.propname.ws"
+						}
+					}
+				},
+				{
+					"begin" : "\\(",
+					"end": "\\)\\s*=>",
+					"name" : "meta.tag",
+					"patterns": [
+						{"include": "$self"}
+					]
+				}
+			]
+		}
+	},
+	"scopeName": "source.ws"
+}

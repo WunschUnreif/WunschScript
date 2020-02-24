@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# Third-party files 
+third/antlr4-cpp-runtime-4/*
+!third/antlr4-cpp-runtime-4/README.md
+
+# ANTLR generated
+grammar/.antlr/*
+grammar/
+
+# vscode files 
+.vscode/*
