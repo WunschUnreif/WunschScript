@@ -103,4 +103,26 @@ var curryAdd = (x) => {
 
 curryAdd(3)(4);
 
+var t = 3;
 
+var factorial = (n) => {
+    if n == 0 {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+# (assign 'factorial 
+#   (funcliteral ('n) ()  ))
+
+var out = () => {
+    var inn = () ==> {
+        out();
+        print(t);
+    }
+    return inn;
+}
+
+var t = 4;
+
+var _inn = out();

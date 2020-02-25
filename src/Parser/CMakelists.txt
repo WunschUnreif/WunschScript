@@ -1,0 +1,8 @@
+aux_source_directory(. SRC_PARSER)
+
+add_library(WSParser STATIC ${SRC_PARSER})
+
+target_include_directories(WSParser 
+    PUBLIC 
+    ../../third/antlr4-cpp-runtime-4/runtime/src
+)

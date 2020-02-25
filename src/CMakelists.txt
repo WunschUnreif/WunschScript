@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.0)
+
+project(WunschScript VERSION 0.0.1)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS on)
+
+# compiler toolchain
+set(CMAKE_CXX_COMPILER "g++-9")
+set(CMAKE_C_COMPILER "gcc-9")
+
+set(CMAKE_CXX_FLAGS "-O2")
+
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+add_subdirectory(Parser)
+add_subdirectory(AbstractLang)
