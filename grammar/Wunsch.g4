@@ -15,33 +15,33 @@ stmt
     ;
 
 expr
-    : literal                       #literalExpr
-    | funcDef                       #funDefLiteral
-    // | THIS                          #thisExpr
-    | ID                            #idExpr
-    | '(' expr ')'                  #bracketExpr
-    | expr '.' ID                   #memberAccessExpr
-    | expr '[' expr ']'             #bracoAccessExpr
-    | expr '(' exprList ')'         #funcallExpr
-    | '!' expr                      #logiNotExpr
-    | '~' expr                      #binNotExpr
-    | ('+'|'-') expr                #unaryPMExpr
-    | expr ('*'|'/'|'%') expr       #multdivExpr
-    | expr ('+'|'-') expr           #addMinExpr
-    | expr ('<'|'<='|'>='|'>') expr #compareExpr
-    | expr ('=='|'!=') expr         #equalExpr
-    | expr '&' expr                 #binAndExpr
-    | expr '^' expr                 #binXorExpr
-    | expr '|' expr                 #binOrExpr
-    | expr '&&' expr                #logiAndExpr
-    | expr '||' expr                #logiOrExpr
+    : literal                           #literalExpr
+    | funcDef                           #funDefLiteral
+    // | THIS                              #thisExpr
+    | ID                                #idExpr
+    | '(' expr ')'                      #bracketExpr
+    | expr '.' ID                       #memberAccessExpr
+    | expr '[' expr ']'                 #bracoAccessExpr
+    | expr '(' exprList ')'             #funcallExpr
+    | '!' expr                          #logiNotExpr
+    | '~' expr                          #binNotExpr
+    | op=('+'|'-') expr                 #unaryPMExpr
+    | expr op=('*'|'/'|'%') expr        #multdivExpr
+    | expr op=('+'|'-') expr            #addMinExpr
+    | expr op=('<'|'<='|'>='|'>') expr  #compareExpr
+    | expr op=('=='|'!=') expr          #equalExpr
+    | expr '&' expr                     #binAndExpr
+    | expr '^' expr                     #binXorExpr
+    | expr '|' expr                     #binOrExpr
+    | expr '&&' expr                    #logiAndExpr
+    | expr '||' expr                    #logiOrExpr
     ;
 
 literal 
     : integerLiteral 
     | floatLiteral 
     | boolLiteral 
-    | stringLiteral+ 
+    | stringLiteral
     | listLiteral 
     | dictLiteral 
     | nilLiteral;
@@ -54,7 +54,7 @@ integerLiteral
     ;
 floatLiteral : FLOAT;
 boolLiteral : BOOLEANLIT;
-stringLiteral : STRING;
+stringLiteral : STRING+;
 
 listLiteral : '[' ']' 
             | '[' expr (',' expr)* ']';
@@ -70,8 +70,7 @@ varDef
     | 'var' ID              #plainVarDef
     ;
 assignment 
-    : ID '=' expr   #idAssign
-    | expr '=' expr #exprAssign
+    : expr '=' expr #exprAssign
     ;
 
 /* Function define */

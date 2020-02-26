@@ -9,10 +9,13 @@
  * 
  */
 
-#pragma once
-
 #ifndef __WS_ASL_STATEMENT_H__
 #define __WS_ASL_STATEMENT_H__
+
+#include <memory>
+
+#include "Environment.hpp"
+#include "Scope.hpp"
 
 namespace ws {
 
@@ -38,7 +41,13 @@ namespace asl {
             StatementReturn
         } type;
 
-        virtual void execute(const Environment & env) = 0;
+        virtual void execute(Environment & env) = 0;
+    };
+
+
+    struct StatementBlock {
+        std::shared_ptr<Scope> lexScope;
+        std::vector<std::shared_ptr<StatementBase>> body;
     };
 
 } // namespace al

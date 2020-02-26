@@ -115,9 +115,6 @@ public:
   virtual void enterPlainVarDef(WunschParser::PlainVarDefContext * /*ctx*/) override { }
   virtual void exitPlainVarDef(WunschParser::PlainVarDefContext * /*ctx*/) override { }
 
-  virtual void enterIdAssign(WunschParser::IdAssignContext * /*ctx*/) override { }
-  virtual void exitIdAssign(WunschParser::IdAssignContext * /*ctx*/) override { }
-
   virtual void enterExprAssign(WunschParser::ExprAssignContext * /*ctx*/) override { }
   virtual void exitExprAssign(WunschParser::ExprAssignContext * /*ctx*/) override { }
 

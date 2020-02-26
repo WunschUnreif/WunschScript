@@ -113,9 +113,6 @@ public:
   virtual void enterPlainVarDef(WunschParser::PlainVarDefContext *ctx) = 0;
   virtual void exitPlainVarDef(WunschParser::PlainVarDefContext *ctx) = 0;
 
-  virtual void enterIdAssign(WunschParser::IdAssignContext *ctx) = 0;
-  virtual void exitIdAssign(WunschParser::IdAssignContext *ctx) = 0;
-
   virtual void enterExprAssign(WunschParser::ExprAssignContext *ctx) = 0;
   virtual void exitExprAssign(WunschParser::ExprAssignContext *ctx) = 0;
 

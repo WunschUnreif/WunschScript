@@ -9,8 +9,6 @@
  * 
  */
 
-#pragma once 
-
 #ifndef __WS_ASL_GENERAL_DATA_NODE_HPP__
 #define __WS_ASL_GENERAL_DATA_NODE_HPP__
 
@@ -24,7 +22,6 @@ namespace asl {
 
     /**
      * @brief A linkage to any type of data.
-     * 
      */
     struct GeneralDataNode {
 

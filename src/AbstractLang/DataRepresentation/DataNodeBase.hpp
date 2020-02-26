@@ -1,5 +1,3 @@
-#pragma once 
-
 #ifndef __WS_ASL_DATA_NODE_BASE_HPP__
 #define __WS_ASL_DATA_NODE_BASE_HPP__
 
