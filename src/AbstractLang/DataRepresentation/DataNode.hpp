@@ -4,6 +4,7 @@
 #include <string>
 #include <deque>
 #include <map>
+#include <functional>
 
 #include <cstdint>
 
@@ -54,7 +55,7 @@ namespace asl {
      * @brief Data node for `list` type.
      */
     struct DataNodeList final : public DataNodeBase {
-        std::deque<std::shared_ptr<DataNodeBase>> value;
+        std::deque<GeneralDataNode> value;
     };
 
     /**
@@ -70,6 +71,15 @@ namespace asl {
     struct DataNodeFunc final : public DataNodeBase {
         Scope paramScope;
         std::vector<std::shared_ptr<StatementBase>> body;
+    };
+
+    /**
+     * @brief Data node for system function access.
+     * System functions are those functions provided by the
+     * interpreter, such as `print()`, `read()`.
+     */
+    struct DataNodeSystemFunc final : public DataNodeBase {
+        std::function<GeneralDataNode(std::vector<GeneralDataNode>)> impl;
     };
 
 }

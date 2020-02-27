@@ -26,15 +26,17 @@ namespace asl {
     struct GeneralDataNode {
 
         enum DataType {
-            TypeNil, 
+            TypeUndefined,          // for uninitialized value 
+            TypeNil,
             TypeBool,
             TypeInt, 
             TypeFloat,
             TypeString,
             TypeList,
             TypeDict,
-            TypeFunc
-        } type;
+            TypeFunc,
+            TypeSystemFunc
+        } type = TypeUndefined;
 
         std::shared_ptr<DataNodeBase> data;
     };
