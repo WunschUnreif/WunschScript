@@ -9,7 +9,7 @@ namespace ws {
 namespace asl {
 
     struct ExpressionBase {
-        virtual ~ExpressionBase() = 0;
+        virtual ~ExpressionBase() {}
 
         virtual GeneralDataNode Eval(Environment & env, bool asLval = false) = 0;
     };

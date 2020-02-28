@@ -7,7 +7,7 @@ namespace asl {
 
     struct DataNodeBase {
 
-        virtual ~DataNodeBase() = 0;  
+        virtual ~DataNodeBase() {}
         
     };
 

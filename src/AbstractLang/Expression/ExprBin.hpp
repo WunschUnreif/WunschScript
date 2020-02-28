@@ -16,7 +16,7 @@ namespace asl {
     struct ExpressionBinaryNot final : public ExpressionBase {
         std::shared_ptr<ExpressionBase> rhs;
 
-        GeneralDataNode Eval(Environment & env, bool asLval = false);
+        GeneralDataNode Eval(Environment & env, bool asLval = false) override;
     };
 
     /**

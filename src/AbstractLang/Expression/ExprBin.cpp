@@ -5,7 +5,7 @@
 using namespace ws::asl;
 
 GeneralDataNode ExpressionBinaryNot::Eval(Environment & env, bool asLval) {
-    /// logical not expression can not serve as left value
+    /// binary not expression can not serve as left value
     if(asLval) {
         env.ReportError(std::runtime_error("Cannot evaluate binary not as left value."));
         return GeneralDataNode();

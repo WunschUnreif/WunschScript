@@ -12,10 +12,13 @@ ws::asl::GeneralDataNode ws::asl::Environment::GetDataNode(const std::string & n
     /// 2. find in the lexical scope
     auto currentScopeNode = currentScope;
     while(currentScopeNode != nullptr) {
+        /// search in the current scope
         if(currentScopeNode->content.find(name) != currentScope->content.end()) {
             return currentScopeNode->content[name];
         }
-        if(currentScopeNode->enableTraceup) {
+
+        /// trace up to parent scopes
+        if(currentScopeNode->enableTraceup && !currentScopeNode->parent.expired()) {
             currentScopeNode = currentScopeNode->parent.lock();
         } else {
             return GeneralDataNode();
