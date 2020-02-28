@@ -39,6 +39,13 @@ namespace asl {
         } type = TypeUndefined;
 
         std::shared_ptr<DataNodeBase> data;
+
+        std::string ToString();
+
+        bool IsEqualTo(GeneralDataNode rhs);
+
+        GeneralDataNode DeepCopy();
+
     };
 
 } // namespace asl

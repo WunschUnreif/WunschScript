@@ -88,9 +88,14 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
         auto index = std::dynamic_pointer_cast<DataNodeInt>(rhsResult.data)->value;
 
         if(asLval) {
-            /// reserve enough space if accessing out-of-range index
-            if(index >= listNode->value.size()) {
-                listNode->value.resize(index + 1);
+            /// reserve enough space if accessing out-of-range index, using nil to fill
+            while(index >= listNode->value.size()) {
+                /// generate a nil node to fill
+                GeneralDataNode filling;
+                filling.type = GeneralDataNode::DataType::TypeNil;
+                filling.data = std::make_shared<DataNodeNil>();
+
+                listNode->value.push_back(filling);
             }
 
             return listNode->value[index];

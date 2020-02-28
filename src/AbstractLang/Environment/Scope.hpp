@@ -16,6 +16,10 @@ namespace asl {
         std::map<std::string, GeneralDataNode> content;
         std::vector<std::shared_ptr<Scope>> children;
 
+        /// whether the search can go to its parent node.
+        /// this is set to false for every file's root scope.
+        /// useful when importing another script in the 
+        /// current script to preventing unexpected scope overlap.
         bool enableTraceup = true;
     };
 

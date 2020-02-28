@@ -41,7 +41,7 @@ namespace asl {
             StatementReturn
         } type;
 
-        virtual void execute(Environment & env) = 0;
+        virtual void Execute(Environment & env) = 0;
     };
 
 

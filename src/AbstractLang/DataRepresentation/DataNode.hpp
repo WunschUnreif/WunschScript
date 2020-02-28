@@ -5,6 +5,7 @@
 #include <deque>
 #include <map>
 #include <functional>
+#include <memory>
 
 #include <cstdint>
 
@@ -21,13 +22,21 @@ namespace asl {
      * @brief Data node for `nil` type
      * Nothing is stored.
      */
-    struct DataNodeNil final : public DataNodeBase {};
+    struct DataNodeNil final : public DataNodeBase {
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
+    };
 
     /**
      * @brief Data node for `bool` type.
      */
     struct DataNodeBool final : public DataNodeBase {
         bool value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -35,6 +44,10 @@ namespace asl {
      */
     struct DataNodeInt final : public DataNodeBase {
         int64_t value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -42,6 +55,10 @@ namespace asl {
      */
     struct DataNodeFloat final : public DataNodeBase {
         double value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -49,6 +66,10 @@ namespace asl {
      */
     struct DataNodeStr final : public DataNodeBase {
         std::string value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -56,6 +77,10 @@ namespace asl {
      */
     struct DataNodeList final : public DataNodeBase {
         std::deque<GeneralDataNode> value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -63,14 +88,23 @@ namespace asl {
      */
     struct DataNodeDict final : public DataNodeBase {
         std::map<std::string, GeneralDataNode> value;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
      * @brief Data node for `func` type.
      */
-    struct DataNodeFunc final : public DataNodeBase {
+    struct DataNodeFunc final : public DataNodeBase, public std::enable_shared_from_this<DataNodeFunc> {
+        std::weak_ptr<DataNodeDict> thisDict;
         Scope paramScope;
         std::vector<std::shared_ptr<StatementBase>> body;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
     /**
@@ -80,6 +114,10 @@ namespace asl {
      */
     struct DataNodeSystemFunc final : public DataNodeBase {
         std::function<GeneralDataNode(std::vector<GeneralDataNode>)> impl;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
 }

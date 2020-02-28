@@ -10,6 +10,9 @@ using namespace ws::asl;
 std::shared_ptr<Scope> rootScope;
 Environment env;
 
+/// init 
+///     var x = 10;
+///     var y = 30;
 void init() {
     rootScope = std::make_shared<Scope>();
 
@@ -28,6 +31,13 @@ void init() {
     std::dynamic_pointer_cast<DataNodeInt>(y.data)->value = 30;
 
     rootScope->content["y"] = y;
+
+    GeneralDataNode z;
+    z.type = GeneralDataNode::TypeInt;
+    z.data = std::make_shared<DataNodeInt>();
+    std::dynamic_pointer_cast<DataNodeInt>(z.data)->value = 20;
+
+    rootScope->content["z"] = z;
 }
 
 void test1() {
@@ -46,6 +56,7 @@ void test1() {
     gdn = expr->Eval(env, false);
 
     std::cout << std::dynamic_pointer_cast<DataNodeInt>(gdn.data)->value << std::endl;
+    std::cout << gdn.ToString() << std::endl;
 }
 
 void test2() {
@@ -67,6 +78,33 @@ void test2() {
     assert(result.type == GeneralDataNode::TypeBool);
 
     std::cout << std::dynamic_pointer_cast<DataNodeBool>(result.data)->value << std::endl;
+    std::cout << result.ToString() << std::endl;
+}
+
+void test3() {
+    std::clog << "Testing : ``` x == z; x != z; ```" << std::endl;
+
+    std::shared_ptr<ExpressionBase> exprX = std::make_shared<ExpressionID>();
+    std::dynamic_pointer_cast<ExpressionID>(exprX)->identifier = "x";
+
+    std::shared_ptr<ExpressionBase> exprY = std::make_shared<ExpressionID>();
+    std::dynamic_pointer_cast<ExpressionID>(exprY)->identifier = "z";
+
+    auto expr1 = std::make_shared<ExpressionEqual>();
+    expr1->lhs = exprX;
+    expr1->rhs = exprY;
+    expr1->op = ExpressionEqual::TestEqual;
+
+    auto expr2 = std::make_shared<ExpressionEqual>();
+    expr2->lhs = exprX;
+    expr2->rhs = exprY;
+    expr2->op = ExpressionEqual::TestUnequal;
+
+    auto gdn1 = expr1->Eval(env);
+    auto gdn2 = expr2->Eval(env);
+
+    std::cout << gdn1.ToString() << std::endl;
+    std::cout << gdn2.ToString() << std::endl;
 }
 
 int main() {
@@ -74,6 +112,7 @@ int main() {
 
     test1();
     test2();
+    test3();
 
     return 0;
 }
