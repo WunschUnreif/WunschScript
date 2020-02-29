@@ -16,5 +16,6 @@
 #include "Expression/ExprMemberAccess.hpp"
 #include "Expression/ExprUnary.hpp"
 #include "Expression/ExprEqual.hpp"
+#include "Expression/ExprAddMinus.hpp"
 
 #include "Statement/Statement.hpp"

@@ -28,7 +28,7 @@ std::string GeneralDataNode::ToString() {
 bool GeneralDataNode::IsEqualTo(GeneralDataNode rhs) {
     if(type == rhs.type && data != nullptr) {
         assert(rhs.data != nullptr);
-        std::cout << "IsEqualTo: " << data->IsEqualTo(rhs.data) << std::endl;
+        
         return data->IsEqualTo(rhs.data);
     }
 

@@ -41,21 +41,28 @@ void init() {
 }
 
 void test1() {
-    std::clog << "Testing : ``` x; x = 20; ```" << std::endl;
+    std::clog << "Testing : ``` x; x = 20; x; ```" << std::endl;
 
     std::shared_ptr<ExpressionBase> expr = std::make_shared<ExpressionID>();
     std::dynamic_pointer_cast<ExpressionID>(expr)->identifier = "x";
 
-    auto gdn = expr->Eval(env, true);
+    auto gdn = expr->Eval(env, false);
     assert(gdn.type == GeneralDataNode::TypeInt);
 
-    std::cout << std::dynamic_pointer_cast<DataNodeInt>(gdn.data)->value << std::endl;
+    std::cout << gdn.ToString() << std::endl;
 
-    std::dynamic_pointer_cast<DataNodeInt>(gdn.data)->value = 20;
+    GeneralDataNode node20;
+    node20.type = GeneralDataNode::TypeInt;
+    node20.data = std::make_shared<DataNodeInt>();
+    std::dynamic_pointer_cast<DataNodeInt>(node20.data)->value = 20;
+
+    std::shared_ptr<ExpressionBase> exprLit = std::make_shared<ExpressionLiteral>();
+    std::dynamic_pointer_cast<ExpressionLiteral>(exprLit)->value = node20;
+
+    expr->SetValue(env, exprLit->Eval(env));
 
     gdn = expr->Eval(env, false);
 
-    std::cout << std::dynamic_pointer_cast<DataNodeInt>(gdn.data)->value << std::endl;
     std::cout << gdn.ToString() << std::endl;
 }
 
@@ -77,7 +84,6 @@ void test2() {
 
     assert(result.type == GeneralDataNode::TypeBool);
 
-    std::cout << std::dynamic_pointer_cast<DataNodeBool>(result.data)->value << std::endl;
     std::cout << result.ToString() << std::endl;
 }
 
@@ -107,12 +113,31 @@ void test3() {
     std::cout << gdn2.ToString() << std::endl;
 }
 
+void test4() {
+    std::clog << "Testing : ``` x + z; ```" << std::endl;
+
+    std::shared_ptr<ExpressionBase> exprX = std::make_shared<ExpressionID>();
+    std::dynamic_pointer_cast<ExpressionID>(exprX)->identifier = "x";
+
+    std::shared_ptr<ExpressionBase> exprY = std::make_shared<ExpressionID>();
+    std::dynamic_pointer_cast<ExpressionID>(exprY)->identifier = "z";
+
+    auto expr1 = std::make_shared<ExpressionAdd>();
+    expr1->lhs = exprX;
+    expr1->rhs = exprY;
+
+    auto gdn1 = expr1->Eval(env);
+
+    std::cout << gdn1.ToString() << std::endl;
+}
+
 int main() {
     init();
 
     test1();
     test2();
     test3();
+    test4();
 
     return 0;
 }

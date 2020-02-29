@@ -194,6 +194,11 @@ std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
         assert(kv.second.data.get() != this);
 
         result->value[kv.first] = kv.second.DeepCopy();
+
+        /// rebind 'this' pointer for function inside
+        if(result->value[kv.first].type == GeneralDataNode::TypeFunc) {
+            std::dynamic_pointer_cast<DataNodeFunc>(result->value[kv.first].data)->thisDict = result;
+        }
     }
 
     return result;
@@ -220,11 +225,15 @@ bool DataNodeFunc::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
 
     /// for func, the storage of them are unique, so only need to 
     /// compare the location
-    return this == rhs.get();
+    return this->body[0].get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->body[0].get() &&
+            this->thisDict.lock().get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->thisDict.lock().get();
 }
 
 std::shared_ptr<DataNodeBase> DataNodeFunc::DeepCopy() {
-    return shared_from_this();
+    auto result = std::make_shared<DataNodeFunc>(*this);
+    result->thisDict.reset();
+
+    return result;
 }
 
 /* ---------------- Implementation for type func ---------------- */

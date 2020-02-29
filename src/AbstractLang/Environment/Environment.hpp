@@ -25,6 +25,7 @@ namespace asl {
         std::stack<std::weak_ptr<DataNodeDict>> thisStack;
 
         GeneralDataNode GetDataNode(const std::string & name);
+        bool SetDataNode(const std::string & name, GeneralDataNode target);
 
         void ReportError(const std::runtime_error & error);
     };

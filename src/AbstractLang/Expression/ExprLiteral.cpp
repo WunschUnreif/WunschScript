@@ -9,5 +9,7 @@ GeneralDataNode ExpressionLiteral::Eval(Environment & env, bool asLval) {
         env.ReportError(std::runtime_error("Literal cannot be evaluated as left value."));
         return GeneralDataNode();
     }
-    return value;
+
+    /// a literal is immutable, so deep copy is needed
+    return value.DeepCopy();
 }

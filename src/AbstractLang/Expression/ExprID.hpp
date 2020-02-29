@@ -12,6 +12,8 @@ namespace asl {
         std::string identifier;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
+
+        void SetValue(Environment & env, GeneralDataNode target) override;
     };
 
 }
