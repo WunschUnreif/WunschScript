@@ -12,6 +12,7 @@
 #ifndef __WS_ASL_STATEMENT_H__
 #define __WS_ASL_STATEMENT_H__
 
+#include <string>
 #include <memory>
 
 #include "Environment.hpp"
@@ -40,6 +41,10 @@ namespace asl {
             StatementForLoop,
             StatementReturn
         } type;
+
+        std::string filename;
+        size_t line;
+        size_t character;
 
         virtual void Execute(Environment & env) = 0;
     };

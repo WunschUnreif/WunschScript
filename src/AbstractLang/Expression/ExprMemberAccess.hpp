@@ -9,8 +9,6 @@ namespace ws {
 
 namespace asl {
 
-    /// TODO: Implementation `SetValue`!
-
     /**
      * @brief Expression for member access.
      * Form: `lhs.id`
@@ -22,6 +20,7 @@ namespace asl {
         std::string id;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false)  override;
+        void SetValue(Environment & env, GeneralDataNode target) override;
 
     };
 
@@ -36,6 +35,7 @@ namespace asl {
         std::shared_ptr<ExpressionBase> rhs;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false)  override;
+        void SetValue(Environment & env, GeneralDataNode target) override;
 
     };
 

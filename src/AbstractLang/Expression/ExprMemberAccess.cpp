@@ -34,6 +34,23 @@ GeneralDataNode ExpressionMemberAccess::Eval(Environment & env, bool asLval) {
     }
 }
 
+void ExpressionMemberAccess::SetValue(Environment & env, GeneralDataNode target) {
+    /// first evaluate the left hand expression
+    auto lhsResult = lhs->Eval(env);
+
+    /// the result should be a dict
+    if(lhsResult.type != GeneralDataNode::DataType::TypeDict) {
+        env.ReportError(std::runtime_error("Trying to access a member from non-dict value."));
+        return;
+    }
+
+    /// get the dict storage
+    auto dictNode = std::dynamic_pointer_cast<DataNodeDict>(lhsResult.data);
+
+    /// set the value
+    dictNode->value[id] = target;
+}
+
 GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool asLval) {
     /// first evaluated the left hand expression
     auto lhsResult = lhs->Eval(env);
@@ -73,7 +90,7 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
     }
 
     /// 2. in case lhs is list
-    if(lhsResult.type == GeneralDataNode::DataType::TypeDict) {
+    if(lhsResult.type == GeneralDataNode::DataType::TypeList) {
         /// evaluated the right hand expression (inside the '[]')
         auto rhsResult = rhs->Eval(env);
 
@@ -112,4 +129,66 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
     /// 3. otherwise, error
     env.ReportError(std::runtime_error("Cannor access member from non-dict/list value"));
     return GeneralDataNode();
+}
+
+void ExpressionMemberAccessCalaulated::SetValue(Environment & env, GeneralDataNode target) {
+    /// first evaluated the left hand expression
+    auto lhsResult = lhs->Eval(env);
+
+    /// 1. in case lhs is dict
+    if(lhsResult.type == GeneralDataNode::DataType::TypeDict) {
+        /// evaluated the right hand expression (inside the '[]')
+        auto rhsResult = rhs->Eval(env);
+
+        /// the result should be a str 
+        if(rhsResult.type != GeneralDataNode::DataType::TypeString) {
+            env.ReportError(std::runtime_error("Trying to access a member using non-str key."));
+            return;
+        }
+
+        std::string id = std::dynamic_pointer_cast<DataNodeStr>(rhsResult.data)->value;
+
+        /// get the dict storage
+        auto dictNode = std::dynamic_pointer_cast<DataNodeDict>(lhsResult.data);
+
+        /// set the value
+        dictNode->value[id] = target;
+
+        return;
+    }
+
+    /// 2. in case lhs is list
+    if(lhsResult.type == GeneralDataNode::DataType::TypeList) {
+        /// evaluated the right hand expression (inside the '[]')
+        auto rhsResult = rhs->Eval(env);
+
+        /// the result should be a int 
+        if(rhsResult.type != GeneralDataNode::DataType::TypeInt) {
+            env.ReportError(std::runtime_error("Trying to access a member using non-int index."));
+            return;
+        }
+
+        /// get the indexed data from list
+        auto listNode = std::dynamic_pointer_cast<DataNodeList>(lhsResult.data);
+        auto index = std::dynamic_pointer_cast<DataNodeInt>(rhsResult.data)->value;
+
+        /// reserve enough space if accessing out-of-range index, using nil to fill
+        while(index >= listNode->value.size()) {
+            /// generate a nil node to fill
+            GeneralDataNode filling;
+            filling.type = GeneralDataNode::DataType::TypeNil;
+            filling.data = std::make_shared<DataNodeNil>();
+
+            listNode->value.push_back(filling);
+        }
+
+        /// set the valur
+        listNode->value[index] = target;
+
+        return;
+    }
+
+    /// 3. otherwise, error
+    env.ReportError(std::runtime_error("Cannor access member from non-dict/list value"));
+    return;
 }
