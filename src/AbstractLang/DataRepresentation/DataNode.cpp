@@ -225,8 +225,7 @@ bool DataNodeFunc::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
 
     /// for func, the storage of them are unique, so only need to 
     /// compare the location
-    return this->body[0].get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->body[0].get() &&
-            this->thisDict.lock().get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->thisDict.lock().get();
+    return this->body.body[0].get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->body.body[0].get();
 }
 
 std::shared_ptr<DataNodeBase> DataNodeFunc::DeepCopy() {

@@ -30,7 +30,14 @@ GeneralDataNode ExpressionMemberAccess::Eval(Environment & env, bool asLval) {
         ///< an empty GDN will be created for assignment.
         auto dictNode = std::dynamic_pointer_cast<DataNodeDict>(lhsResult.data);
 
-        return dictNode->value[id];
+        auto result = dictNode->value[id];
+
+        /// bind `this` to function member
+        if(result.type == GeneralDataNode::DataType::TypeFunc) {
+            std::dynamic_pointer_cast<DataNodeFunc>(result.data)->thisDict = dictNode;
+        }
+
+        return result;
     }
 }
 
@@ -77,6 +84,11 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
             if(it == dictNode->value.end()) {
                 env.ReportError(std::runtime_error("Key does not exists for the required member access."));
                 return GeneralDataNode();
+            }
+
+            /// bind `this` to function member
+            if(it->second.type == GeneralDataNode::DataType::TypeFunc) {
+                std::dynamic_pointer_cast<DataNodeFunc>(it->second.data)->thisDict = dictNode;
             }
 
             return it->second;

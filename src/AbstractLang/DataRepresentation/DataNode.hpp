@@ -17,6 +17,7 @@ namespace ws {
 namespace asl {
 
     struct StatementBase;
+    struct Environment;
 
     /**
      * @brief Data node for `nil` type
@@ -100,7 +101,9 @@ namespace asl {
     struct DataNodeFunc final : public DataNodeBase, public std::enable_shared_from_this<DataNodeFunc> {
         std::weak_ptr<DataNodeDict> thisDict;
         Scope paramScope;
-        std::vector<std::shared_ptr<StatementBase>> body;
+        std::vector<std::string> paramNames;
+        
+        StatementBlock body;
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
@@ -113,7 +116,7 @@ namespace asl {
      * interpreter, such as `print()`, `read()`.
      */
     struct DataNodeSystemFunc final : public DataNodeBase {
-        std::function<GeneralDataNode(std::vector<GeneralDataNode>)> impl;
+        std::function<GeneralDataNode(std::vector<GeneralDataNode>, Environment &)> impl;
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;

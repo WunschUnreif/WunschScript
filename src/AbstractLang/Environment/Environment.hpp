@@ -24,6 +24,9 @@ namespace asl {
         /// Stack for 'this' in function call
         std::stack<std::weak_ptr<DataNodeDict>> thisStack;
 
+        /// Stack for storing return values
+        std::stack<GeneralDataNode> returnStack;
+
         GeneralDataNode GetDataNode(const std::string & name);
         bool SetDataNode(const std::string & name, GeneralDataNode target);
 

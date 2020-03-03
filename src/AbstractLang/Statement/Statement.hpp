@@ -32,19 +32,10 @@ namespace asl {
         
         virtual ~StatementBase() = 0;
 
-        enum StatementType {
-            StatementExpression,
-            StatementVariableDefinition,
-            StatementAssignment,
-            StatementConditional,
-            StatementWhileLoop, 
-            StatementForLoop,
-            StatementReturn
-        } type;
-
         std::string filename;
         size_t line;
         size_t character;
+        std::string contentString;
 
         virtual void Execute(Environment & env) = 0;
     };
