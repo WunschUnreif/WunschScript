@@ -9,12 +9,13 @@ namespace ws {
 
 namespace asl {
 
-    struct StatementExpression final : StatementBase {
+    struct StatementAssignment final : StatementBase {
 
-        std::shared_ptr<ExpressionBase> expr;
+        std::shared_ptr<ExpressionBase> lhs;
+        std::shared_ptr<ExpressionBase> rhs;
 
         bool Execute(Environment & env) override;
-
+        
     };
 
 }

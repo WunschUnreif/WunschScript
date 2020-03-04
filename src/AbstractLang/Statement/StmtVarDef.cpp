@@ -4,11 +4,11 @@
 
 using namespace ws::asl;
 
-void StatementVariableDefine::Execute(Environment & env) {
+bool StatementVariableDefine::Execute(Environment & env) {
     /// first forbid use of reserved word
     if(IsReservedWord()) {
         env.ReportError(std::runtime_error("Cannot use reserved word for variable name"));
-        return;
+        return true;
     }
 
     /// evaluate the rhs exression
@@ -16,4 +16,11 @@ void StatementVariableDefine::Execute(Environment & env) {
 
     /// update the binding in the current scope
     env.currentScope->content[id] = value;
+
+    return true;
+}
+
+bool StatementVariableDefine::IsReservedWord() {
+    /// TODO: judge reserved word
+    return false;
 }

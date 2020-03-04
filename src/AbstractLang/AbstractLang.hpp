@@ -17,5 +17,11 @@
 #include "Expression/ExprUnary.hpp"
 #include "Expression/ExprEqual.hpp"
 #include "Expression/ExprAddMinus.hpp"
+#include "Expression/ExprFuncCall.hpp"
+#include "Expression/ExprMultDiv.hpp"
 
 #include "Statement/Statement.hpp"
+#include "Statement/StmtAssignment.hpp"
+#include "Statement/StmtExpr.hpp"
+#include "Statement/StmtReturn.hpp"
+#include "Statement/StmtVarDef.hpp"

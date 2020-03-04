@@ -193,12 +193,8 @@ std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
         /// ensure there is no loop (self containing) inside the dict
         assert(kv.second.data.get() != this);
 
+        result->generator[kv.first] = generator[kv.first];
         result->value[kv.first] = kv.second.DeepCopy();
-
-        /// rebind 'this' pointer for function inside
-        if(result->value[kv.first].type == GeneralDataNode::TypeFunc) {
-            std::dynamic_pointer_cast<DataNodeFunc>(result->value[kv.first].data)->thisDict = result;
-        }
     }
 
     return result;
@@ -211,11 +207,11 @@ std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
 std::string DataNodeFunc::ToString() {
     std::string result = "(";
 
-    for(auto paramName : paramScope.content) {
-        result += paramName.first + ", ";
+    for(auto paramName : paramNames) {
+        result += paramName + ", ";
     }
 
-    result += ") => func<" + std::to_string(reinterpret_cast<uint64_t>(this)) + ">";
+    result += ") => func<" + std::to_string(reinterpret_cast<uint64_t>(this->body.body[0].get())) + ">";
 
     return result;
 }

@@ -10,6 +10,8 @@ namespace ws {
 
 namespace asl {
 
+    struct Environment;
+
     struct ExpressionBase {
         virtual ~ExpressionBase() {}
 

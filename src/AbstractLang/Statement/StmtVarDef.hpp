@@ -14,7 +14,7 @@ namespace asl {
         std::string id;
         std::shared_ptr<ExpressionBase> expr;
 
-        void Execute(Environment & env);
+        bool Execute(Environment & env) override;
 
     private:
         bool IsReservedWord();

@@ -1,4 +1,5 @@
 #include <exception>
+#include <iostream>
 
 #include <cmath>
 
@@ -131,7 +132,7 @@ GeneralDataNode ExpressionDivMod::Eval(Environment & env, bool asLval) {
 
 GeneralDataNode ExpressionDivMod::EvalForInt(GeneralDataNode lhsResult, GeneralDataNode rhsResult) {
     /// check divided by 0
-    if(std::dynamic_pointer_cast<DataNodeFloat>(rhsResult.data)->value == 0) {
+    if(std::dynamic_pointer_cast<DataNodeInt>(rhsResult.data)->value == 0) {
         return GeneralDataNode();
     }
 

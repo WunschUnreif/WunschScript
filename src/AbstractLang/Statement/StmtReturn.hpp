@@ -9,7 +9,7 @@ namespace ws {
 
 namespace asl {
 
-    struct StatementExpression final : StatementBase {
+    struct StatementReturn final : StatementBase {
 
         std::shared_ptr<ExpressionBase> expr;
 

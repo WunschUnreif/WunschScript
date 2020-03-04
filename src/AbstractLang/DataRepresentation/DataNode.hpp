@@ -18,6 +18,7 @@ namespace asl {
 
     struct StatementBase;
     struct Environment;
+    struct ExpressionBase;
 
     /**
      * @brief Data node for `nil` type
@@ -88,6 +89,7 @@ namespace asl {
      * @brief Data node for `dict` type.
      */
     struct DataNodeDict final : public DataNodeBase {
+        std::map<std::string, std::shared_ptr<ExpressionBase>> generator;
         std::map<std::string, GeneralDataNode> value;
 
         std::string ToString() override;

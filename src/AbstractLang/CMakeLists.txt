@@ -21,9 +21,9 @@ target_include_directories(WSAbstractLang
     Expression/
 )
 
-add_executable(WSAbstractLangTest ${SRC_ABSLANG})
+add_executable(WSAbstractLangTest1 UnitTest1.cpp)
 
-target_include_directories(WSAbstractLangTest
+target_include_directories(WSAbstractLangTest1
     PUBLIC
     ./
     Statement/
@@ -32,4 +32,17 @@ target_include_directories(WSAbstractLangTest
     Expression/
 )
 
-target_link_libraries(WSAbstractLangTest WSAbstractLang)
+target_link_libraries(WSAbstractLangTest1 WSAbstractLang)
+
+add_executable(WSAbstractLangTest2 UnitTest2.cpp)
+
+target_include_directories(WSAbstractLangTest2
+    PUBLIC
+    ./
+    Statement/
+    DataRepresentation/
+    Environment/
+    Expression/
+)
+
+target_link_libraries(WSAbstractLangTest2 WSAbstractLang)

@@ -1,4 +1,5 @@
 #include <exception>
+#include <iostream>
 
 #include <cassert>
 
@@ -72,8 +73,9 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
 
     /// execute
     for(auto stmt : funcStorage->body.body) {
-        stmt->Execute(env);
-        if(env.returnStack.size() == lastReturnSize + 1) {
+        auto notReturned = stmt->Execute(env);
+        if(!notReturned) {
+            assert(env.returnStack.size() == lastReturnSize + 1);
             break;
         }
     }

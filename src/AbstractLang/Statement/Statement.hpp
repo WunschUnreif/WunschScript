@@ -30,14 +30,14 @@ namespace asl {
      */
     struct StatementBase {
         
-        virtual ~StatementBase() = 0;
+        virtual ~StatementBase() {};
 
         std::string filename;
         size_t line;
         size_t character;
         std::string contentString;
 
-        virtual void Execute(Environment & env) = 0;
+        virtual bool Execute(Environment & env) = 0;
     };
 
 
