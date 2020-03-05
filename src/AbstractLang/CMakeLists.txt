@@ -5,7 +5,6 @@ aux_source_directory(Environment SRC_ABSLANG_ENVR)
 aux_source_directory(Expression SRC_ABSLANG_EXPR)
 
 add_library(WSAbstractLang STATIC 
-    # ${SRC_ABSLANG} 
     ${SRC_ABSLANG_STMT}
     ${SRC_ABSLANG_DR}
     ${SRC_ABSLANG_ENVR}
@@ -22,7 +21,7 @@ target_include_directories(WSAbstractLang
 )
 
 # --------------------- test1 ---------------------
-add_executable(WSAbstractLangTest1 UnitTest1.cpp UTTool.cpp)
+add_executable(WSAbstractLangTest1 UT/UnitTest1.cpp UT/UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest1
     PUBLIC
@@ -31,13 +30,14 @@ target_include_directories(WSAbstractLangTest1
     DataRepresentation/
     Environment/
     Expression/
+    UT/
 )
 
 target_link_libraries(WSAbstractLangTest1 WSAbstractLang)
 
 
 # --------------------- test2 ---------------------
-add_executable(WSAbstractLangTest2 UnitTest2.cpp UTTool.cpp)
+add_executable(WSAbstractLangTest2 UT/UnitTest2.cpp UT/UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest2
     PUBLIC
@@ -46,13 +46,14 @@ target_include_directories(WSAbstractLangTest2
     DataRepresentation/
     Environment/
     Expression/
+    UT/
 )
 
 target_link_libraries(WSAbstractLangTest2 WSAbstractLang)
 
 
 # --------------------- test3 ---------------------
-add_executable(WSAbstractLangTest3 UnitTest3.cpp UTTool.cpp)
+add_executable(WSAbstractLangTest3 UT/UnitTest3.cpp UT/UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest3
     PUBLIC
@@ -61,13 +62,14 @@ target_include_directories(WSAbstractLangTest3
     DataRepresentation/
     Environment/
     Expression/
+    UT/
 )
 
 target_link_libraries(WSAbstractLangTest3 WSAbstractLang)
 
 
 # --------------------- test4 ---------------------
-add_executable(WSAbstractLangTest4 UnitTest4.cpp UTTool.cpp)
+add_executable(WSAbstractLangTest4 UT/UnitTest4.cpp UT/UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest4
     PUBLIC
@@ -76,6 +78,7 @@ target_include_directories(WSAbstractLangTest4
     DataRepresentation/
     Environment/
     Expression/
+    UT/
 )
 
 target_link_libraries(WSAbstractLangTest4 WSAbstractLang)

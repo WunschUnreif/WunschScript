@@ -27,3 +27,4 @@
 #include "Statement/StmtVarDef.hpp"
 #include "Statement/StmtCond.hpp"
 #include "Statement/StmtWhileLoop.hpp"
+#include "Statement/StmtForLoop.hpp"

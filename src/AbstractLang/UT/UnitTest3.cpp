@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
+#include <exception>
 
 #include <cassert>
+#include <cstdlib>
 
 #include "AbstractLang.hpp"
 #include "UTTool.hpp"
@@ -39,6 +41,8 @@ void dodeffactorial() {
 
     auto thenBr = std::make_shared<StatementReturn>();
     thenBr->expr = GenIntLiteralExpr(1);
+    // thenBr->expr = GenNilLiteralExpr(); // uncomment this for error test
+    thenBr->info->content = "return 1;";
 
     auto recur = std::make_shared<ExpressionFuncCall>();
     recur->funcObj = GenIDExpr("factorial");
@@ -49,9 +53,11 @@ void dodeffactorial() {
         GenIDExpr("n"),
         recur
     );
+    elseBr->info->content = "return n * factorial(n - 1);";
 
     auto ifStmt = std::make_shared<StatementCondition>();
     ifStmt->cond = condExpr;
+    ifStmt->info->content = "if n == 0 || n == 1 { return nil; } else { return n * factorial(n - 1); }";
 
     ifStmt->thenBranch = std::make_shared<StatementBlock>();
     ifStmt->thenBranch->lexScope = std::make_shared<Scope>();
@@ -120,9 +126,15 @@ int main() {
     init();
 
     dodeffactorial();
-    call(0);
-    call(1);
-    call(10);
+
+    try{
+        call(0);
+        call(1);
+        call(10);
+    } catch(std::runtime_error & e) {
+        std::cerr << e.what() << std::endl;
+        exit(0);
+    }
 
     return 0;
 }

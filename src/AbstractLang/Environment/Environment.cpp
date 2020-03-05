@@ -62,5 +62,29 @@ bool ws::asl::Environment::SetDataNode(const std::string & name, ws::asl::Genera
 
 void ws::asl::Environment::ReportError(const std::runtime_error & error) {
     /// Temporary handling method
-    throw error;
+    throw std::runtime_error(
+        std::string("Runtime error: ") + 
+        error.what() + 
+        "\nTraceback: \n" + 
+        GetInfoStackString()
+    );
+}
+
+std::string ws::asl::Environment::GetInfoStackString() {
+    auto depth = infoStack.size() - 1;
+    auto infoStackCopy = infoStack;
+
+    std::string result;
+
+    while(depth--) {
+        result += "\tFrame #" + std::to_string(depth) + "\t" 
+                  + infoStackCopy.top().lock()->file + ":"
+                  + std::to_string(infoStackCopy.top().lock()->line) + ":"
+                  + std::to_string(infoStackCopy.top().lock()->character) + "\n"
+                  + "\t\tEquivalance code: \n\t\t\t" + infoStackCopy.top().lock()->content + "\n";
+
+        infoStackCopy.pop();
+    }
+
+    return result;
 }

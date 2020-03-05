@@ -36,6 +36,9 @@ namespace asl {
         bool SetDataNode(const std::string & name, GeneralDataNode target);
 
         void ReportError(const std::runtime_error & error);
+
+    protected:
+        std::string GetInfoStackString();
     };
 
 }
