@@ -4,7 +4,7 @@
 
 using namespace ws::asl;
 
-bool StatementVariableDefine::Execute(Environment & env) {
+bool StatementVariableDefine::InnerExecute(Environment & env) {
     /// first forbid use of reserved word
     if(IsReservedWord()) {
         env.ReportError(std::runtime_error("Cannot use reserved word for variable name"));

@@ -64,29 +64,27 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
     }
 
     /// Prepare the environment
-    auto lastScope = env.currentScope;
     auto lastReturnSize = env.returnStack.size();
 
-    env.currentScope = funcStorage->body.lexScope;
     env.paramStack.push(funcStorage->paramScope);
     env.thisStack.push(funcStorage->thisDict);
 
     /// execute
-    for(auto stmt : funcStorage->body.body) {
-        auto notReturned = stmt->Execute(env);
-        if(!notReturned) {
-            assert(env.returnStack.size() == lastReturnSize + 1);
-            break;
-        }
-    }
+    funcStorage->body->Execute(env);
     
-    assert(env.returnStack.size() == lastReturnSize + 1);
+    GeneralDataNode result;
+    result.type = GeneralDataNode::DataType::TypeNil;
+    result.data = std::make_shared<DataNodeNil>();
 
-    auto result = env.returnStack.top(); 
-    env.returnStack.pop();
+    /// function did return something
+    if(env.returnStack.size() == lastReturnSize + 1) {
+        result = env.returnStack.top(); 
+        env.returnStack.pop();
+    }
+
+    /// restore the environment
     env.thisStack.pop();
     env.paramStack.pop();
-    env.currentScope = lastScope;
 
     return result;
 }

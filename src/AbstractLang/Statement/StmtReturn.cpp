@@ -4,7 +4,7 @@
 
 using namespace ws::asl;
 
-bool StatementReturn::Execute(Environment & env) {
+bool StatementReturn::InnerExecute(Environment & env) {
     /// evaluate the rhs exression
     auto value = expr->Eval(env);
 

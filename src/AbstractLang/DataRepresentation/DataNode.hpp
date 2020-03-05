@@ -17,6 +17,7 @@ namespace ws {
 namespace asl {
 
     struct StatementBase;
+    struct StatementBlock;
     struct Environment;
     struct ExpressionBase;
 
@@ -78,6 +79,7 @@ namespace asl {
      * @brief Data node for `list` type.
      */
     struct DataNodeList final : public DataNodeBase {
+        std::deque<std::shared_ptr<ExpressionBase>> generator;
         std::deque<GeneralDataNode> value;
 
         std::string ToString() override;
@@ -105,7 +107,7 @@ namespace asl {
         Scope paramScope;
         std::vector<std::string> paramNames;
         
-        StatementBlock body;
+        std::shared_ptr<StatementBlock> body;
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;

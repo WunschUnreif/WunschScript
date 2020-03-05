@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Environment.hpp"
 
 ws::asl::GeneralDataNode ws::asl::Environment::GetDataNode(const std::string & name) {
@@ -31,7 +33,7 @@ ws::asl::GeneralDataNode ws::asl::Environment::GetDataNode(const std::string & n
 bool ws::asl::Environment::SetDataNode(const std::string & name, ws::asl::GeneralDataNode target) {
     /// 1. check the parameter scope
     if(!paramStack.empty()) {
-        ws::asl::Scope scope = paramStack.top();
+        ws::asl::Scope & scope = paramStack.top();
         if(scope.content.find(name) != scope.content.end()) {
             scope.content[name] = target;
             return true;

@@ -21,7 +21,8 @@ target_include_directories(WSAbstractLang
     Expression/
 )
 
-add_executable(WSAbstractLangTest1 UnitTest1.cpp)
+# --------------------- test1 ---------------------
+add_executable(WSAbstractLangTest1 UnitTest1.cpp UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest1
     PUBLIC
@@ -34,7 +35,9 @@ target_include_directories(WSAbstractLangTest1
 
 target_link_libraries(WSAbstractLangTest1 WSAbstractLang)
 
-add_executable(WSAbstractLangTest2 UnitTest2.cpp)
+
+# --------------------- test2 ---------------------
+add_executable(WSAbstractLangTest2 UnitTest2.cpp UTTool.cpp)
 
 target_include_directories(WSAbstractLangTest2
     PUBLIC
@@ -46,3 +49,33 @@ target_include_directories(WSAbstractLangTest2
 )
 
 target_link_libraries(WSAbstractLangTest2 WSAbstractLang)
+
+
+# --------------------- test3 ---------------------
+add_executable(WSAbstractLangTest3 UnitTest3.cpp UTTool.cpp)
+
+target_include_directories(WSAbstractLangTest3
+    PUBLIC
+    ./
+    Statement/
+    DataRepresentation/
+    Environment/
+    Expression/
+)
+
+target_link_libraries(WSAbstractLangTest3 WSAbstractLang)
+
+
+# --------------------- test4 ---------------------
+add_executable(WSAbstractLangTest4 UnitTest4.cpp UTTool.cpp)
+
+target_include_directories(WSAbstractLangTest4
+    PUBLIC
+    ./
+    Statement/
+    DataRepresentation/
+    Environment/
+    Expression/
+)
+
+target_link_libraries(WSAbstractLangTest4 WSAbstractLang)

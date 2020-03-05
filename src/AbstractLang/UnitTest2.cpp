@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include "AbstractLang.hpp"
+#include "UTTool.hpp"
 
 using namespace ws::asl;
 
@@ -31,58 +32,6 @@ void init() {
     rootScope = std::make_shared<Scope>();
     rootScope->enableTraceup = false;
     env.currentScope = rootScope;
-}
-
-std::shared_ptr<ExpressionBase> GenIntLiteralExpr(int64_t x) {
-    auto literal = std::make_shared<ExpressionLiteral>();
-    literal->value = GeneralDataNode();
-    literal->value.type = GeneralDataNode::TypeInt;
-    literal->value.data = std::make_shared<DataNodeInt>();
-    std::dynamic_pointer_cast<DataNodeInt>(literal->value.data)->value = x;
-    return literal;
-}
-
-std::shared_ptr<ExpressionBase> GenNilLiteralExpr(int64_t x) {
-    auto literal = std::make_shared<ExpressionLiteral>();
-    literal->value = GeneralDataNode();
-    literal->value.type = GeneralDataNode::TypeNil;
-    literal->value.data = std::make_shared<DataNodeNil>();
-    return literal;
-}
-
-std::shared_ptr<ExpressionBase> GenIDExpr(const std::string & id) {
-    auto expr = std::make_shared<ExpressionID>();
-    expr->identifier = id;
-    return expr;
-}
-
-std::shared_ptr<ExpressionBase> GenDotExpr(const std::string & dict, const std::string & dot) {
-    auto expr = std::make_shared<ExpressionMemberAccess>();
-    expr->lhs = GenIDExpr(dict);
-    expr->id = dot;
-    return expr;
-}
-
-std::shared_ptr<ExpressionBase> GenAddExpr(std::shared_ptr<ExpressionBase> lhs, std::shared_ptr<ExpressionBase> rhs) {
-    auto expr = std::make_shared<ExpressionAdd>();
-    expr->lhs = lhs;
-    expr->rhs = rhs;
-    return expr;
-}
-
-std::shared_ptr<ExpressionBase> GenMultExpr(std::shared_ptr<ExpressionBase> lhs, std::shared_ptr<ExpressionBase> rhs) {
-    auto expr = std::make_shared<ExpressionMultiply>();
-    expr->lhs = lhs;
-    expr->rhs = rhs;
-    return expr;
-}
-
-std::shared_ptr<ExpressionBase> GenModExpr(std::shared_ptr<ExpressionBase> lhs, std::shared_ptr<ExpressionBase> rhs) {
-    auto expr = std::make_shared<ExpressionDivMod>();
-    expr->lhs = lhs;
-    expr->rhs = rhs;
-    expr->op = ExpressionDivMod::opMod;
-    return expr;
 }
 
 void dostmt1() {
@@ -142,16 +91,16 @@ void dostmt3() {
     auto stmtRtn = std::make_shared<StatementReturn>();
     stmtRtn->expr = GenIDExpr("x");
 
-    auto stmtBlock = StatementBlock();
-    stmtBlock.lexScope = std::make_shared<Scope>();
-    rootScope->children.push_back(stmtBlock.lexScope);
-    stmtBlock.lexScope->parent = rootScope;
-    stmtBlock.body.push_back(stmtAssign);
-    stmtBlock.body.push_back(stmtRtn);
+    auto stmtBlock = std::make_shared<StatementBlock>();
+    stmtBlock->lexScope = std::make_shared<Scope>();
+    rootScope->children.push_back(stmtBlock->lexScope);
+    stmtBlock->lexScope->parent = rootScope;
+    stmtBlock->body.push_back(stmtAssign);
+    stmtBlock->body.push_back(stmtRtn);
 
     auto funcNode = std::make_shared<DataNodeFunc>();
     funcNode->paramNames.push_back("dict");
-    funcNode->body = std::move(stmtBlock);
+    funcNode->body = stmtBlock;
     
     auto funcGDN = GeneralDataNode();
     funcGDN.type = GeneralDataNode::TypeFunc;

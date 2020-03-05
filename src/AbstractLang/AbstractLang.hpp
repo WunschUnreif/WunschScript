@@ -25,3 +25,5 @@
 #include "Statement/StmtExpr.hpp"
 #include "Statement/StmtReturn.hpp"
 #include "Statement/StmtVarDef.hpp"
+#include "Statement/StmtCond.hpp"
+#include "Statement/StmtWhileLoop.hpp"

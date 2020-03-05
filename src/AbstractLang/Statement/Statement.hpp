@@ -23,6 +23,14 @@ namespace ws {
 namespace asl {
 
     struct Environment;
+    struct Scope;
+
+    struct ExecutionInformation  {
+        std::string file;
+        size_t line;
+        size_t character;
+        std::string content;
+    };
 
     /**
      * @brief Abstract class for statement node.
@@ -32,18 +40,20 @@ namespace asl {
         
         virtual ~StatementBase() {};
 
-        std::string filename;
-        size_t line;
-        size_t character;
-        std::string contentString;
+        std::shared_ptr<ExecutionInformation> info = std::make_shared<ExecutionInformation>();
 
-        virtual bool Execute(Environment & env) = 0;
+        /// with wrappers for execution information
+        virtual bool Execute(Environment & env);
+
+        virtual bool InnerExecute(Environment & env) = 0;
     };
 
 
     struct StatementBlock {
         std::shared_ptr<Scope> lexScope;
         std::vector<std::shared_ptr<StatementBase>> body;
+
+        bool Execute(Environment & env);
     };
 
 } // namespace al

@@ -14,7 +14,7 @@ namespace asl {
         std::shared_ptr<ExpressionBase> lhs;
         std::shared_ptr<ExpressionBase> rhs;
 
-        bool Execute(Environment & env) override;
+        bool InnerExecute(Environment & env) override;
         
     };
 

@@ -2,7 +2,7 @@
 
 using namespace ws::asl;
 
-bool StatementExpression::Execute(Environment & env) {
+bool StatementExpression::InnerExecute(Environment & env) {
     auto _ = expr->Eval(env);
     return true;
 }

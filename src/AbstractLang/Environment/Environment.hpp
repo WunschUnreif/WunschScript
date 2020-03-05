@@ -14,6 +14,8 @@ namespace asl {
 
     struct DataNodeDict;
 
+    struct ExecutionInformation;
+
     struct Environment {
         /// Lexical scope of program.
         std::shared_ptr<Scope> currentScope;
@@ -26,6 +28,9 @@ namespace asl {
 
         /// Stack for storing return values
         std::stack<GeneralDataNode> returnStack;
+
+        /// Stack for execution information
+        std::stack<std::weak_ptr<ExecutionInformation>> infoStack;
 
         GeneralDataNode GetDataNode(const std::string & name);
         bool SetDataNode(const std::string & name, GeneralDataNode target);

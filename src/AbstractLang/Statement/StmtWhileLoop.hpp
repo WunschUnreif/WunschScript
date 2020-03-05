@@ -9,16 +9,14 @@ namespace ws {
 
 namespace asl {
 
-    struct StatementVariableDefine final : StatementBase {
+    struct StatementWhileLoop final : StatementBase {
 
-        std::string id;
-        std::shared_ptr<ExpressionBase> expr;
+        std::shared_ptr<ExpressionBase> cond;
+        
+        std::shared_ptr<StatementBlock> loopBody;
 
         bool InnerExecute(Environment & env) override;
 
-    private:
-        bool IsReservedWord();
-        
     };
 
 }

@@ -211,7 +211,7 @@ std::string DataNodeFunc::ToString() {
         result += paramName + ", ";
     }
 
-    result += ") => func<" + std::to_string(reinterpret_cast<uint64_t>(this->body.body[0].get())) + ">";
+    result += ") => func<" + std::to_string(reinterpret_cast<uint64_t>(this->body->body[0].get())) + ">";
 
     return result;
 }
@@ -221,7 +221,7 @@ bool DataNodeFunc::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
 
     /// for func, the storage of them are unique, so only need to 
     /// compare the location
-    return this->body.body[0].get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->body.body[0].get();
+    return this->body->body[0].get() == std::dynamic_pointer_cast<DataNodeFunc>(rhs)->body->body[0].get();
 }
 
 std::shared_ptr<DataNodeBase> DataNodeFunc::DeepCopy() {
