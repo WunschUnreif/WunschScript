@@ -22,6 +22,12 @@ public:
   virtual void enterStmt(WunschParser::StmtContext * /*ctx*/) override { }
   virtual void exitStmt(WunschParser::StmtContext * /*ctx*/) override { }
 
+  virtual void enterThisExpr(WunschParser::ThisExprContext * /*ctx*/) override { }
+  virtual void exitThisExpr(WunschParser::ThisExprContext * /*ctx*/) override { }
+
+  virtual void enterDeepCopyExpr(WunschParser::DeepCopyExprContext * /*ctx*/) override { }
+  virtual void exitDeepCopyExpr(WunschParser::DeepCopyExprContext * /*ctx*/) override { }
+
   virtual void enterBinNotExpr(WunschParser::BinNotExprContext * /*ctx*/) override { }
   virtual void exitBinNotExpr(WunschParser::BinNotExprContext * /*ctx*/) override { }
 
@@ -118,8 +124,11 @@ public:
   virtual void enterExprAssign(WunschParser::ExprAssignContext * /*ctx*/) override { }
   virtual void exitExprAssign(WunschParser::ExprAssignContext * /*ctx*/) override { }
 
-  virtual void enterFuncDef(WunschParser::FuncDefContext * /*ctx*/) override { }
-  virtual void exitFuncDef(WunschParser::FuncDefContext * /*ctx*/) override { }
+  virtual void enterFixedFunc(WunschParser::FixedFuncContext * /*ctx*/) override { }
+  virtual void exitFixedFunc(WunschParser::FixedFuncContext * /*ctx*/) override { }
+
+  virtual void enterArrTailFunc(WunschParser::ArrTailFuncContext * /*ctx*/) override { }
+  virtual void exitArrTailFunc(WunschParser::ArrTailFuncContext * /*ctx*/) override { }
 
   virtual void enterIdList(WunschParser::IdListContext * /*ctx*/) override { }
   virtual void exitIdList(WunschParser::IdListContext * /*ctx*/) override { }

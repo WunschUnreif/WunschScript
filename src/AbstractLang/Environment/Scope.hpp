@@ -28,3 +28,6 @@ namespace asl {
 }
 
 #endif // !__WS_ASL_SCOPE_HPP__
+/**
+ * 
+*/

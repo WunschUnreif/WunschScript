@@ -2,6 +2,7 @@
 #include <memory>
 
 #include <cassert>
+#include <ctime>
 
 #include "AbstractLang.hpp"
 #include "UTTool.hpp"
@@ -128,9 +129,14 @@ int main() {
     init();
 
     dodefsum();
-    call(0);
-    call(1);
-    call(100);
+    // call(0);
+    // call(1);
+
+    auto start = clock();
+    call(1000000);
+    auto end = clock();
+
+    std::cout << "Elapsed: " << std::to_string(double(end - start) / CLOCKS_PER_SEC * 1000) << "ms" << std::endl;
 
     return 0;
 }

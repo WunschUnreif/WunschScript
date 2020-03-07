@@ -20,6 +20,12 @@ public:
   virtual void enterStmt(WunschParser::StmtContext *ctx) = 0;
   virtual void exitStmt(WunschParser::StmtContext *ctx) = 0;
 
+  virtual void enterThisExpr(WunschParser::ThisExprContext *ctx) = 0;
+  virtual void exitThisExpr(WunschParser::ThisExprContext *ctx) = 0;
+
+  virtual void enterDeepCopyExpr(WunschParser::DeepCopyExprContext *ctx) = 0;
+  virtual void exitDeepCopyExpr(WunschParser::DeepCopyExprContext *ctx) = 0;
+
   virtual void enterBinNotExpr(WunschParser::BinNotExprContext *ctx) = 0;
   virtual void exitBinNotExpr(WunschParser::BinNotExprContext *ctx) = 0;
 
@@ -116,8 +122,11 @@ public:
   virtual void enterExprAssign(WunschParser::ExprAssignContext *ctx) = 0;
   virtual void exitExprAssign(WunschParser::ExprAssignContext *ctx) = 0;
 
-  virtual void enterFuncDef(WunschParser::FuncDefContext *ctx) = 0;
-  virtual void exitFuncDef(WunschParser::FuncDefContext *ctx) = 0;
+  virtual void enterFixedFunc(WunschParser::FixedFuncContext *ctx) = 0;
+  virtual void exitFixedFunc(WunschParser::FixedFuncContext *ctx) = 0;
+
+  virtual void enterArrTailFunc(WunschParser::ArrTailFuncContext *ctx) = 0;
+  virtual void exitArrTailFunc(WunschParser::ArrTailFuncContext *ctx) = 0;
 
   virtual void enterIdList(WunschParser::IdListContext *ctx) = 0;
   virtual void exitIdList(WunschParser::IdListContext *ctx) = 0;

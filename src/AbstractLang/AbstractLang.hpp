@@ -19,6 +19,7 @@
 #include "Expression/ExprAddMinus.hpp"
 #include "Expression/ExprFuncCall.hpp"
 #include "Expression/ExprMultDiv.hpp"
+#include "Expression/ExprDeepCopy.hpp"
 
 #include "Statement/Statement.hpp"
 #include "Statement/StmtAssignment.hpp"

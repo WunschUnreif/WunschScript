@@ -8,11 +8,23 @@ var sum = (n) => {
         s = s + n;
         n = n - 1;
     }
-    return s
+    return <s>;
 };
 
-var rs1 = sum(0);
+var sumElems = ([elems]) => {
+    var ans = 0;
+    for x in elems {
+        ans = ans + x;
+    }
+    return <ans>;   # return deep copy of ans
+};
 
-var rs2 = sum(1);
+var x = sumElems(1, 2, 3);
 
-var rs3 = sum(100);
+var gcd = (a) => {
+    (b) => {
+        while b != 0 {
+            a, b = b, a % b
+        }
+    }
+}

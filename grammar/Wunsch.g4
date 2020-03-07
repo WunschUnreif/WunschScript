@@ -17,9 +17,10 @@ stmt
 expr
     : literal                           #literalExpr
     | funcDef                           #funDefLiteral
-    // | THIS                              #thisExpr
+    | THIS                              #thisExpr
     | ID                                #idExpr
     | '(' expr ')'                      #bracketExpr
+    | '<' expr '>'                      #deepCopyExpr
     | expr '.' ID                       #memberAccessExpr
     | expr '[' expr ']'                 #bracoAccessExpr
     | expr '(' exprList ')'             #funcallExpr
@@ -52,17 +53,12 @@ integerLiteral
     | OCT_INT   #octInteger
     | HEX_INT   #hexInteger
     ;
-floatLiteral : FLOAT;
-boolLiteral : BOOLEANLIT;
+floatLiteral  : FLOAT;
+boolLiteral   : BOOLEANLIT;
 stringLiteral : STRING+;
-
-listLiteral : '[' ']' 
-            | '[' expr (',' expr)* ']';
-
-dictLiteral : '{' '}' 
-            | '{' ID ':' expr (',' ID ':' expr)* '}';
-
-nilLiteral : 'nil';
+listLiteral   : '[' (expr (',' expr)*)? ']';
+dictLiteral   : '{' (ID ':' expr (',' ID ':' expr)*)? '}';
+nilLiteral    : 'nil';
 
 /* Varible define and assignment */
 varDef 
@@ -70,11 +66,13 @@ varDef
     | 'var' ID              #plainVarDef
     ;
 assignment 
-    : expr '=' expr #exprAssign
+    : expr '=' expr         #exprAssign
     ;
 
 /* Function define */
-funcDef : '(' idList ')' '=>' stmtBlock;
+funcDef : '(' idList ')' '=>' stmtBlock                     #fixedFunc
+        | '(' (idList ',')? '[' ID ']' ')' '=>' stmtBlock   #arrTailFunc
+        ;
 
 idList
     : ID (',' ID)*

@@ -6,3 +6,6 @@ target_include_directories(WSParser
     PUBLIC 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )
+
+# Parser is automatically generated, no warnings needed
+target_compile_options(WSParser PUBLIC "-w")
