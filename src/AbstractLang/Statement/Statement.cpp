@@ -11,7 +11,16 @@ bool StatementBase::Execute(Environment & env) {
     return permitContinue;
 } 
 
-bool StatementBlock::Execute(Environment & env) {
+bool StatementBlock::Execute(Environment & env, std::map<std::string, GeneralDataNode> * pour) {
+    /// prepare new scope
+    lexScope->push();
+
+    if(pour) {
+        for(auto kv : *pour) {
+            lexScope->contentStack.top()[kv.first] = kv.second;
+        }
+    }
+
     /// save the environment
     auto lastScope = env.currentScope;
     /// load scope of this block
@@ -28,6 +37,8 @@ bool StatementBlock::Execute(Environment & env) {
 
     /// restore the environment
     env.currentScope = lastScope;
+
+    lexScope->pop();
 
     return permitContinue;
 }

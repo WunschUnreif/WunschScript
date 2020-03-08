@@ -27,7 +27,8 @@ Environment env;
 
 int main(int argc, char ** argv) {
     for(int i = 1; i < argc; ++i) {
-        antlr4::ANTLRInputStream input(argv[i]);
+        std::ifstream ifs(argv[i]);
+        antlr4::ANTLRInputStream input(ifs);
 
         WunschLexer lexer(&input);
         antlr4::CommonTokenStream tokens(&lexer);
@@ -36,7 +37,7 @@ int main(int argc, char ** argv) {
 
         WunschParser parser(&tokens);
 
-        auto literal = parser.literal();
+        auto literal = parser.expr();
 
         ParseTreeVisitor visitor;
         auto result = visitor.visit(literal);

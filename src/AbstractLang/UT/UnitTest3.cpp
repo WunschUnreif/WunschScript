@@ -77,6 +77,9 @@ void dodeffactorial() {
     stmtBlock->lexScope->parent = rootScope;
     stmtBlock->body.push_back(ifStmt);
 
+    ifStmt->thenBranch->lexScope->parent = stmtBlock->lexScope;
+    ifStmt->elseBranch->lexScope->parent = stmtBlock->lexScope;
+
     auto funcNode = std::make_shared<DataNodeFunc>();
     funcNode->paramNames.push_back("n");
     funcNode->body = stmtBlock;
@@ -127,14 +130,14 @@ int main() {
 
     dodeffactorial();
 
-    try{
+    // try{
         call(0);
         call(1);
         call(10);
-    } catch(std::runtime_error & e) {
-        std::cerr << e.what() << std::endl;
-        exit(0);
-    }
+    // } catch(std::runtime_error & e) {
+    //     std::cerr << e.what() << std::endl;
+    //     exit(0);
+    // }
 
     return 0;
 }

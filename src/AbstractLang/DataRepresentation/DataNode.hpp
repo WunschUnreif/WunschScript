@@ -102,10 +102,12 @@ namespace asl {
     /**
      * @brief Data node for `func` type.
      */
-    struct DataNodeFunc final : public DataNodeBase, public std::enable_shared_from_this<DataNodeFunc> {
+    struct DataNodeFunc final : public DataNodeBase {
         std::weak_ptr<DataNodeDict> thisDict;
-        Scope paramScope;
         std::vector<std::string> paramNames;
+
+        bool withArrTail = false;
+        std::string arrName;
         
         std::shared_ptr<StatementBlock> body;
 

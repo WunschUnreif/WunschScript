@@ -1,14 +1,32 @@
-var a = {
-    x : 1
+var Node = {
+    parent : nil,
+    children : [nil],
+    value: 0,
+
+    addCh : ([children]) => {
+        for ch in children {
+            
+            # weak reference
+            ch.parent = @this;
+
+            this.children = this.children + ch
+        }
+    },
+
+    getParentValue : () => {
+        # optional deref
+        return parent?.value;
+    },
+
+    getParent : () => {
+        # owned deref
+        return parent!;
+    }
 };
 
-var b = {
-    x : 2
-};
+var root = <Node>;
 
-a.b = b;
-b.a = a;
+var ch = <Node>;
+ch.value = 1;
 
-# +-----+  +-----+
-# |  A  |  |  B  |
-# +-----+  +-----+
+root.addCh(ch);

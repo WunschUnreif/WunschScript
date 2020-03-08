@@ -56,35 +56,36 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
     }
 
     /// bind the parameters
+    std::map<std::string, GeneralDataNode> pour;
+
     for(size_t i = 0; i < params.size(); ++i) {
         auto currParam = params[i]->Eval(env);
         auto currName = funcStorage->paramNames[i];
 
-        funcStorage->paramScope.content[currName] = currParam;
+        pour[currName] = currParam;
     }
 
     /// Prepare the environment
     auto lastReturnSize = env.returnStack.size();
 
-    env.paramStack.push(funcStorage->paramScope);
     env.thisStack.push(funcStorage->thisDict);
 
-    /// execute
-    funcStorage->body->Execute(env);
-    
+    /// push a nil flag to the return stack, also as default return value
     GeneralDataNode result;
     result.type = GeneralDataNode::DataType::TypeNil;
     result.data = std::make_shared<DataNodeNil>();
 
-    /// function did return something
-    if(env.returnStack.size() == lastReturnSize + 1) {
-        result = env.returnStack.top(); 
-        env.returnStack.pop();
-    }
+    env.returnStack.push(result);
+
+    /// execute
+    funcStorage->body->Execute(env, &pour);
+
+    /// retrive the result
+    result = env.returnStack.top(); 
+    env.returnStack.pop();
 
     /// restore the environment
     env.thisStack.pop();
-    env.paramStack.pop();
 
     return result;
 }

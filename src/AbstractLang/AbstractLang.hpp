@@ -20,6 +20,7 @@
 #include "Expression/ExprFuncCall.hpp"
 #include "Expression/ExprMultDiv.hpp"
 #include "Expression/ExprDeepCopy.hpp"
+#include "Expression/ExprThis.hpp"
 
 #include "Statement/Statement.hpp"
 #include "Statement/StmtAssignment.hpp"

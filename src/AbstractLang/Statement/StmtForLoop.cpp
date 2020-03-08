@@ -12,7 +12,7 @@ bool StatementForLoop::InnerExecute(Environment & env) {
     if(iterableObj.type == GeneralDataNode::DataType::TypeList) {
         for(auto currGDN : std::dynamic_pointer_cast<DataNodeList>(iterableObj.data)->value) {
             /// bind the iterator
-            loopBody->lexScope->content[iteratorName] = currGDN;
+            loopBody->lexScope->contentStack.top()[iteratorName] = currGDN;
 
             /// execute the loop body
             auto permitContinue = loopBody->Execute(env);
@@ -36,7 +36,7 @@ bool StatementForLoop::InnerExecute(Environment & env) {
             keyStrGDN.data = keyStrNode;
 
             /// bind the iterator
-            loopBody->lexScope->content[iteratorName] = keyStrGDN;
+            loopBody->lexScope->contentStack.top()[iteratorName] = keyStrGDN;
 
             /// execute the loop body
             auto permitContinue = loopBody->Execute(env);
@@ -48,6 +48,6 @@ bool StatementForLoop::InnerExecute(Environment & env) {
     }
 
     /// if the expression is not list or dict, do as an var def in local scope
-    loopBody->lexScope->content[iteratorName] = iterableObj;
+    loopBody->lexScope->contentStack.top()[iteratorName] = iterableObj;
     return loopBody->Execute(env);
 }

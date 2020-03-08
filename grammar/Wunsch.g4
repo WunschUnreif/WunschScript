@@ -5,13 +5,13 @@ program
     ;
 
 stmt
-    : expr ';'
-    | varDef ';'
-    | assignment ';'
-    | condStmt
-    | whileStmt
-    | forStmt
-    | returnStmt ';'
+    : expr ';'        
+    | varDef ';'      
+    | assignment ';'  
+    | condStmt        
+    | whileStmt       
+    | forStmt         
+    | returnStmt ';' 
     ;
 
 expr
@@ -109,7 +109,8 @@ FLOAT : ('0'| (('1'..'9') ('0'..'9')*))
 BOOLEANLIT : 'true' | 'false';
 
 // String
-STRING : '"' ('\\"' | .)*? '"';
+STRING : '"' (ESC | ~["\\])* '"';
+ESC : '\\' [abnrtvf\\"0];
 
 // this
 THIS : 'this';

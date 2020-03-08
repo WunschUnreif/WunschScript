@@ -81,3 +81,38 @@ antlrcpp::Any syn::ParseTreeVisitor::visitFloatLiteral(WunschParser::FloatLitera
 
     return exprLit;
 }
+
+antlrcpp::Any syn::ParseTreeVisitor::visitBoolLiteral(WunschParser::BoolLiteralContext * ctx) {
+    /// allocate storage
+    auto boolNode = std::make_shared<DataNodeBool>();
+
+    /// parse the boolean
+    boolNode->value = ctx->BOOLEANLIT()->getText() == "true" ? true : false;
+
+    /// generate GDN for result
+    GeneralDataNode result;
+    result.type = GeneralDataNode::DataType::TypeBool;
+    result.data = boolNode;
+
+    /// should return an expression
+    auto exprLit = std::make_shared<ExpressionLiteral>();
+    exprLit->value = result;
+
+    return exprLit;
+}
+
+antlrcpp::Any syn::ParseTreeVisitor::visitNilLiteral(WunschParser::NilLiteralContext * ctx) {
+    /// allocate storage
+    auto nilNode = std::make_shared<DataNodeNil>();
+
+    /// generate GDN for result
+    GeneralDataNode result;
+    result.type = GeneralDataNode::DataType::TypeNil;
+    result.data = nilNode;
+
+    /// should return an expression
+    auto exprLit = std::make_shared<ExpressionLiteral>();
+    exprLit->value = result;
+
+    return exprLit;
+}

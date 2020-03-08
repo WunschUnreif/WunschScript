@@ -19,7 +19,7 @@ public:
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
     T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
     DEC_INT = 39, OCT_INT = 40, HEX_INT = 41, FLOAT = 42, BOOLEANLIT = 43, 
-    STRING = 44, THIS = 45, ID = 46, COMMENT = 47, WS = 48
+    STRING = 44, ESC = 45, THIS = 46, ID = 47, COMMENT = 48, WS = 49
   };
 
   WunschLexer(antlr4::CharStream *input);

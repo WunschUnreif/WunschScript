@@ -1,6 +1,7 @@
 #ifndef __WS_ASL_SCOPE_HPP__
 #define __WS_ASL_SCOPE_HPP__
 
+#include <iostream>
 #include <memory>
 #include <map>
 #include <vector>
@@ -13,7 +14,7 @@ namespace asl {
 
     struct Scope {
         std::weak_ptr<Scope> parent;
-        std::map<std::string, GeneralDataNode> content;
+        std::stack<std::map<std::string, GeneralDataNode>> contentStack;
         std::vector<std::shared_ptr<Scope>> children;
 
         /// whether the search can go to its parent node.
@@ -21,6 +22,18 @@ namespace asl {
         /// useful when importing another script in the 
         /// current script to preventing unexpected scope overlap.
         bool enableTraceup = true;
+
+        Scope() {
+            push();
+        }
+
+        void push() {
+            contentStack.push(std::map<std::string, GeneralDataNode>());
+        }
+
+        void pop() {
+            contentStack.pop();
+        }
     };
 
 }

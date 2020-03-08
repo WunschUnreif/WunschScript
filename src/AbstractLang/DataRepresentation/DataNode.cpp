@@ -89,7 +89,7 @@ std::shared_ptr<DataNodeBase> DataNodeFloat::DeepCopy() {
 /* ---------------- Implementation for type str ---------------- */
 
 std::string DataNodeStr::ToString() {
-    return value;
+    return "\"" + value + "\"";
 }
 
 bool DataNodeStr::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
@@ -110,11 +110,13 @@ std::shared_ptr<DataNodeBase> DataNodeStr::DeepCopy() {
 /* ---------------- Implementation for type list ---------------- */
 
 std::string DataNodeList::ToString() {
-    std::string result = "[";
+    std::string result = "[ ";
+    bool first = true;
     for(auto gdn : value) {
-        result += gdn.ToString() + ", ";
+        result += (first ? "" : ", ") + gdn.ToString();
+        first = false;
     }
-    result += "]";
+    result += " ]";
 
     return result;
 }
@@ -157,11 +159,13 @@ std::shared_ptr<DataNodeBase> DataNodeList::DeepCopy() {
 /* ---------------- Implementation for type dict ---------------- */
 
 std::string DataNodeDict::ToString() {
-    std::string result = "{";
+    std::string result = "{ ";
+    bool first = true;
     for(auto kv : value) {
-        result += "\"" + kv.first + "\" : " + kv.second.ToString() + ", ";
+        result += std::string(first ? "" : ", ") + "\"" + kv.first + "\" : " + kv.second.ToString();
+        first = false;
     }
-    result += "}";
+    result += " }";
 
     return result;
 }
@@ -193,7 +197,6 @@ std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
         /// ensure there is no loop (self containing) inside the dict
         assert(kv.second.data.get() != this);
 
-        result->generator[kv.first] = generator[kv.first];
         result->value[kv.first] = kv.second.DeepCopy();
     }
 
@@ -207,8 +210,14 @@ std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
 std::string DataNodeFunc::ToString() {
     std::string result = "(";
 
+    bool first = true;
     for(auto paramName : paramNames) {
-        result += paramName + ", ";
+        result += (first ? "" : ", ") + paramName;
+        first = false;
+    }
+
+    if(withArrTail) {
+        result += (first ? "[" : ", [") + arrName + "]";
     }
 
     result += ") => func<" + std::to_string(reinterpret_cast<uint64_t>(this->body->body[0].get())) + ">";

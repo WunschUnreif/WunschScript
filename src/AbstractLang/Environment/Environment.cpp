@@ -5,9 +5,11 @@
 ws::asl::GeneralDataNode ws::asl::Environment::GetDataNode(const std::string & name) {
     /// 1. check the parameter scope
     if(!paramStack.empty()) {
-        ws::asl::Scope scope = paramStack.top();
-        if(scope.content.find(name) != scope.content.end()) {
-            return scope.content[name];
+        ws::asl::Scope & scope = paramStack.top();
+
+        auto contentIt = scope.contentStack.top().find(name);
+        if(contentIt != scope.contentStack.top().end()) {
+            return contentIt->second;
         }
     }
 
@@ -15,8 +17,9 @@ ws::asl::GeneralDataNode ws::asl::Environment::GetDataNode(const std::string & n
     auto currentScopeNode = currentScope;
     while(currentScopeNode != nullptr) {
         /// search in the current scope
-        if(currentScopeNode->content.find(name) != currentScope->content.end()) {
-            return currentScopeNode->content[name];
+        auto contentIt = currentScopeNode->contentStack.top().find(name);
+        if(contentIt != currentScopeNode->contentStack.top().end()) {
+            return contentIt->second;
         }
 
         /// trace up to parent scopes
@@ -34,8 +37,10 @@ bool ws::asl::Environment::SetDataNode(const std::string & name, ws::asl::Genera
     /// 1. check the parameter scope
     if(!paramStack.empty()) {
         ws::asl::Scope & scope = paramStack.top();
-        if(scope.content.find(name) != scope.content.end()) {
-            scope.content[name] = target;
+
+        auto contentIt = scope.contentStack.top().find(name);
+        if(contentIt != scope.contentStack.top().end()) {
+            contentIt->second = target;
             return true;
         }
     }
@@ -44,8 +49,9 @@ bool ws::asl::Environment::SetDataNode(const std::string & name, ws::asl::Genera
     auto currentScopeNode = currentScope;
     while(currentScopeNode != nullptr) {
         /// search in the current scope
-        if(currentScopeNode->content.find(name) != currentScope->content.end()) {
-            currentScopeNode->content[name] = target;
+        auto contentIt = currentScopeNode->contentStack.top().find(name);
+        if(contentIt != currentScopeNode->contentStack.top().end()) {
+            contentIt->second = target;
             return true;
         }
 
@@ -87,4 +93,18 @@ std::string ws::asl::Environment::GetInfoStackString() {
     }
 
     return result;
+}
+
+ws::asl::GeneralDataNode ws::asl::Environment::GetThisDict() {
+    /// test if `this` is available in the current environment
+    if(thisStack.empty() || thisStack.top().expired()) {
+        return GeneralDataNode();
+    }
+
+    /// assembly a GDN for `this`
+    GeneralDataNode thisGDN;
+    thisGDN.type = GeneralDataNode::DataType::TypeDict;
+    thisGDN.data = thisStack.top().lock();
+
+    return thisGDN;
 }

@@ -35,6 +35,8 @@ namespace asl {
         GeneralDataNode GetDataNode(const std::string & name);
         bool SetDataNode(const std::string & name, GeneralDataNode target);
 
+        GeneralDataNode GetThisDict();
+
         void ReportError(const std::runtime_error & error);
 
     protected:

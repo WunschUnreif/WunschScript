@@ -53,7 +53,7 @@ namespace asl {
         std::shared_ptr<Scope> lexScope;
         std::vector<std::shared_ptr<StatementBase>> body;
 
-        bool Execute(Environment & env);
+        bool Execute(Environment & env, std::map<std::string, GeneralDataNode> * pour = nullptr);
     };
 
 } // namespace al

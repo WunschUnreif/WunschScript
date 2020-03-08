@@ -15,7 +15,7 @@ bool StatementVariableDefine::InnerExecute(Environment & env) {
     auto value = expr->Eval(env);
 
     /// update the binding in the current scope
-    env.currentScope->content[id] = value;
+    env.currentScope->contentStack.top()[id] = value;
 
     return true;
 }

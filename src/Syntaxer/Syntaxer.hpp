@@ -1,5 +1,10 @@
 #pragma once
 
+#include <stack>
+#include <memory>
+
+#include "AbstractLang.hpp"
+
 #include "WunschVisitor.h"
 
 namespace ws {
@@ -12,47 +17,47 @@ namespace syn {
 
         antlrcpp::Any visitStmt(WunschParser::StmtContext *context) override { return nullptr; }   /* [ ] */
 
-        antlrcpp::Any visitThisExpr(WunschParser::ThisExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitThisExpr(WunschParser::ThisExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitDeepCopyExpr(WunschParser::DeepCopyExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitDeepCopyExpr(WunschParser::DeepCopyExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitBinNotExpr(WunschParser::BinNotExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitBinNotExpr(WunschParser::BinNotExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitLogiAndExpr(WunschParser::LogiAndExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitLogiAndExpr(WunschParser::LogiAndExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitMultdivExpr(WunschParser::MultdivExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitMultdivExpr(WunschParser::MultdivExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitBracketExpr(WunschParser::BracketExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitBracketExpr(WunschParser::BracketExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitAddMinExpr(WunschParser::AddMinExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitAddMinExpr(WunschParser::AddMinExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitLogiNotExpr(WunschParser::LogiNotExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitLogiNotExpr(WunschParser::LogiNotExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitBracoAccessExpr(WunschParser::BracoAccessExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitBracoAccessExpr(WunschParser::BracoAccessExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitBinOrExpr(WunschParser::BinOrExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitBinOrExpr(WunschParser::BinOrExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitBinXorExpr(WunschParser::BinXorExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitBinXorExpr(WunschParser::BinXorExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitFuncallExpr(WunschParser::FuncallExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitFuncallExpr(WunschParser::FuncallExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitFunDefLiteral(WunschParser::FunDefLiteralContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitFunDefLiteral(WunschParser::FunDefLiteralContext *context) override; /* [x] */
 
-        antlrcpp::Any visitLiteralExpr(WunschParser::LiteralExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitLiteralExpr(WunschParser::LiteralExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitLogiOrExpr(WunschParser::LogiOrExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitLogiOrExpr(WunschParser::LogiOrExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitBinAndExpr(WunschParser::BinAndExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitBinAndExpr(WunschParser::BinAndExprContext *context) override;  /* [x] */
 
-        antlrcpp::Any visitMemberAccessExpr(WunschParser::MemberAccessExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitMemberAccessExpr(WunschParser::MemberAccessExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitUnaryPMExpr(WunschParser::UnaryPMExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitUnaryPMExpr(WunschParser::UnaryPMExprContext *context) override; /* [x] */
 
-        antlrcpp::Any visitIdExpr(WunschParser::IdExprContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitIdExpr(WunschParser::IdExprContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitCompareExpr(WunschParser::CompareExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitCompareExpr(WunschParser::CompareExprContext *context); /* [x] */
 
-        antlrcpp::Any visitEqualExpr(WunschParser::EqualExprContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitEqualExpr(WunschParser::EqualExprContext *context); /* [x] */
 
         antlrcpp::Any visitLiteral(WunschParser::LiteralContext *context) override; /* [x] */
 
@@ -64,31 +69,31 @@ namespace syn {
 
         antlrcpp::Any visitFloatLiteral(WunschParser::FloatLiteralContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitBoolLiteral(WunschParser::BoolLiteralContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitBoolLiteral(WunschParser::BoolLiteralContext *context) override; /* [x] */
 
-        antlrcpp::Any visitStringLiteral(WunschParser::StringLiteralContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitStringLiteral(WunschParser::StringLiteralContext *context) override; /* [x] */
 
-        antlrcpp::Any visitListLiteral(WunschParser::ListLiteralContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitListLiteral(WunschParser::ListLiteralContext *context) override; /* [x] */
 
-        antlrcpp::Any visitDictLiteral(WunschParser::DictLiteralContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitDictLiteral(WunschParser::DictLiteralContext *context) override; /* [x] */
 
-        antlrcpp::Any visitNilLiteral(WunschParser::NilLiteralContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitNilLiteral(WunschParser::NilLiteralContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitImmediateVarDef(WunschParser::ImmediateVarDefContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitImmediateVarDef(WunschParser::ImmediateVarDefContext *context) override; /* [x] */
 
-        antlrcpp::Any visitPlainVarDef(WunschParser::PlainVarDefContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitPlainVarDef(WunschParser::PlainVarDefContext *context) override; /* [x] */
 
         antlrcpp::Any visitExprAssign(WunschParser::ExprAssignContext *context) override { return nullptr; }   /* [ ] */
 
-        antlrcpp::Any visitFixedFunc(WunschParser::FixedFuncContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitFixedFunc(WunschParser::FixedFuncContext *context) override; /* [x] */
 
-        antlrcpp::Any visitArrTailFunc(WunschParser::ArrTailFuncContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitArrTailFunc(WunschParser::ArrTailFuncContext *context) override; /* [x] */
 
-        antlrcpp::Any visitIdList(WunschParser::IdListContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitIdList(WunschParser::IdListContext *context) override;   /* [x] */
 
         antlrcpp::Any visitStmtBlock(WunschParser::StmtBlockContext *context) override { return nullptr; } /* [ ] */
 
-        antlrcpp::Any visitExprList(WunschParser::ExprListContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitExprList(WunschParser::ExprListContext *context) override;   /* [x] */
 
         antlrcpp::Any visitCondStmt(WunschParser::CondStmtContext *context) override { return nullptr; }   /* [ ] */
 
@@ -97,6 +102,13 @@ namespace syn {
         antlrcpp::Any visitForStmt(WunschParser::ForStmtContext *context) override { return nullptr; } /* [ ] */
 
         antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) override { return nullptr; }   /* [ ] */
+
+    protected:
+        std::stack<std::shared_ptr<ws::asl::Scope>> lexScopeStack;
+
+        std::string filename;
+
+        void FillStmtInfo(std::shared_ptr<ws::asl::StatementBase> stmt, antlr4::ParserRuleContext * ctx);
 
     };
 
