@@ -36,23 +36,25 @@ print(dict1);
 var fibo = (n) => {
     if n == 1 || n == 2 {
         return 1;
-    } 
-    var a = fibo(n - 1);
-    var b = fibo(n - 2);
-    return a + b;
+    } else {
+        var a = fibo(n - 1);
+        var b = fibo(n - 2);
+        return a + b;
+    }
 };
 
-for i in [1, 2, 3, 4, 5, 6, 7, 8] {
+var range = (start, end, step) => {
+    var result = [];
+    var curr = start;
+    while curr < end {
+        result = result + curr;
+        curr = curr + step;
+    }
+    return result;
+}
+
+for i in range(1, 11, 1) {
     print(fibo(i));
 }
 
-var sum = (n) => {
-    var s = 0;
-    while n > 0 {
-        s = s + n;
-        n = n - 1;
-    }
-    return <s>;
-};
-
-print(sum(1000000));
+print(range(0, 10, 2));

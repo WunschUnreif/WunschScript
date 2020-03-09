@@ -103,10 +103,11 @@ namespace syn {
 
         antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) override;   /* [x] */
 
-    protected:
-        std::stack<std::shared_ptr<ws::asl::Scope>> lexScopeStack;
 
         std::string filename;
+
+    protected:
+        std::stack<std::shared_ptr<ws::asl::Scope>> lexScopeStack;
 
         void FillStmtInfo(std::shared_ptr<ws::asl::StatementBase> stmt, antlr4::ParserRuleContext * ctx);
 

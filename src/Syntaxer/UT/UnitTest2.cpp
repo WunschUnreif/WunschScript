@@ -1,7 +1,7 @@
 /**
  * @file UnitTest1.cpp
  * @author WunschUnreif (wunschunreif@sjtu.edu.cn)
- * @brief Test on literal parsing
+ * @brief Test on program parsing
  * @version 0.1
  * @date 2020-03-07
  * 

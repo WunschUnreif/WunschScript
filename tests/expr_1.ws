@@ -16,4 +16,6 @@ var foo = (dict) => {
 
 var rs = foo(dict1);# stmt 4
 
+print(dict1);
+
 # print results: {rs, dict1}

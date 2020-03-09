@@ -15,3 +15,5 @@ var rs1 = factorial(0);
 var rs2 = factorial(1);
 
 var rs3 = factorial(10);
+
+print(rs3);
