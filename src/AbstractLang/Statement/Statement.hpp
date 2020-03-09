@@ -15,8 +15,8 @@
 #include <string>
 #include <memory>
 
-#include "Environment.hpp"
-#include "Scope.hpp"
+#include "Environment/Environment.hpp"
+#include "Environment/Scope.hpp"
 
 namespace ws {
 

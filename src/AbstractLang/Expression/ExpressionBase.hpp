@@ -3,8 +3,8 @@
 
 #include <exception>
 
-#include "GeneralDataNode.hpp"
-#include "Environment.hpp"
+#include "DataRepresentation/GeneralDataNode.hpp"
+#include "Environment/Environment.hpp"
 
 namespace ws {
 

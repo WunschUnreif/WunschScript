@@ -14,7 +14,7 @@
 
 #include <memory>
 
-#include "DataNodeBase.hpp"
+#include "DataRepresentation/DataNodeBase.hpp"
 
 namespace ws {
 

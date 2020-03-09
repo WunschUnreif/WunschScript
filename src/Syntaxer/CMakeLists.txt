@@ -46,4 +46,27 @@ if(BUILD_UT)
         libantlr4-runtime.a
     )
 
+    # ---------------- test 2 ----------------
+    add_executable(WSSyntaxerTest2 UT/UnitTest2.cpp)
+
+    target_include_directories(WSSyntaxerTest2 PUBLIC
+        UT/
+
+        ./
+        ../Parser/
+
+        ../../third/antlr4-cpp-runtime-4/runtime/src
+    )
+
+    target_link_directories(WSSyntaxerTest2 PUBLIC 
+        ../../third/antlr4-cpp-runtime-4/dist
+    )
+
+    target_link_libraries(WSSyntaxerTest2 PUBLIC 
+        WSParser
+        WSAbstractLang
+        WSSyntaxer
+        libantlr4-runtime.a
+    )
+
 endif()

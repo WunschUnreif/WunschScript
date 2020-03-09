@@ -15,7 +15,7 @@ std::string GeneralDataNode::ToString() {
     case TypeBool:          result = "bool(" +   data->ToString() + ')'; break;
     case TypeInt:           result = "int(" +    data->ToString() + ')'; break;
     case TypeFloat:         result = "float(" +  data->ToString() + ')'; break;
-    case TypeString:        result = "str(" +    data->ToString() + ')'; break;
+    case TypeString:        result = "str(\""+   data->ToString()+'\"'+ ')'; break;
     case TypeList:          result = "list(" +   data->ToString() + ')'; break;
     case TypeDict:          result = "dict(" +   data->ToString() + ')'; break;
     case TypeFunc:          result = "func(" +   data->ToString() + ')'; break;

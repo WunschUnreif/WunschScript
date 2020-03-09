@@ -37,7 +37,7 @@ int main(int argc, char ** argv) {
 
         WunschParser parser(&tokens);
 
-        auto literal = parser.expr();
+        auto literal = parser.literal();
 
         ParseTreeVisitor visitor;
         auto result = visitor.visit(literal);

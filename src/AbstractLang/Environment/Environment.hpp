@@ -4,9 +4,9 @@
 #include <stack>
 #include <exception>
 
-#include "Scope.hpp"
-#include "DataNode.hpp"
-#include "GeneralDataNode.hpp"
+#include "Environment/Scope.hpp"
+#include "DataRepresentation/DataNode.hpp"
+#include "DataRepresentation/GeneralDataNode.hpp"
 
 namespace ws {
 

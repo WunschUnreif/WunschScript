@@ -6,7 +6,7 @@
 #include <map>
 #include <vector>
 
-#include "GeneralDataNode.hpp"
+#include "DataRepresentation/GeneralDataNode.hpp"
 
 namespace ws {
 

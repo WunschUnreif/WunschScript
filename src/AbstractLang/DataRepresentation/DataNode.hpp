@@ -9,8 +9,8 @@
 
 #include <cstdint>
 
-#include "DataNodeBase.hpp"
-#include "Statement.hpp"
+#include "DataRepresentation/DataNodeBase.hpp"
+#include "Statement/Statement.hpp"
 
 namespace ws {
 

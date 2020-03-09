@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-#include "ExpressionBase.hpp"
+#include "Expression/ExpressionBase.hpp"
 
 namespace ws {
 

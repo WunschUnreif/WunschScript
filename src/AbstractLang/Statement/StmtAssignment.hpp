@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "ExpressionBase.hpp"
-#include "Statement.hpp"
+#include "Expression/ExpressionBase.hpp"
+#include "Statement/Statement.hpp"
 
 namespace ws {
 

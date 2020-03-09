@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Program/Program.hpp"
+
 #include "Environment/Environment.hpp"
 #include "Environment/Scope.hpp"
 

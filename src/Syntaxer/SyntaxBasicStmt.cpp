@@ -15,7 +15,7 @@ antlrcpp::Any syn::ParseTreeVisitor::visitImmediateVarDef(WunschParser::Immediat
     stmt->expr = visit(ctx->expr()).as<std::shared_ptr<ExpressionBase>>();
 
     FillStmtInfo(stmt, ctx);
-
+    
     return std::dynamic_pointer_cast<StatementBase>(stmt);
 }
 
@@ -33,6 +33,17 @@ antlrcpp::Any syn::ParseTreeVisitor::visitPlainVarDef(WunschParser::PlainVarDefC
     stmt->id = ctx->ID()->getText();
 
     stmt->expr = GenNilLiteralExpr();
+
+    FillStmtInfo(stmt, ctx);
+
+    return std::dynamic_pointer_cast<StatementBase>(stmt);
+}
+
+antlrcpp::Any syn::ParseTreeVisitor::visitExprAssign(WunschParser::ExprAssignContext * ctx) {
+    auto stmt = std::make_shared<StatementAssignment>();
+
+    stmt->lhs = visit(ctx->expr(0)).as<std::shared_ptr<ExpressionBase>>();
+    stmt->rhs = visit(ctx->expr(1)).as<std::shared_ptr<ExpressionBase>>();
 
     FillStmtInfo(stmt, ctx);
 

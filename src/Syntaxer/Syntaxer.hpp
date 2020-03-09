@@ -13,9 +13,9 @@ namespace syn {
 
     struct ParseTreeVisitor final : public WunschVisitor {
 
-        antlrcpp::Any visitProgram(WunschParser::ProgramContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitProgram(WunschParser::ProgramContext *context) override; /* [x] */
 
-        antlrcpp::Any visitStmt(WunschParser::StmtContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitStmt(WunschParser::StmtContext *context) override;   /* [x] */
 
         antlrcpp::Any visitThisExpr(WunschParser::ThisExprContext *context) override;   /* [x] */
 
@@ -83,7 +83,7 @@ namespace syn {
 
         antlrcpp::Any visitPlainVarDef(WunschParser::PlainVarDefContext *context) override; /* [x] */
 
-        antlrcpp::Any visitExprAssign(WunschParser::ExprAssignContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitExprAssign(WunschParser::ExprAssignContext *context) override;   /* [x] */
 
         antlrcpp::Any visitFixedFunc(WunschParser::FixedFuncContext *context) override; /* [x] */
 
@@ -91,17 +91,17 @@ namespace syn {
 
         antlrcpp::Any visitIdList(WunschParser::IdListContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitStmtBlock(WunschParser::StmtBlockContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitStmtBlock(WunschParser::StmtBlockContext *context) override; /* [x] */
 
         antlrcpp::Any visitExprList(WunschParser::ExprListContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitCondStmt(WunschParser::CondStmtContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitCondStmt(WunschParser::CondStmtContext *context) override;   /* [x] */
 
-        antlrcpp::Any visitWhileStmt(WunschParser::WhileStmtContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitWhileStmt(WunschParser::WhileStmtContext *context) override; /* [x] */
 
-        antlrcpp::Any visitForStmt(WunschParser::ForStmtContext *context) override { return nullptr; } /* [ ] */
+        antlrcpp::Any visitForStmt(WunschParser::ForStmtContext *context) override; /* [x] */
 
-        antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) override { return nullptr; }   /* [ ] */
+        antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) override;   /* [x] */
 
     protected:
         std::stack<std::shared_ptr<ws::asl::Scope>> lexScopeStack;

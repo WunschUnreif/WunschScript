@@ -24,6 +24,11 @@ GeneralDataNode ExpressionMemberAccess::Eval(Environment & env, bool asLval) {
             return GeneralDataNode();
         }
 
+        /// bind `this` to function member
+        if(it->second.type == GeneralDataNode::DataType::TypeFunc) {
+            std::dynamic_pointer_cast<DataNodeFunc>(it->second.data)->thisDict = dictNode;
+        }
+
         return it->second;
     } else {
         ///< as lval, do not care whether the key exists in the dict, if not, 

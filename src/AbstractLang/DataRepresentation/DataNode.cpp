@@ -89,7 +89,7 @@ std::shared_ptr<DataNodeBase> DataNodeFloat::DeepCopy() {
 /* ---------------- Implementation for type str ---------------- */
 
 std::string DataNodeStr::ToString() {
-    return "\"" + value + "\"";
+    return value;
 }
 
 bool DataNodeStr::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {

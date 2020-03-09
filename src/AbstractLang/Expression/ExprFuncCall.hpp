@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 
-#include "ExpressionBase.hpp"
+#include "Expression/ExpressionBase.hpp"
 
 namespace ws {
 
