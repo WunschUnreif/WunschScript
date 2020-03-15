@@ -4,6 +4,7 @@
 #include "Syntaxer.hpp"
 
 #include "TreeDiagram.hpp"
+#include "LoadSystemFunctions.hpp"
 
 using namespace ws::asl;
 using namespace ws::syn;
@@ -65,8 +66,8 @@ TreeDiagram::TreeDiagram(const std::string & code, const std::string & filename)
     /// if error:
     auto errornum = parser.getNumberOfSyntaxErrors();
 
-    std::cout << GetColor(YELLOW) << "Syntax Error: " << errornum << GetColor(DEFAULT) << std::endl;
     if(errornum > 0) {
+        std::cout << GetColor(YELLOW) << "Syntax Error: " << errornum << GetColor(DEFAULT) << std::endl;
         throw std::runtime_error("Syntax errors.");
     }
 
@@ -101,8 +102,8 @@ GeneralDataNode TreeDiagram::ExecuteAndExtract() {
 }
 
 
-__attribute__((weak)) 
-void LoadSystemFunctions(std::shared_ptr<ws::asl::Scope> rootScope) {
+// __attribute__((weak)) 
+// void LoadSystemFunctions(std::shared_ptr<ws::asl::Scope> rootScope) {
 
-}
+// }
 

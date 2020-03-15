@@ -9,7 +9,7 @@ var Node = {
             # weak reference
             ch.parent = @this;
 
-            this.children = this.children + ch
+            this.children = this.children + ch;
         }
     },
 
@@ -20,7 +20,7 @@ var Node = {
 
     getParent : () => {
         # owned deref
-        return parent!;
+        return parent;
     }
 };
 

@@ -22,4 +22,4 @@ namespace td {
 
 }
 
-void LoadSystemFunctions(std::shared_ptr<ws::asl::Scope> rootScope);
+// void LoadSystemFunctions(std::shared_ptr<ws::asl::Scope> rootScope);

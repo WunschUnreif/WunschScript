@@ -9,6 +9,7 @@ target_include_directories(WSTreeDiagram PUBLIC
     ../Syntaxer/
     ../AbstractLang/
     ../Parser/
+    ../Support/
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )

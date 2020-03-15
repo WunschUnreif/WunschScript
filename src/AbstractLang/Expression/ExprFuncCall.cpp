@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include "ExprFuncCall.hpp"
+#include "GeneralDataNodeFactory.hpp"
 
 using namespace ws::asl;
 
@@ -47,41 +48,68 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
     /// get the function
     auto funcStorage = std::dynamic_pointer_cast<DataNodeFunc>(func.data);
 
-    /// assure the parameters number
-    if(funcStorage->paramNames.size() != params.size()) {
-        env.ReportError(std::runtime_error("Argument number wrong, expecting " + 
-                                            std::to_string(funcStorage->paramNames.size()) + 
-                                            ", got " + std::to_string(params.size()) + "."));
-        return GeneralDataNode();
+    if(funcStorage->withArrTail) {
+        /// handle params with array tail
+        /// assure the parameters number
+        if(funcStorage->paramNames.size() > params.size()) {
+            env.ReportError(std::runtime_error("Argument number wrong, expecting at least " + 
+                                                std::to_string(funcStorage->paramNames.size()) + 
+                                                ", got " + std::to_string(params.size()) + "."));
+            return GeneralDataNode();
+        }
+    } else {
+        /// handle fixed params
+        /// assure the parameters number
+        if(funcStorage->paramNames.size() != params.size()) {
+            env.ReportError(std::runtime_error("Argument number wrong, expecting " + 
+                                                std::to_string(funcStorage->paramNames.size()) + 
+                                                ", got " + std::to_string(params.size()) + "."));
+            return GeneralDataNode();
+        }
     }
 
     /// bind the parameters
     std::map<std::string, GeneralDataNode> pour;
 
-    for(size_t i = 0; i < params.size(); ++i) {
+    /// fixed param part
+    for(size_t i = 0; i < funcStorage->paramNames.size(); ++i) {
         auto currParam = params[i]->Eval(env);
         auto currName = funcStorage->paramNames[i];
 
         pour[currName] = currParam;
     }
 
-    /// Prepare the environment
-    auto lastReturnSize = env.returnStack.size();
+    /// array param part
+    if(funcStorage->withArrTail) {
+        /// generate a list for extra params
+        GeneralDataNode listGDN;
+        listGDN.type = GeneralDataNode::DataType::TypeList;
+        listGDN.data = std::make_shared<DataNodeList>();
+        auto listNode = std::dynamic_pointer_cast<DataNodeList>(listGDN.data);
 
+        /// calculate the param values
+        for(size_t i = funcStorage->paramNames.size(); i < params.size(); ++i) {
+            auto currParam = params[i]->Eval(env);
+            listNode->value.push_back(currParam);
+        }
+
+        /// bind the array
+        pour[funcStorage->arrName] = listGDN;
+    }
+
+    /// Prepare the environment
     env.thisStack.push(funcStorage->thisDict);
 
     /// push a nil flag to the return stack, also as default return value
-    GeneralDataNode result;
-    result.type = GeneralDataNode::DataType::TypeNil;
-    result.data = std::make_shared<DataNodeNil>();
+    auto nilFlag = GeneralDataNodeFactory::MakeNilGDN();
 
-    env.returnStack.push(result);
+    env.returnStack.push(nilFlag);
 
     /// execute
     funcStorage->body->Execute(env, &pour);
 
     /// retrive the result
-    result = env.returnStack.top(); 
+    auto result = env.returnStack.top(); 
     env.returnStack.pop();
 
     /// restore the environment

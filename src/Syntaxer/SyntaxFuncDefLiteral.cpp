@@ -41,8 +41,10 @@ antlrcpp::Any syn::ParseTreeVisitor::visitArrTailFunc(WunschParser::ArrTailFuncC
     auto funcNode = std::make_shared<DataNodeFunc>();
     
     /// parse the fixed param names 
-    for(auto idContext : ctx->idList()->ID()) {
-        funcNode->paramNames.push_back(idContext->getText());
+    if(ctx->idList()) {
+        for(auto idContext : ctx->idList()->ID()) {
+            funcNode->paramNames.push_back(idContext->getText());
+        }
     }
 
     /// parse the arr name

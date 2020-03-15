@@ -8,6 +8,7 @@
 #include "DataRepresentation/DataNode.hpp"
 #include "DataRepresentation/DataNodeBase.hpp"
 #include "DataRepresentation/GeneralDataNode.hpp"
+#include "DataRepresentation/GeneralDataNodeFactory.hpp"
 
 #include "Expression/ExpressionBase.hpp"
 #include "Expression/ExprBin.hpp"
