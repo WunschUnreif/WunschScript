@@ -43,6 +43,9 @@ public:
   virtual void enterAddMinExpr(WunschParser::AddMinExprContext * /*ctx*/) override { }
   virtual void exitAddMinExpr(WunschParser::AddMinExprContext * /*ctx*/) override { }
 
+  virtual void enterDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext * /*ctx*/) override { }
+  virtual void exitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext * /*ctx*/) override { }
+
   virtual void enterLogiNotExpr(WunschParser::LogiNotExprContext * /*ctx*/) override { }
   virtual void exitLogiNotExpr(WunschParser::LogiNotExprContext * /*ctx*/) override { }
 

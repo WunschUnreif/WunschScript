@@ -41,6 +41,9 @@ public:
   virtual void enterAddMinExpr(WunschParser::AddMinExprContext *ctx) = 0;
   virtual void exitAddMinExpr(WunschParser::AddMinExprContext *ctx) = 0;
 
+  virtual void enterDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext *ctx) = 0;
+  virtual void exitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext *ctx) = 0;
+
   virtual void enterLogiNotExpr(WunschParser::LogiNotExprContext *ctx) = 0;
   virtual void exitLogiNotExpr(WunschParser::LogiNotExprContext *ctx) = 0;
 

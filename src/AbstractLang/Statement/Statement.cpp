@@ -5,7 +5,11 @@ using namespace ws::asl;
 
 bool StatementBase::Execute(Environment & env) {
     env.infoStack.push(info);
+    env.aliveDictStack.emplace();
+
     auto permitContinue = this->InnerExecute(env);
+
+    env.aliveDictStack.pop();
     env.infoStack.pop();
 
     return permitContinue;

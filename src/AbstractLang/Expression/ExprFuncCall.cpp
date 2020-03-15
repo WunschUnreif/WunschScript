@@ -97,6 +97,11 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
         pour[funcStorage->arrName] = listGDN;
     }
 
+    /// bind captures
+    for(size_t captureNum = 0; captureNum < funcStorage->captureIDs.size(); ++captureNum) {
+        pour[funcStorage->captureIDs[captureNum]] = funcStorage->captureVals[captureNum];
+    }
+
     /// Prepare the environment
     env.thisStack.push(funcStorage->thisDict);
 

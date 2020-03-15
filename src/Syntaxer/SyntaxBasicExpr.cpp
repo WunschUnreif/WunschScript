@@ -34,6 +34,19 @@ antlrcpp::Any syn::ParseTreeVisitor::visitDeepCopyExpr(WunschParser::DeepCopyExp
     return std::dynamic_pointer_cast<ExpressionBase>(deepcopyExpr);
 }
 
+antlrcpp::Any syn::ParseTreeVisitor::visitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext * ctx) {
+    auto deepcopyExpr = std::make_shared<ExpressionDeepCopyModify>();
+
+    deepcopyExpr->ref = visit(ctx->expr()[0]).as<std::shared_ptr<ExpressionBase>>();
+
+    for(size_t i = 0; i < ctx->ID().size(); ++i) {
+        deepcopyExpr->keyToMod.push_back(ctx->ID()[i]->getText());
+        deepcopyExpr->valToMod.push_back(visit(ctx->expr()[i + 1]).as<std::shared_ptr<ExpressionBase>>());
+    }
+
+    return std::dynamic_pointer_cast<ExpressionBase>(deepcopyExpr);
+}
+
 antlrcpp::Any syn::ParseTreeVisitor::visitMemberAccessExpr(WunschParser::MemberAccessExprContext * ctx) {
     auto membAccExpr = std::make_shared<ExpressionMemberAccess>();
 

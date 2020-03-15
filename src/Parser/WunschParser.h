@@ -194,6 +194,20 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  DeepCopyModifyExprContext : public ExprContext {
+  public:
+    DeepCopyModifyExprContext(ExprContext *ctx);
+
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> ID();
+    antlr4::tree::TerminalNode* ID(size_t i);
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  LogiNotExprContext : public ExprContext {
   public:
     LogiNotExprContext(ExprContext *ctx);
@@ -607,9 +621,12 @@ public:
   public:
     ArrTailFuncContext(FuncDefContext *ctx);
 
+    WunschParser::IdListContext *param = nullptr;
+    WunschParser::IdListContext *cap = nullptr;
     antlr4::tree::TerminalNode *ID();
     StmtBlockContext *stmtBlock();
-    IdListContext *idList();
+    std::vector<IdListContext *> idList();
+    IdListContext* idList(size_t i);
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -620,7 +637,9 @@ public:
   public:
     FixedFuncContext(FuncDefContext *ctx);
 
-    IdListContext *idList();
+    WunschParser::IdListContext *cap = nullptr;
+    std::vector<IdListContext *> idList();
+    IdListContext* idList(size_t i);
     StmtBlockContext *stmtBlock();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

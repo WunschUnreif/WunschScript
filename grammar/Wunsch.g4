@@ -21,6 +21,7 @@ expr
     | ID                                #idExpr
     | '(' expr ')'                      #bracketExpr
     | '<' expr '>'                      #deepCopyExpr
+    | '<' expr (ID '=' expr)+ '>'       #deepCopyModifyExpr
     | expr '.' ID                       #memberAccessExpr
     | expr '[' expr ']'                 #bracoAccessExpr
     | expr '(' exprList ')'             #funcallExpr
@@ -70,8 +71,13 @@ assignment
     ;
 
 /* Function define */
-funcDef : '(' idList ')' '=>' stmtBlock                     #fixedFunc
-        | '(' (idList ',')? '[' ID ']' ')' '=>' stmtBlock   #arrTailFunc
+funcDef : '(' idList ')' 
+            ('[' cap=idList ']')? 
+            '=>' stmtBlock                      #fixedFunc
+
+        | '('  (param=idList ',')? '[' ID ']'  ')' 
+            ('[' cap=idList ']')?
+             '=>' stmtBlock                     #arrTailFunc
         ;
 
 idList

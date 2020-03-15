@@ -21,6 +21,17 @@ namespace asl {
 
     };
 
+    struct ExpressionDeepCopyModify final : public ExpressionBase {
+
+        std::shared_ptr<ExpressionBase> ref;
+
+        std::vector<std::string> keyToMod;
+        std::vector<std::shared_ptr<ExpressionBase>> valToMod;
+
+        GeneralDataNode Eval(Environment & env, bool asLval = false) override;
+
+    };
+
 }
 
 }

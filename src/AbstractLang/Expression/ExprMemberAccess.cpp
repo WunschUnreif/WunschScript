@@ -24,13 +24,15 @@ GeneralDataNode ExpressionMemberAccess::Eval(Environment & env, bool asLval) {
             return GeneralDataNode();
         }
 
-        /// bind `this` to function member
+        /// bind `this` to function member and keep the current dict alive
         if(it->second.type == GeneralDataNode::DataType::TypeFunc) {
             std::dynamic_pointer_cast<DataNodeFunc>(it->second.data)->thisDict = dictNode;
+            env.aliveDictStack.top().push_back(dictNode);
         }
 
         return it->second;
     } else {
+        /// [DEPRECATED] branch shifted into function `SetValue`
         ///< as lval, do not care whether the key exists in the dict, if not, 
         ///< an empty GDN will be created for assignment.
         auto dictNode = std::dynamic_pointer_cast<DataNodeDict>(lhsResult.data);
@@ -91,9 +93,10 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
                 return GeneralDataNode();
             }
 
-            /// bind `this` to function member
+            /// bind `this` to function member and keep the current dict alive
             if(it->second.type == GeneralDataNode::DataType::TypeFunc) {
                 std::dynamic_pointer_cast<DataNodeFunc>(it->second.data)->thisDict = dictNode;
+                env.aliveDictStack.top().push_back(dictNode);
             }
 
             return it->second;

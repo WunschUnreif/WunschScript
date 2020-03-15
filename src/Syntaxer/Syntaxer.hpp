@@ -103,6 +103,8 @@ namespace syn {
 
         antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) override;   /* [x] */
 
+        antlrcpp::Any visitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext *context) override;  /* [x] */
+
 
         std::string filename;
 

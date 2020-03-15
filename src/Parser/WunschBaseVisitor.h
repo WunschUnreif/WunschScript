@@ -51,6 +51,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitLogiNotExpr(WunschParser::LogiNotExprContext *ctx) override {
     return visitChildren(ctx);
   }

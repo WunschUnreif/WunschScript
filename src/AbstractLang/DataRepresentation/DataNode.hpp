@@ -103,13 +103,17 @@ namespace asl {
      * @brief Data node for `func` type.
      */
     struct DataNodeFunc final : public DataNodeBase {
-        std::weak_ptr<DataNodeDict> thisDict;
-        std::vector<std::string> paramNames;
+        std::weak_ptr<DataNodeDict> thisDict;       // the owner dict object of this function
 
-        bool withArrTail = false;
-        std::string arrName;
+        std::vector<std::string> paramNames;        // parameter name list
+
+        bool withArrTail = false;                   // whether this function contains array-tailed parameter
+        std::string arrName;                        // the name of tail array
+
+        std::vector<std::string> captureIDs;        // the list of ID this function wants to capture
+        std::vector<GeneralDataNode> captureVals;   // captured values
         
-        std::shared_ptr<StatementBlock> body;
+        std::shared_ptr<StatementBlock> body;       // function body
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;

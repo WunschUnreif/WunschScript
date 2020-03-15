@@ -37,6 +37,8 @@ public:
 
     virtual antlrcpp::Any visitAddMinExpr(WunschParser::AddMinExprContext *context) = 0;
 
+    virtual antlrcpp::Any visitDeepCopyModifyExpr(WunschParser::DeepCopyModifyExprContext *context) = 0;
+
     virtual antlrcpp::Any visitLogiNotExpr(WunschParser::LogiNotExprContext *context) = 0;
 
     virtual antlrcpp::Any visitBracoAccessExpr(WunschParser::BracoAccessExprContext *context) = 0;

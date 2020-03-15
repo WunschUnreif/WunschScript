@@ -32,6 +32,11 @@ namespace asl {
         /// Stack for execution information
         std::stack<std::weak_ptr<ExecutionInformation>> infoStack;
 
+        /// vector for alive dict objs in the current statement.
+        /// in case as `<dict1>.somefunc()` where dict is released 
+        /// too early and somefunc cannot capture `this`.
+        std::stack<std::vector<std::shared_ptr<DataNodeDict>>> aliveDictStack;
+
         GeneralDataNode GetDataNode(const std::string & name);
         bool SetDataNode(const std::string & name, GeneralDataNode target);
 

@@ -17,8 +17,15 @@ antlrcpp::Any syn::ParseTreeVisitor::visitFixedFunc(WunschParser::FixedFuncConte
     auto funcNode = std::make_shared<DataNodeFunc>();
     
     /// parse the param names 
-    for(auto idContext : ctx->idList()->ID()) {
+    for(auto idContext : ctx->idList(0)->ID()) {
         funcNode->paramNames.push_back(idContext->getText());
+    }
+
+    /// parse the capture list
+    if(ctx->cap) {
+        for(auto idContext : ctx->cap->ID()) {
+            funcNode->captureIDs.push_back(idContext->getText());
+        }
     }
 
     /// fill the body
@@ -41,9 +48,16 @@ antlrcpp::Any syn::ParseTreeVisitor::visitArrTailFunc(WunschParser::ArrTailFuncC
     auto funcNode = std::make_shared<DataNodeFunc>();
     
     /// parse the fixed param names 
-    if(ctx->idList()) {
-        for(auto idContext : ctx->idList()->ID()) {
+    if(ctx->param) {
+        for(auto idContext : ctx->param->ID()) {
             funcNode->paramNames.push_back(idContext->getText());
+        }
+    }
+
+    /// parse the capture list
+    if(ctx->cap) {
+        for(auto idContext : ctx->cap->ID()) {
+            funcNode->captureIDs.push_back(idContext->getText());
         }
     }
 
