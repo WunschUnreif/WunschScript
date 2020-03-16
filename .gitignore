@@ -45,3 +45,9 @@ grammar/
 # cmake generated
 src/build/*
 
+# documentation
+doc/Specification/*.gz
+doc/Specification/*.out
+doc/Specification/*.log
+doc/Specification/*.aux
+doc/Specification/*.toc
