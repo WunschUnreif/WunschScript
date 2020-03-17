@@ -199,6 +199,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitBr(WunschParser::BrContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
 
 };
 

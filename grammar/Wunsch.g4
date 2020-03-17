@@ -1,42 +1,42 @@
 grammar Wunsch;
 
 program
-    : (stmt)*
+    : br (stmt)* br
     ;
 
 stmt
-    : expr ';'        
-    | varDef ';'      
-    | assignment ';'  
-    | condStmt        
-    | whileStmt       
-    | forStmt         
-    | returnStmt ';' 
+    : expr          (ENDL | br ';' br | <EOF>)
+    | varDef        (ENDL | br ';' br | <EOF>)
+    | assignment    (ENDL | br ';' br | <EOF>)
+    | condStmt      (ENDL | br ';' br | <EOF>)
+    | whileStmt     (ENDL | br ';' br | <EOF>)
+    | forStmt       (ENDL | br ';' br | <EOF>)
+    | returnStmt    (ENDL | br ';' br | <EOF>)
     ;
 
 expr
-    : literal                           #literalExpr
-    | funcDef                           #funDefLiteral
-    | THIS                              #thisExpr
-    | ID                                #idExpr
-    | '(' expr ')'                      #bracketExpr
-    | '<' expr '>'                      #deepCopyExpr
-    | '<' expr (ID '=' expr)+ '>'       #deepCopyModifyExpr
-    | expr '.' ID                       #memberAccessExpr
-    | expr '[' expr ']'                 #bracoAccessExpr
-    | expr '(' exprList ')'             #funcallExpr
-    | '!' expr                          #logiNotExpr
-    | '~' expr                          #binNotExpr
-    | op=('+'|'-') expr                 #unaryPMExpr
-    | expr op=('*'|'/'|'%') expr        #multdivExpr
-    | expr op=('+'|'-') expr            #addMinExpr
-    | expr op=('<'|'<='|'>='|'>') expr  #compareExpr
-    | expr op=('=='|'!=') expr          #equalExpr
-    | expr '&' expr                     #binAndExpr
-    | expr '^' expr                     #binXorExpr
-    | expr '|' expr                     #binOrExpr
-    | expr '&&' expr                    #logiAndExpr
-    | expr '||' expr                    #logiOrExpr
+    : literal                                               #literalExpr
+    | funcDef                                               #funDefLiteral
+    | THIS                                                  #thisExpr
+    | ID                                                    #idExpr
+    | '(' br expr br ')'                                    #bracketExpr
+    | '<' br expr br '>'                                    #deepCopyExpr
+    | '<' br expr ( br ID br '=' br expr br)+ br '>'        #deepCopyModifyExpr
+    | expr br '.' br ID                                     #memberAccessExpr
+    | expr br '[' br expr br ']'                            #bracoAccessExpr
+    | expr br '(' br exprList br ')'                        #funcallExpr
+    | '!' expr                                              #logiNotExpr
+    | '~' expr                                              #binNotExpr
+    | op=('+'|'-') expr                                     #unaryPMExpr
+    | expr op=('*'|'/'|'%') br expr                         #multdivExpr
+    | expr op=('+'|'-') br expr                             #addMinExpr
+    | expr op=('<'|'<='|'>='|'>') br expr                   #compareExpr
+    | expr op=('=='|'!=') br expr                           #equalExpr
+    | expr '&' br expr                                      #binAndExpr
+    | expr '^' br expr                                      #binXorExpr
+    | expr '|' br expr                                      #binOrExpr
+    | expr '&&' br expr                                     #logiAndExpr
+    | expr '||' br expr                                     #logiOrExpr
     ;
 
 literal 
@@ -57,44 +57,44 @@ integerLiteral
 floatLiteral  : FLOAT;
 boolLiteral   : BOOLEANLIT;
 stringLiteral : STRING+;
-listLiteral   : '[' (expr (',' expr)*)? ']';
-dictLiteral   : '{' (ID ':' expr (',' ID ':' expr)*)? '}';
+listLiteral   : '[' br (expr ( br ',' br expr)*)? br ']';
+dictLiteral   : '{' br (ID br ':' br expr (br ',' br ID br ':' br expr)*)? br '}';
 nilLiteral    : 'nil';
 
 /* Varible define and assignment */
 varDef 
-    : 'var' ID '=' expr     #immediateVarDef
-    | 'var' ID              #plainVarDef
+    : 'var' ID br '=' br expr       #immediateVarDef
+    | 'var' ID                      #plainVarDef
     ;
 assignment 
-    : expr '=' expr         #exprAssign
+    : expr br '=' br expr           #exprAssign
     ;
 
 /* Function define */
-funcDef : '(' idList ')' 
-            ('[' cap=idList ']')? 
-            '=>' stmtBlock                      #fixedFunc
+funcDef : '(' br idList br ')'
+            (br '[' br cap=idList br ']' br)? 
+            '=>' br stmtBlock                      #fixedFunc
 
-        | '('  (param=idList ',')? '[' ID ']'  ')' 
-            ('[' cap=idList ']')?
-             '=>' stmtBlock                     #arrTailFunc
+        | '(' br (param=idList br ',' br)? '[' br ID br ']' br ')' br
+            ( br '[' br cap=idList br ']' br)?
+             '=>' br stmtBlock                     #arrTailFunc
         ;
 
 idList
-    : ID (',' ID)*
+    : ID (br ',' br ID)*
     |
     ;
 
 stmtBlock
-    : '{' (stmt)* '}'
+    : '{' br (stmt)* br '}'
     ;
 
 exprList
-    : expr (',' expr)*
+    : expr (br ',' br expr)*
     |
     ;
 
-condStmt : 'if' expr stmtBlock ('else' stmtBlock)?;
+condStmt : 'if' expr stmtBlock (br 'else' br stmtBlock)?;
 whileStmt : 'while' expr stmtBlock;
 forStmt : 'for' ID 'in' expr stmtBlock;
 returnStmt : 'return' expr;
@@ -125,7 +125,12 @@ THIS : 'this';
 ID : ('_' | ('a'..'z') | ('A'..'Z')) ('_' | ('a'..'z') | ('A'..'Z') | '0'..'9')* ;
 
 // comment
-COMMENT : '#' .*? '\n' -> skip;
+COMMENT : '#' .*? ENDL -> skip;
 
 // deliminater after statements.
-WS : (' '|'\t'|'\n') -> skip;
+WS : (' '|'\t') -> skip;
+
+br : ENDL?;
+
+// end line
+ENDL : ('\n')+;

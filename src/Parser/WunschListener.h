@@ -152,6 +152,9 @@ public:
   virtual void enterReturnStmt(WunschParser::ReturnStmtContext *ctx) = 0;
   virtual void exitReturnStmt(WunschParser::ReturnStmtContext *ctx) = 0;
 
+  virtual void enterBr(WunschParser::BrContext *ctx) = 0;
+  virtual void exitBr(WunschParser::BrContext *ctx) = 0;
+
 
 };
 

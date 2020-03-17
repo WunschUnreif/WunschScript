@@ -154,6 +154,9 @@ public:
   virtual void enterReturnStmt(WunschParser::ReturnStmtContext * /*ctx*/) override { }
   virtual void exitReturnStmt(WunschParser::ReturnStmtContext * /*ctx*/) override { }
 
+  virtual void enterBr(WunschParser::BrContext * /*ctx*/) override { }
+  virtual void exitBr(WunschParser::BrContext * /*ctx*/) override { }
+
 
   virtual void enterEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }
   virtual void exitEveryRule(antlr4::ParserRuleContext * /*ctx*/) override { }

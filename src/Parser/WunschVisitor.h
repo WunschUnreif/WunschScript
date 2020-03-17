@@ -111,6 +111,8 @@ public:
 
     virtual antlrcpp::Any visitReturnStmt(WunschParser::ReturnStmtContext *context) = 0;
 
+    virtual antlrcpp::Any visitBr(WunschParser::BrContext *context) = 0;
+
 
 };
 
