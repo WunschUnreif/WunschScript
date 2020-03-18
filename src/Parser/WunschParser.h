@@ -659,10 +659,13 @@ public:
 
     WunschParser::IdListContext *param = nullptr;
     WunschParser::IdListContext *cap = nullptr;
+    WunschParser::StmtBlockContext *body = nullptr;
+    WunschParser::ExprContext *res = nullptr;
     std::vector<BrContext *> br();
     BrContext* br(size_t i);
     antlr4::tree::TerminalNode *ID();
     StmtBlockContext *stmtBlock();
+    ExprContext *expr();
     std::vector<IdListContext *> idList();
     IdListContext* idList(size_t i);
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -676,11 +679,14 @@ public:
     FixedFuncContext(FuncDefContext *ctx);
 
     WunschParser::IdListContext *cap = nullptr;
+    WunschParser::StmtBlockContext *body = nullptr;
+    WunschParser::ExprContext *res = nullptr;
     std::vector<BrContext *> br();
     BrContext* br(size_t i);
     std::vector<IdListContext *> idList();
     IdListContext* idList(size_t i);
     StmtBlockContext *stmtBlock();
+    ExprContext *expr();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 

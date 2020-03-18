@@ -23,8 +23,8 @@ expr
     | '<' br expr br '>'                                    #deepCopyExpr
     | '<' br expr ( br ID br '=' br expr br)+ br '>'        #deepCopyModifyExpr
     | expr br '.' br ID                                     #memberAccessExpr
-    | expr br '[' br expr br ']'                            #bracoAccessExpr
-    | expr br '(' br exprList br ')'                        #funcallExpr
+    | expr '[' br expr br ']'                            #bracoAccessExpr
+    | expr '(' br exprList br ')'                        #funcallExpr
     | '!' expr                                              #logiNotExpr
     | '~' expr                                              #binNotExpr
     | op=('+'|'-') expr                                     #unaryPMExpr
@@ -73,11 +73,11 @@ assignment
 /* Function define */
 funcDef : '(' br idList br ')'
             (br '[' br cap=idList br ']' br)? 
-            '=>' br stmtBlock                      #fixedFunc
+            '=>' br (body=stmtBlock | res=expr)     #fixedFunc
 
         | '(' br (param=idList br ',' br)? '[' br ID br ']' br ')' br
             ( br '[' br cap=idList br ']' br)?
-             '=>' br stmtBlock                     #arrTailFunc
+             '=>' br (body=stmtBlock | res=expr)    #arrTailFunc
         ;
 
 idList

@@ -51,3 +51,4 @@ doc/Specification/*.out
 doc/Specification/*.log
 doc/Specification/*.aux
 doc/Specification/*.toc
+doc/Specification/_minted-main/*
