@@ -2,11 +2,30 @@
 
 \section{Overview}
 
-\begin{minted}[frame=single]{c}
-int main() {
-    return 0;
-}
-\end{minted}
-
-\mintinline{python}|print("hello")|
-aaa
+\begin{listing}[!h]
+    \begin{minted}[
+        breaklines, 
+        mathescape, 
+        linenos, 
+        fontsize=\footnotesize,
+        frame=lines,
+        xleftmargin=2em
+    ]{ws}
+    var Y = (gen) => 
+        ( (f)[gen] => (n)[f, gen] => gen(f(f))(n) ) (
+            (f)[gen] => (n)[f, gen] => gen(f(f))(n)
+        )
+    
+    var fac_gen = (g) => (m)[g] => {
+        if m <= 1 {
+            return 1
+        } else {
+            return m * g(m - 1)
+        }
+    }
+    
+    # will calculate $5! = 120$ and then output
+    print(Y(fac_gen)(5))
+    \end{minted}
+    \caption{Y combinator}
+\end{listing}

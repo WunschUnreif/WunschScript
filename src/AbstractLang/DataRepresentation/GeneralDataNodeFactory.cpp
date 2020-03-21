@@ -30,6 +30,15 @@ GeneralDataNode GeneralDataNodeFactory::MakeIntGDN(int64_t val) {
     return result;
 }
 
+GeneralDataNode GeneralDataNodeFactory::MakeFloatGDN(double val) {
+    GeneralDataNode result;
+    result.type = GeneralDataNode::TypeFloat;
+    result.data = std::make_shared<DataNodeFloat>();
+    std::dynamic_pointer_cast<DataNodeFloat>(result.data)->value = val;
+
+    return result;
+}
+
 GeneralDataNode GeneralDataNodeFactory::MakeStrGDN(const std::string & val) {
     GeneralDataNode result;
     result.type = GeneralDataNode::TypeString;

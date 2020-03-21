@@ -1,6 +1,4 @@
-# test of while loop
-
-# correspond to `src/AbstractLang/UnitTest4.cpp`
+# test of while loop etc.
 
 var sum = (n) => {
     var s = 0;
@@ -22,9 +20,14 @@ var sumElems = ([elems]) => {
 var x = sumElems(1, 2, 3);
 
 var gcd = (a) => {
-    (b) => {
+    return (b)[a] => {
         while b != 0 {
-            a, b = b, a % b
+            var t = a
+            a = b
+            b = t % b
         }
+        return a
     }
 }
+
+print(gcd(34986)(3087))

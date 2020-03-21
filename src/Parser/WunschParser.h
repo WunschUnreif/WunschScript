@@ -88,6 +88,7 @@ public:
     virtual size_t getRuleIndex() const override;
     ExprContext *expr();
     antlr4::tree::TerminalNode *ENDL();
+    antlr4::tree::TerminalNode *EOF();
     std::vector<BrContext *> br();
     BrContext* br(size_t i);
     VarDefContext *varDef();

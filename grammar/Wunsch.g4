@@ -5,26 +5,22 @@ program
     ;
 
 stmt
-    : expr          (ENDL | br ';' br | <EOF>)
-    | varDef        (ENDL | br ';' br | <EOF>)
-    | assignment    (ENDL | br ';' br | <EOF>)
-    | condStmt      (ENDL | br ';' br | <EOF>)
-    | whileStmt     (ENDL | br ';' br | <EOF>)
-    | forStmt       (ENDL | br ';' br | <EOF>)
-    | returnStmt    (ENDL | br ';' br | <EOF>)
+    : expr          (ENDL | (br ';' br) | EOF)
+    | varDef        (ENDL | (br ';' br) | EOF)
+    | assignment    (ENDL | (br ';' br) | EOF)
+    | condStmt      (ENDL | (br ';' br) | EOF)
+    | whileStmt     (ENDL | (br ';' br) | EOF)
+    | forStmt       (ENDL | (br ';' br) | EOF)
+    | returnStmt    (ENDL | (br ';' br) | EOF)
     ;
 
 expr
-    : literal                                               #literalExpr
-    | funcDef                                               #funDefLiteral
-    | THIS                                                  #thisExpr
-    | ID                                                    #idExpr
-    | '(' br expr br ')'                                    #bracketExpr
+    : '(' br expr br ')'                                    #bracketExpr
     | '<' br expr br '>'                                    #deepCopyExpr
     | '<' br expr ( br ID br '=' br expr br)+ br '>'        #deepCopyModifyExpr
     | expr br '.' br ID                                     #memberAccessExpr
-    | expr '[' br expr br ']'                            #bracoAccessExpr
-    | expr '(' br exprList br ')'                        #funcallExpr
+    | expr '[' br expr br ']'                               #bracoAccessExpr
+    | expr '(' br exprList br ')'                           #funcallExpr
     | '!' expr                                              #logiNotExpr
     | '~' expr                                              #binNotExpr
     | op=('+'|'-') expr                                     #unaryPMExpr
@@ -37,6 +33,10 @@ expr
     | expr '|' br expr                                      #binOrExpr
     | expr '&&' br expr                                     #logiAndExpr
     | expr '||' br expr                                     #logiOrExpr
+    | literal                                               #literalExpr
+    | funcDef                                               #funDefLiteral
+    | THIS                                                  #thisExpr
+    | ID                                                    #idExpr
     ;
 
 literal 

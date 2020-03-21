@@ -1,6 +1,7 @@
 #include <exception>
 
 #include "ExprMemberAccess.hpp"
+#include "GeneralDataNodeFactory.hpp"
 
 using namespace ws::asl;
 
@@ -146,7 +147,38 @@ GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool a
         }
     }
 
-    /// 3. otherwise, error
+    /// 3. in case lhs is str
+    if(lhsResult.type == GeneralDataNode::DataType::TypeString) {
+        /// evaluated the right hand expression (inside the '[]')
+        auto rhsResult = rhs->Eval(env);
+
+        /// the result should be a int 
+        if(rhsResult.type != GeneralDataNode::DataType::TypeInt) {
+            env.ReportError(std::runtime_error("Trying to access a member using non-int index."));
+            return GeneralDataNode();
+        }
+
+        /// get the indexed data from list
+        auto & strdata = std::dynamic_pointer_cast<DataNodeStr>(lhsResult.data)->value;
+        auto index = std::dynamic_pointer_cast<DataNodeInt>(rhsResult.data)->value;
+
+        if(asLval) {
+            /// cannot eval str[index] as lval
+            env.ReportError(std::runtime_error("Cannot evaluate `[...]` on str as left value."));
+            return GeneralDataNode();
+        } else {
+            if(index >= strdata.length()) {
+                env.ReportError(std::runtime_error("Index out of range."));
+                return GeneralDataNode();
+            }
+
+            /// generate a string GDN for result
+            auto result = GeneralDataNodeFactory::MakeStrGDN(strdata.substr(index, 1));
+            return result;
+        }
+    }
+
+    /// 4. otherwise, error
     env.ReportError(std::runtime_error("Cannor access member from non-dict/list value"));
     return GeneralDataNode();
 }
