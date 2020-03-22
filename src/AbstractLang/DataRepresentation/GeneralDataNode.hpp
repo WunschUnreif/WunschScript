@@ -35,7 +35,8 @@ namespace asl {
             TypeList,
             TypeDict,
             TypeFunc,
-            TypeSystemFunc
+            TypeSystemFunc,
+            TypeWeakReference
         } type = TypeUndefined;
 
         std::shared_ptr<DataNodeBase> data;

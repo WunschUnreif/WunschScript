@@ -262,3 +262,26 @@ std::shared_ptr<DataNodeBase> DataNodeSystemFunc::DeepCopy() {
 }
 
 /* ---------------- Implementation for type systemfunc ---------------- */
+
+/* ---------------- Implementation for type weak ref ---------------- */
+
+std::string DataNodeWeakReference::ToString() {
+    return "weakref<" + std::to_string(reinterpret_cast<uint64_t>(ptr.lock().get())) + ">" + 
+            "(count=" + std::to_string(ptr.use_count()) + ")";
+}
+
+bool DataNodeWeakReference::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
+    assert(typeid(*this) == typeid(*rhs));
+
+    return ptr.lock() == std::dynamic_pointer_cast<DataNodeWeakReference>(rhs)->ptr.lock();
+}
+
+std::shared_ptr<DataNodeBase> DataNodeWeakReference::DeepCopy() {
+    auto result = std::make_shared<DataNodeWeakReference>();
+    result->ptr = ptr;
+    result->type = type;
+
+    return result;
+}
+
+/* ---------------- Implementation for type weak ref ---------------- */

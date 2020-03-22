@@ -31,6 +31,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitWeakrefExpr(WunschParser::WeakrefExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitBinNotExpr(WunschParser::BinNotExprContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -80,6 +84,10 @@ public:
   }
 
   virtual antlrcpp::Any visitLiteralExpr(WunschParser::LiteralExprContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDerefExpr(WunschParser::DerefExprContext *ctx) override {
     return visitChildren(ctx);
   }
 

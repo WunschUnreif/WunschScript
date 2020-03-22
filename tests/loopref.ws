@@ -1,32 +1,51 @@
-var Node = {
-    parent : nil,
-    children : [nil],
-    value: 0,
+var DoubleLinkedListNode = {
+    value : nil,
 
-    addCh : ([children]) => {
-        for ch in children {
-            
-            # weak reference
-            ch.parent = @this;
+    prev : @nil,
+    next : nil,
 
-            this.children = this.children + ch;
+    insertAfter : (node) => {
+        node.prev = @this
+        node.next = this.next
+        if this.next != nil {
+            this.next.prev = @node
+        }
+        this.next = node
+    },
+
+    delete : () => {
+        if this.prev? != nil {
+            this.prev!.next = this.next
+        }
+        if this.next != nil {
+            this.next.prev = this.prev
         }
     },
 
-    getParentValue : () => {
-        # optional deref
-        return parent?.value;
+    printFromThis : () => {
+        print(this.value)
+        if this.next != nil {
+            this.next.printFromThis()
+        }
     },
 
-    getParent : () => {
-        # owned deref
-        return parent;
+    printBeforeThis : () => {
+        if this.prev? != nil {
+            this.prev!.printBeforeThis()
+        }
+        print(this.value)
     }
-};
+}
 
-var root = <Node>;
+var head = <DoubleLinkedListNode value = "head">
+var node1 = <DoubleLinkedListNode value = "1">
+var node2 = <DoubleLinkedListNode value = "2">
+var node3 = <DoubleLinkedListNode value = "3">
 
-var ch = <Node>;
-ch.value = 1;
+head.insertAfter(node1)
+node1.insertAfter(node2)
+node2.insertAfter(node3)
 
-root.addCh(ch);
+head.printFromThis()
+
+node2.printBeforeThis()

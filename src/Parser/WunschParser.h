@@ -18,8 +18,9 @@ public:
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
     T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
-    DEC_INT = 39, OCT_INT = 40, HEX_INT = 41, FLOAT = 42, BOOLEANLIT = 43, 
-    STRING = 44, ESC = 45, THIS = 46, ID = 47, COMMENT = 48, WS = 49, ENDL = 50
+    T__38 = 39, T__39 = 40, DEC_INT = 41, OCT_INT = 42, HEX_INT = 43, FLOAT = 44, 
+    BOOLEANLIT = 45, STRING = 46, ESC = 47, THIS = 48, ID = 49, COMMENT = 50, 
+    WS = 51, ENDL = 52
   };
 
   enum {
@@ -137,6 +138,17 @@ public:
 
     std::vector<BrContext *> br();
     BrContext* br(size_t i);
+    ExprContext *expr();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  WeakrefExprContext : public ExprContext {
+  public:
+    WeakrefExprContext(ExprContext *ctx);
+
     ExprContext *expr();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -306,6 +318,18 @@ public:
     LiteralExprContext(ExprContext *ctx);
 
     LiteralContext *literal();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  DerefExprContext : public ExprContext {
+  public:
+    DerefExprContext(ExprContext *ctx);
+
+    antlr4::Token *op = nullptr;
+    ExprContext *expr();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 

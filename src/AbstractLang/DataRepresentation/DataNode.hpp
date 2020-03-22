@@ -133,6 +133,18 @@ namespace asl {
         std::shared_ptr<DataNodeBase> DeepCopy() override;
     };
 
+    /**
+     * @brief Data node for weak reference node.
+     */
+    struct DataNodeWeakReference final : public DataNodeBase {
+        std::weak_ptr<DataNodeBase> ptr;
+        GeneralDataNode::DataType type;
+
+        std::string ToString() override;
+        bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
+        std::shared_ptr<DataNodeBase> DeepCopy() override;
+    };
+
 }
 
 }

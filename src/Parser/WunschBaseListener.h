@@ -28,6 +28,9 @@ public:
   virtual void enterDeepCopyExpr(WunschParser::DeepCopyExprContext * /*ctx*/) override { }
   virtual void exitDeepCopyExpr(WunschParser::DeepCopyExprContext * /*ctx*/) override { }
 
+  virtual void enterWeakrefExpr(WunschParser::WeakrefExprContext * /*ctx*/) override { }
+  virtual void exitWeakrefExpr(WunschParser::WeakrefExprContext * /*ctx*/) override { }
+
   virtual void enterBinNotExpr(WunschParser::BinNotExprContext * /*ctx*/) override { }
   virtual void exitBinNotExpr(WunschParser::BinNotExprContext * /*ctx*/) override { }
 
@@ -66,6 +69,9 @@ public:
 
   virtual void enterLiteralExpr(WunschParser::LiteralExprContext * /*ctx*/) override { }
   virtual void exitLiteralExpr(WunschParser::LiteralExprContext * /*ctx*/) override { }
+
+  virtual void enterDerefExpr(WunschParser::DerefExprContext * /*ctx*/) override { }
+  virtual void exitDerefExpr(WunschParser::DerefExprContext * /*ctx*/) override { }
 
   virtual void enterLogiOrExpr(WunschParser::LogiOrExprContext * /*ctx*/) override { }
   virtual void exitLogiOrExpr(WunschParser::LogiOrExprContext * /*ctx*/) override { }

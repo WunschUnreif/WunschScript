@@ -27,6 +27,8 @@ public:
 
     virtual antlrcpp::Any visitDeepCopyExpr(WunschParser::DeepCopyExprContext *context) = 0;
 
+    virtual antlrcpp::Any visitWeakrefExpr(WunschParser::WeakrefExprContext *context) = 0;
+
     virtual antlrcpp::Any visitBinNotExpr(WunschParser::BinNotExprContext *context) = 0;
 
     virtual antlrcpp::Any visitLogiAndExpr(WunschParser::LogiAndExprContext *context) = 0;
@@ -52,6 +54,8 @@ public:
     virtual antlrcpp::Any visitFunDefLiteral(WunschParser::FunDefLiteralContext *context) = 0;
 
     virtual antlrcpp::Any visitLiteralExpr(WunschParser::LiteralExprContext *context) = 0;
+
+    virtual antlrcpp::Any visitDerefExpr(WunschParser::DerefExprContext *context) = 0;
 
     virtual antlrcpp::Any visitLogiOrExpr(WunschParser::LogiOrExprContext *context) = 0;
 

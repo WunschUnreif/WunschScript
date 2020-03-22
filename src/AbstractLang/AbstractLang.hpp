@@ -24,6 +24,7 @@
 #include "Expression/ExprMultDiv.hpp"
 #include "Expression/ExprDeepCopy.hpp"
 #include "Expression/ExprThis.hpp"
+#include "Expression/ExprWeakRef.hpp"
 
 #include "Statement/Statement.hpp"
 #include "Statement/StmtAssignment.hpp"

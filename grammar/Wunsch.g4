@@ -21,6 +21,8 @@ expr
     | expr br '.' br ID                                     #memberAccessExpr
     | expr '[' br expr br ']'                               #bracoAccessExpr
     | expr '(' br exprList br ')'                           #funcallExpr
+    | expr op=('?'|'!')                                     #derefExpr
+    | '@' expr                                              #weakrefExpr
     | '!' expr                                              #logiNotExpr
     | '~' expr                                              #binNotExpr
     | op=('+'|'-') expr                                     #unaryPMExpr

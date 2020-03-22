@@ -107,6 +107,10 @@ namespace syn {
 
         antlrcpp::Any visitBr(WunschParser::BrContext * context) override {return nullptr;};
 
+        antlrcpp::Any visitWeakrefExpr(WunschParser::WeakrefExprContext *context) override;  /* [x] */
+
+        antlrcpp::Any visitDerefExpr(WunschParser::DerefExprContext *context) override;  /* [x] */
+
 
         std::string filename;
 
