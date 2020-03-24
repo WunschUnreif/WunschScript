@@ -96,7 +96,7 @@ exprList
     |
     ;
 
-condStmt : 'if' expr stmtBlock (br 'else' br stmtBlock)?;
+condStmt : 'if' expr stmtBlock (br 'else' br (elbr=stmtBlock|elif=condStmt))?;
 whileStmt : 'while' expr stmtBlock;
 forStmt : 'for' ID 'in' expr stmtBlock;
 returnStmt : 'return' expr;

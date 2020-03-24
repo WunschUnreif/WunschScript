@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # build ut or not
-option(BUILD_UT "Build unit tests." on)
+option(BUILD_UT "Build unit tests." off)
 
 add_subdirectory(Parser)
 add_subdirectory(AbstractLang)
@@ -23,3 +23,4 @@ add_subdirectory(Syntaxer)
 add_subdirectory(TreeDiagram)
 add_subdirectory(Interpreter)
 add_subdirectory(Support)
+add_subdirectory(VirtualMachine)

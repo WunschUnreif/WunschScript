@@ -14,8 +14,32 @@ antlrcpp::Any syn::ParseTreeVisitor::visitCondStmt(WunschParser::CondStmtContext
     stmt->cond = visit(ctx->expr()).as<std::shared_ptr<ExpressionBase>>();
     stmt->thenBranch = visit(ctx->stmtBlock(0)).as<std::shared_ptr<StatementBlock>>();
 
-    if(ctx->stmtBlock().size() == 2) {
-        stmt->elseBranch = visit(ctx->stmtBlock(1)).as<std::shared_ptr<StatementBlock>>();
+    if(ctx->elbr) {
+        // else {...}
+        stmt->elseBranch = visit(ctx->elbr).as<std::shared_ptr<StatementBlock>>();
+    } else if(ctx->elif) {
+        // else if(...) ...
+        /// create a new lexical scope
+        auto scope = std::make_shared<Scope>();
+
+        scope->parent = lexScopeStack.top();
+        lexScopeStack.top()->children.push_back(scope);
+
+        /// push the scope node
+        lexScopeStack.push(scope);
+
+        /// create the stmt block object
+        auto block = std::make_shared<StatementBlock>();
+
+        block->lexScope = scope;
+        
+        /// parse the body
+        block->body.push_back(visit(ctx->elif).as<std::shared_ptr<StatementBase>>());
+
+        /// pop the scope node
+        lexScopeStack.pop();
+
+        stmt->elseBranch = block;
     }
 
     FillStmtInfo(stmt, ctx);

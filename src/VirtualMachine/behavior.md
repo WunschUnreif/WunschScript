@@ -142,7 +142,7 @@
 | `endps`      | `nop`                                         |
 | `endp`       | `push(nil); returnFromFunc();`                |
 | `ret`        | `retaddr.pop->ip`                             |
-| `func x`     | `push(<Fn startbyte=x>)`                      |
+| `func`       | `push(<Fn startbyte=ip.next.next>)`           |
 | `param N`    | `top->fn; fn.paramNames.append(Const[N])`     |
 | `arrparam N` | `top->fn; fn.arrTailName = Const[N]`          |
 | `bind N`     | `top->fn; fn.bind(name=Const[N])`             |
@@ -150,10 +150,10 @@
 | `get N`      | `push(scope[Const[n]])`                       |
 | `set N`      | `pop->x; scope[Const[n]]:=x`                  |
 | `this`       | `push this`                                   |
-| `jfalse N`   | `pop->x; if x=false then jump to byte N`      |
-| `jmp N`      | `jump to byte N`                              |
+| `jfalse N`   | `pop->x; if x=false then jump by N bytes`     |
+| `jmp N`      | `jump by N bytes`                             |
 | `iter N`     | `pop->x; env.iter:=x; env.iterName:=Const[N]` |
-| `next N`     | `next iteration, goto byte N`                 |
+| `next N`     | `next iteration, jump by N bytes`             |
 
 
 

@@ -776,6 +776,8 @@ public:
 
   class  CondStmtContext : public antlr4::ParserRuleContext {
   public:
+    WunschParser::StmtBlockContext *elbr = nullptr;;
+    WunschParser::CondStmtContext *elif = nullptr;;
     CondStmtContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     ExprContext *expr();
@@ -783,6 +785,7 @@ public:
     StmtBlockContext* stmtBlock(size_t i);
     std::vector<BrContext *> br();
     BrContext* br(size_t i);
+    CondStmtContext *condStmt();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

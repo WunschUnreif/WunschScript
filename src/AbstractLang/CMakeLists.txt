@@ -20,7 +20,7 @@ target_include_directories(WSAbstractLang
     DataRepresentation/
     Environment/
     Expression/
-    "Program/"
+    Program/
 )
 
 
