@@ -37,6 +37,8 @@ namespace asl {
     struct DataNodeBool final : public DataNodeBase {
         bool value;
 
+        explicit DataNodeBool(bool value = false) : value(value) {}
+
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
         std::shared_ptr<DataNodeBase> DeepCopy() override;
@@ -47,6 +49,8 @@ namespace asl {
      */
     struct DataNodeInt final : public DataNodeBase {
         int64_t value;
+
+        explicit DataNodeInt(int64_t value = 0) : value(value) {}
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
@@ -59,6 +63,8 @@ namespace asl {
     struct DataNodeFloat final : public DataNodeBase {
         double value;
 
+        explicit DataNodeFloat(double value = 0) : value(value) {}
+
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
         std::shared_ptr<DataNodeBase> DeepCopy() override;
@@ -69,6 +75,8 @@ namespace asl {
      */
     struct DataNodeStr final : public DataNodeBase {
         std::string value;
+
+        explicit DataNodeStr(const std::string & value = "") : value(value) {}
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
@@ -127,6 +135,12 @@ namespace asl {
      */
     struct DataNodeSystemFunc final : public DataNodeBase {
         std::function<GeneralDataNode(std::vector<GeneralDataNode>, Environment &)> impl;
+
+        DataNodeSystemFunc() {}
+
+        explicit DataNodeSystemFunc(
+            std::function<GeneralDataNode(std::vector<GeneralDataNode>, Environment &)> impl
+        ) : impl(impl) {}
 
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;

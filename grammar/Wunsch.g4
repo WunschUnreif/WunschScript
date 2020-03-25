@@ -15,7 +15,11 @@ stmt
     ;
 
 expr
-    : '(' br expr br ')'                                    #bracketExpr
+    : literal                                               #literalExpr
+    | funcDef                                               #funDefLiteral
+    | THIS                                                  #thisExpr
+    | ID                                                    #idExpr
+    | '(' br expr br ')'                                    #bracketExpr
     | '<' br expr br '>'                                    #deepCopyExpr
     | '<' br expr ( br ID br '=' br expr br)+ br '>'        #deepCopyModifyExpr
     | expr br '.' br ID                                     #memberAccessExpr
@@ -35,10 +39,6 @@ expr
     | expr '|' br expr                                      #binOrExpr
     | expr '&&' br expr                                     #logiAndExpr
     | expr '||' br expr                                     #logiOrExpr
-    | literal                                               #literalExpr
-    | funcDef                                               #funDefLiteral
-    | THIS                                                  #thisExpr
-    | ID                                                    #idExpr
     ;
 
 literal 
@@ -135,4 +135,4 @@ WS : (' '|'\t') -> skip;
 br : ENDL?;
 
 // end line
-ENDL : ('\n')+;
+ENDL : ('\n' WS*)+;
