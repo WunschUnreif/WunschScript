@@ -1,99 +1,49 @@
-#pragma once 
+#pragma once
 
-#include <string>
 #include <vector>
+#include <string>
 
-#include <cstdlib>
+#include <cstdint>
+
+#include "Opcode.hpp"
 
 namespace ws {
 
 namespace vm {
 
-enum OpCode : uint8_t {
-    /* -------- Arithmetic Operations -------- */
-    UADD                        = 0,
-    USUB                        = 1,
+    struct ByteCode {
 
-    ADD                         = 2,
-    SUB                         = 3,
-    MUL                         = 4,
-    DIV                         = 5,
-    REM                         = 6,
+        std::vector<uint8_t> codeBuffer;
+        std::vector<uint8_t> dataBuffer;
 
-    IMMI                        = 130,
-    IMMF                        = 131,
-    IMMB                        = 132,
-    IMMS                        = 133,
-    IMMN                        = 36,
+        std::string GetConstAt(size_t offset);
 
-    /* -------- Comparison Operations -------- */
-    LT                          = 7,
-    LTE                         = 8,
-    GT                          = 9,
-    GTE                         = 10,
+        template<typename T>
+        T GetParamAtCode(size_t offset);
 
-    EQ                          = 11,
-    NE                          = 12,
+        std::string ToString();
 
-    /* -------- Binary/Logical Operations -------- */
-    BNOT                        = 13,
-    BAND                        = 14,
-    BXOR                        = 15,
-    BOR                         = 16,
+    };
 
-    LNOT                        = 17,
-    LAND                        = 18,
-    LOR                         = 19,
+#ifdef REQUIRE_GET_PARAM_IMPL
+    // template functions for parameter accessing
+    template<>
+    int64_t ByteCode::GetParamAtCode<int64_t>(size_t offset) {
+        return *reinterpret_cast<int64_t*>(&codeBuffer[offset + OpCodeSize]);
+    }
 
-    /* -------- Object Operations -------- */
-    DCOPY                       = 20,
-    COPY                        = 21,
-    WREF                        = 22,
-    OPDEREF                     = 23,
-    FCDEREF                     = 24,
+    template<>
+    double ByteCode::GetParamAtCode<double>(size_t offset) {
+        return *reinterpret_cast<double*>(&codeBuffer[offset + OpCodeSize]);
+    }
 
-    /* -------- Dict/List Operations -------- */
-    ACCESS                      = 25,
-    ACCESSL                     = 26,
-    THIS                        = 27,
-
-    ACCID                       = 128,
-    ACCIDL                      = 129,
-
-    IMML                        = 37,
-    IMMD                        = 38,
-
-    /* -------- Function Operations -------- */
-    FUNC                        = 28,
-    PRECALL                     = 29,
-    ARG                         = 30,
-    CALL                        = 31,
-
-    /* -------- Other Operations -------- */
-    ASSIGN                      = 32,
-    RET                         = 33,
-    ENDP                        = 34,
-    ENDPS                       = 35,
-
-    PROC                        = 134,
-    PARAM                       = 135,
-    ARRPARAM                    = 136,
-
-    BIND                        = 137,
-    NAME                        = 138,
-    GET                         = 139,
-    SET                         = 140,
-
-    JFALSE                      = 141,
-    JMP                         = 142,
-    NEXT                        = 143,
-    ITER                        = 144,
-};
-
-extern const char * OpNames [56];
-
-constexpr int OpCodeSize = sizeof(OpCode);
-constexpr bool OpCodeHasArgument(OpCode code) { return code & 0x80; }
+    template<>
+    bool ByteCode::GetParamAtCode<bool>(size_t offset) {
+        return static_cast<bool>(
+            *reinterpret_cast<int64_t*>(&codeBuffer[offset + OpCodeSize])
+        );
+    }
+#endif
 
 }
 
