@@ -5,8 +5,12 @@ project(WunschScript VERSION 0.0.1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 # compiler toolchain
-set(CMAKE_CXX_COMPILER "g++-9")
-set(CMAKE_C_COMPILER "gcc-9")
+set(CMAKE_CXX_COMPILER "/usr/local/bin/g++-9")
+set(CMAKE_C_COMPILER "/usr/local/bin/gcc-9")
+# set(CMAKE_RANLIB "gcc-ranlib-9")
+# set(CMAKE_AR "gcc-ar-9")
+
+message(${CMAKE_CXX_COMPILER})
 
 set(CMAKE_CXX_FLAGS "-O2 -g")
 
@@ -15,12 +19,11 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # build ut or not
-option(BUILD_UT "Build unit tests." off)
+option(GEN_UT "Build unit tests." off)
 
 add_subdirectory(Parser)
 add_subdirectory(AbstractLang)
 add_subdirectory(Syntaxer)
 add_subdirectory(TreeDiagram)
 add_subdirectory(Interpreter)
-add_subdirectory(Support)
 add_subdirectory(VirtualMachine)

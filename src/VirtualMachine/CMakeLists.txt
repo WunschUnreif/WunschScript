@@ -12,11 +12,15 @@ target_include_directories(WSVirtualMachime PUBLIC
     ../
 )
 
-# if(BUILD_UT)
+# if(GEN_UT)
     
     add_executable(UTCodePrint UT/BCPrint.cpp)
     add_dependencies(UTCodePrint WSVirtualMachime)
     target_link_libraries(UTCodePrint PUBLIC WSVirtualMachime)
+
+    add_executable(UTCodeBuild UT/BCBuild.cpp)
+    add_dependencies(UTCodeBuild WSVirtualMachime)
+    target_link_libraries(UTCodeBuild PUBLIC WSVirtualMachime)
 
 # endif()
 

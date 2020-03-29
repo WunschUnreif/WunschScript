@@ -24,7 +24,7 @@ target_include_directories(WSAbstractLang
 )
 
 
-if(BUILD_UT)
+if(GEN_UT)
 
     # --------------------- test1 ---------------------
     # add_executable(WSAbstractLangTest1 UT/UnitTest1.cpp UT/UTTool.cpp)

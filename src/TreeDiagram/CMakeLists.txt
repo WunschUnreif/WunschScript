@@ -9,10 +9,14 @@ target_include_directories(WSTreeDiagram PUBLIC
     ../Syntaxer/
     ../AbstractLang/
     ../Parser/
-    ../Support/
+    ./Support/
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )
+
+add_subdirectory(Support)
+
+add_dependencies(WSTreeDiagram WSSupport)
 
 # target_link_directories(WSTreeDiagram PUBLIC 
 #     ../../third/antlr4-cpp-runtime-4/dist

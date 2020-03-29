@@ -24,3 +24,5 @@ target_link_libraries(wunsch PUBLIC
     WSSupport
     libantlr4-runtime.a
 )
+
+add_dependencies(wunsch WSTreeDiagram)
