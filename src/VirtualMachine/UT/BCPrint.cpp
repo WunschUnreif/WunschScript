@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "Bytecode/ByteCode.hpp"
 #include "Bytecode/Opcode.hpp"
@@ -55,7 +56,7 @@ void init() {
     addInt64(addDataString("i"));
 
     addCode(PROC);
-    addInt64(29);
+    addInt64(38);
 
     addCode(GET);
     addInt64(addDataString("x"));
@@ -77,6 +78,11 @@ int main() {
     init();
 
     std::cout << code.ToString() << std::endl;
+
+    std::ifstream ifile("testcode.wsc", std::ios::binary);
+    ByteCode loaded(ifile);
+
+    std::cout << loaded.ToString() << std::endl;
 
     return 0;
 }
