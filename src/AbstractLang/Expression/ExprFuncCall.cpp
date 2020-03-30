@@ -122,3 +122,24 @@ GeneralDataNode ExpressionFuncCall::EvalForFunc(GeneralDataNode func, Environmen
 
     return result;
 }
+
+int64_t ExpressionFuncCall::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += funcObj->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::PRECALL);        // yield `precall`
+    length += vm::OpCodeSize;
+
+    for(auto param : params) {
+        length += param->GenByteCode(builder);  // yield the argument
+
+        builder.Append(vm::OpCode::ARG);        // yield `param`
+        length += vm::OpCodeSize;
+    }
+
+    builder.Append(vm::OpCode::CALL);           // yield `call`
+    length += vm::OpCodeSize;
+
+    return length;
+}

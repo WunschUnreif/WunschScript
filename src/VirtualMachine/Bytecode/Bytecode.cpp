@@ -151,6 +151,7 @@ Instruction ByteCode::GetInstructionAt(size_t offset) {
         case BIND:
         case NAME:
         case GET:
+        case GETL:
         case SET:
         case ITER:
         case SCOPE:

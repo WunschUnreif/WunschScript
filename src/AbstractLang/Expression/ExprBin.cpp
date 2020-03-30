@@ -31,6 +31,19 @@ GeneralDataNode ExpressionBinaryNot::Eval(Environment & env, bool asLval) {
     return result;
 }
 
+int64_t ExpressionBinaryNot::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += rhs->GenByteCode(builder);
+    
+    builder.Append(vm::OpCode::BNOT);
+    length += vm::OpCodeSize;
+
+    return length;
+}
+
+
+
 GeneralDataNode ExpressionBinaryBinaryOp::Eval(Environment & env, bool asLval) {
     /// logical not expression can not serve as left value
     if(asLval) {
@@ -75,4 +88,25 @@ GeneralDataNode ExpressionBinaryBinaryOp::Eval(Environment & env, bool asLval) {
     }
     
     return result;
+}
+
+int64_t ExpressionBinaryBinaryOp::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += rhs->GenByteCode(builder);
+    
+    switch(op) {
+    case BinaryAnd:
+        builder.Append(vm::OpCode::BAND);
+        break;
+    case BinaryOr:
+        builder.Append(vm::OpCode::BOR);
+        break;
+    case BinaryXor:
+        builder.Append(vm::OpCode::BXOR);
+        break;
+    }
+    length += vm::OpCodeSize;
+
+    return length;
 }

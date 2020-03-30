@@ -24,3 +24,13 @@ void ExpressionID::SetValue(Environment & env, GeneralDataNode target) {
         env.ReportError(std::runtime_error("Identifier " + identifier + " is not defined in the current scope."));
     }
 }
+
+int64_t ExpressionID::GenByteCode(vm::ByteCodeBuilder & builder) {
+    builder.Append(vm::OpCode::GET, identifier);
+    return vm::OpCodeSize + sizeof(int64_t);
+}
+
+int64_t ExpressionID::GenByteCodeLval(vm::ByteCodeBuilder & builder) {
+    builder.Append(vm::OpCode::GETL, identifier);
+    return vm::OpCodeSize + sizeof(int64_t);
+}

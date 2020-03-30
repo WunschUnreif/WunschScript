@@ -89,3 +89,16 @@ int64_t ByteCodeBuilder::GetOffsetForConst(const std::string & str) {
 
     return constMap[str];
 }
+
+void ByteCodeBuilder::ChangeArgumentForCode(size_t offset, int64_t argInt) {
+    auto opcode = OpCode(bytecode.codeBuffer[offset]);
+
+    if(!OpCodeHasArgument(opcode)) {
+        throw std::runtime_error("Calling changearg(code) where code don't need argument.");
+    }
+
+    uint8_t * argByteSeq = reinterpret_cast<uint8_t*>(&argInt);
+    for(int i = 0; i < sizeof(int64_t); ++i) {
+        bytecode.codeBuffer[offset + i + OpCodeSize] = argByteSeq[i];
+    }
+}

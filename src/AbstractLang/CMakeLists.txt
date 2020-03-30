@@ -13,14 +13,14 @@ add_library(WSAbstractLang STATIC
     ${SRC_ABSLANG_PROG}
 )
 
-target_include_directories(WSAbstractLang
-    PUBLIC
+target_include_directories(WSAbstractLang PUBLIC
     ./
     Statement/
     DataRepresentation/
     Environment/
     Expression/
-    Program/
+    "Program/"
+    ../VirtualMachine/Bytecode/
 )
 
 

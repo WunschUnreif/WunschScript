@@ -10,6 +10,7 @@ target_include_directories(WSTreeDiagram PUBLIC
     ../AbstractLang/
     ../Parser/
     ./Support/
+    ../VirtualMachine/ByteCode
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )

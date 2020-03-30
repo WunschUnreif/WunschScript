@@ -98,6 +98,17 @@ GeneralDataNode ExpressionAdd::EvalForList(GeneralDataNode lhsResult, GeneralDat
     return result;
 }
 
+int64_t ExpressionAdd::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ADD);
+    length += vm::OpCodeSize;
+
+    return length;
+}
+
 /* ---------------- Implelentation for add ---------------- */
 
 /* ---------------- Implelentation for minus ---------------- */
@@ -156,6 +167,17 @@ GeneralDataNode ExpressionMinus::EvalForFloat(GeneralDataNode lhsResult, General
         std::dynamic_pointer_cast<DataNodeFloat>(rhsResult.data)->value;
 
     return result;
+}
+
+int64_t ExpressionMinus::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::SUB);
+    length += vm::OpCodeSize;
+
+    return length;
 }
 
 /* ---------------- Implelentation for minus ---------------- */

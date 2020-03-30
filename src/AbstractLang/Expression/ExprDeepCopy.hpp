@@ -19,6 +19,8 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     };
 
     struct ExpressionDeepCopyModify final : public ExpressionBase {
@@ -29,6 +31,8 @@ namespace asl {
         std::vector<std::shared_ptr<ExpressionBase>> valToMod;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
 
     };
 

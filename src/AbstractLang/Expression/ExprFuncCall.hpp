@@ -16,6 +16,8 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false);
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     private:
         GeneralDataNode EvalForFunc(GeneralDataNode func, Environment & env);
         GeneralDataNode EvalForSystemFunc(GeneralDataNode func, Environment & env);

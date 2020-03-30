@@ -22,6 +22,8 @@ namespace vm {
         int64_t Append(OpCode code, bool argBool);
         int64_t Append(OpCode code, const std::string & argString);
 
+        void ChangeArgumentForCode(size_t offset, int64_t argInt);
+
     private:
         std::map<std::string, int64_t> constMap;
 

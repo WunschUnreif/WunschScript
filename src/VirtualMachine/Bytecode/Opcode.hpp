@@ -84,17 +84,18 @@ enum OpCode : uint8_t {
     BIND                        = 137,
     NAME                        = 138,
     GET                         = 139,
-    SET                         = 140,
+    GETL                        = 140,
+    SET                         = 141,
 
-    JFALSE                      = 141,
-    JMP                         = 142,
-    NEXT                        = 143,
-    ITER                        = 144,
+    JFALSE                      = 142,
+    JMP                         = 143,
+    NEXT                        = 144,
+    ITER                        = 145,
 
-    SCOPE                       = 145,
-
-    FILE                        = 146,
-    LINE                        = 147,
+    SCOPE                       = 146,
+    
+    FILE                        = 147,
+    LINE                        = 148,
 };
 
 constexpr int OpCodeSize = sizeof(OpCode);

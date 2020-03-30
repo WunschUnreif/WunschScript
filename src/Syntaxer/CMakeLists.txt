@@ -7,15 +7,14 @@ target_include_directories(WSSyntaxer PUBLIC
     ../Parser/
     
     ../AbstractLang/
-    ../AbstractLang/Statement/
-    ../AbstractLang/DataRepresentation/
-    ../AbstractLang/Environment/
-    ../AbstractLang/Expression/
+    ../VirtualMachine/ByteCode
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )
 
-if(BUILD_UT)
+add_dependencies(WSSyntaxer WSAbstractLang)
+
+if(GEN_UT)
 
     # ---------------- test 1 ----------------
     add_executable(WSSyntaxerTest1 UT/UnitTest1.cpp)

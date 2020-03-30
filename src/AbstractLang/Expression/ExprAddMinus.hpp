@@ -20,6 +20,8 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     private: 
         GeneralDataNode EvalForInt(GeneralDataNode lhsResult, GeneralDataNode rhsResult);
         GeneralDataNode EvalForFloat(GeneralDataNode lhsResult, GeneralDataNode rhsResult);
@@ -40,6 +42,8 @@ namespace asl {
         std::shared_ptr<ExpressionBase> rhs;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
 
     private: 
         GeneralDataNode EvalForInt(GeneralDataNode lhsResult, GeneralDataNode rhsResult);

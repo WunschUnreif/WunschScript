@@ -26,3 +26,22 @@ GeneralDataNode ExpressionEqual::Eval(Environment & env, bool asLval) {
 
     return result;
 }
+
+int64_t ExpressionEqual::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    switch(op) {
+    case TestEqual:
+        builder.Append(vm::EQ);
+        break;
+    case TestUnequal:
+        builder.Append(vm::NE);
+        break;
+    }
+    length += vm::OpCodeSize;
+
+    return length;
+}

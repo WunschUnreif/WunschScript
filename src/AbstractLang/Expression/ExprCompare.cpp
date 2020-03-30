@@ -146,3 +146,28 @@ GeneralDataNode ExpressionCompare::EvalForString(GeneralDataNode lhsNode, Genera
 
     return result;
 }
+
+int64_t ExpressionCompare::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    switch(op) {
+    case CompareLess:
+        builder.Append(vm::LT);
+        break;
+    case CompareLessEq:
+        builder.Append(vm::LTE);
+        break;
+    case CompareGreater:
+        builder.Append(vm::GT);
+        break;
+    case CompareGreaterEq:
+        builder.Append(vm::GTE);
+        break;
+    }
+    length += vm::OpCodeSize;
+
+    return length;
+}

@@ -57,6 +57,7 @@ static const char * opNamesWithArg [] = {
     "bind",
     "name",
     "get",
+    "getL",
     "set",
     "jfalse",
     "jmp",

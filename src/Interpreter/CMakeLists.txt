@@ -8,6 +8,7 @@ target_include_directories(wunsch PUBLIC
     ../AbstractLang/
     ../Parser/
     ../TreeDiagram/
+    ../VirtualMachine/ByteCode
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )
@@ -22,6 +23,7 @@ target_link_libraries(wunsch PUBLIC
     WSSyntaxer
     WSTreeDiagram
     WSSupport
+    WSVirtualMachine
     libantlr4-runtime.a
 )
 
