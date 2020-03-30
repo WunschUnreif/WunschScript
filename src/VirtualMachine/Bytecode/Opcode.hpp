@@ -99,6 +99,7 @@ enum OpCode : uint8_t {
 };
 
 constexpr int OpCodeSize = sizeof(OpCode);
+constexpr int OpArgSize = sizeof(int64_t);
 bool OpCodeHasArgument(OpCode code);
 
 std::string GetOpName(OpCode code);

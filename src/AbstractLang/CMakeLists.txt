@@ -56,7 +56,10 @@ if(GEN_UT)
         UT/
     )
 
-    target_link_libraries(WSAbstractLangTest2 WSAbstractLang)
+    target_link_libraries(WSAbstractLangTest2 PUBLIC 
+        WSVirtualMachine
+        WSAbstractLang 
+    )
 
 
     # --------------------- test3 ---------------------
@@ -73,7 +76,7 @@ if(GEN_UT)
         UT/
     )
 
-    target_link_libraries(WSAbstractLangTest3 WSAbstractLang)
+    target_link_libraries(WSAbstractLangTest3 WSAbstractLang WSVirtualMachine)
 
 
     # --------------------- test4 ---------------------
@@ -90,6 +93,34 @@ if(GEN_UT)
         UT/
     )
 
-    target_link_libraries(WSAbstractLangTest4 WSAbstractLang)
+    target_link_libraries(WSAbstractLangTest4 WSAbstractLang WSVirtualMachine)
+
+    # --------------------- codegen test: expr ---------------------
+    add_executable(WSAbstractLangCodeGenExpr UT/CodeGenExpr.cpp)
+
+    target_include_directories(WSAbstractLangCodeGenExpr
+        PUBLIC
+        ./
+        UT/
+
+        ../Syntaxer/
+        ../AbstractLang/
+        ../Parser/
+        ../VirtualMachine/ByteCode
+
+        ../../third/antlr4-cpp-runtime-4/runtime/src
+    )
+
+    target_link_directories(WSAbstractLangCodeGenExpr PUBLIC 
+        ../../third/antlr4-cpp-runtime-4/dist
+    )
+
+    target_link_libraries(WSAbstractLangCodeGenExpr 
+        WSParser
+        WSAbstractLang
+        WSSyntaxer
+        WSVirtualMachine
+        libantlr4-runtime.a
+    )
 
 endif()

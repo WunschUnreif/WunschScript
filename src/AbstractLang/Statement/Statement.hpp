@@ -18,6 +18,8 @@
 #include "Environment/Environment.hpp"
 #include "Environment/Scope.hpp"
 
+#include "CodeBuilder.hpp"
+
 namespace ws {
 
 namespace asl {
@@ -54,6 +56,8 @@ namespace asl {
         std::vector<std::shared_ptr<StatementBase>> body;
 
         bool Execute(Environment & env, std::map<std::string, GeneralDataNode> * pour = nullptr);
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) { return 0; };
     };
 
 } // namespace al

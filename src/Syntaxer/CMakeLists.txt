@@ -42,6 +42,7 @@ if(GEN_UT)
         WSParser
         WSAbstractLang
         WSSyntaxer
+        WSVirtualMachine
         libantlr4-runtime.a
     )
 
@@ -65,6 +66,7 @@ if(GEN_UT)
         WSParser
         WSAbstractLang
         WSSyntaxer
+        WSVirtualMachine
         libantlr4-runtime.a
     )
 

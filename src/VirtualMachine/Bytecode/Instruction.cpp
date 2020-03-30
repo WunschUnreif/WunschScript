@@ -17,7 +17,8 @@ std::string Instruction::ToString(size_t codePointer) {
     case ArgTypeNull:
         break;
     case ArgTypeBool:
-        result << argument.argBool ? "true" : "false";
+        result << (argument.argBool ? "true" : "false");
+        break;
     case ArgTypeInt:
         result << std::to_string(argument.argInt);
         break;

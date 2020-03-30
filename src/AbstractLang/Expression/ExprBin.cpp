@@ -93,6 +93,7 @@ GeneralDataNode ExpressionBinaryBinaryOp::Eval(Environment & env, bool asLval) {
 int64_t ExpressionBinaryBinaryOp::GenByteCode(vm::ByteCodeBuilder & builder) {
     int64_t length = 0;
 
+    length += lhs->GenByteCode(builder);
     length += rhs->GenByteCode(builder);
     
     switch(op) {

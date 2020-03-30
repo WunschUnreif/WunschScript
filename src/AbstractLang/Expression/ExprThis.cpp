@@ -19,3 +19,9 @@ GeneralDataNode ExpressionThis::Eval(Environment & env, bool asLval) {
 
     return result;
 }
+
+int64_t ExpressionThis::GenByteCode(vm::ByteCodeBuilder & builder) {
+    builder.Append(vm::OpCode::THIS);
+
+    return vm::OpCodeSize;
+}

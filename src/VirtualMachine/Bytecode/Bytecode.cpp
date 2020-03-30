@@ -14,8 +14,17 @@ ByteCode::ByteCode(std::ifstream & file) {
     std::vector<uint8_t> buffer;
     uint8_t checksum = 0;
 
+    // check the file size
+    file.seekg(0, std::ios_base::end);
+    auto filesize = file.tellg();
+    file.seekg(0, std::ios_base::beg);
+
+    if(filesize < 13) {
+        throw std::runtime_error("Bytecode file empty.");
+    }
+
     // load the whole file
-    while(true) {
+    while(!file.eof()) {
         char currbyte;
         file.get(currbyte);
 
