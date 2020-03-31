@@ -68,6 +68,8 @@ enum OpCode : uint8_t {
     IMML                        = 37,
     IMMD                        = 38,
 
+    POP                         = 39,
+
     /* -------- Instructions with Argument -------- */
     ACCID                       = 128,
     ACCIDL                      = 129,
@@ -98,8 +100,8 @@ enum OpCode : uint8_t {
     LINE                        = 148,
 };
 
-constexpr int OpCodeSize = sizeof(OpCode);
-constexpr int OpArgSize = sizeof(int64_t);
+constexpr int64_t OpCodeSize = sizeof(OpCode);
+constexpr int64_t OpArgSize = sizeof(int64_t);
 bool OpCodeHasArgument(OpCode code);
 
 std::string GetOpName(OpCode code);

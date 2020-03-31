@@ -7,3 +7,16 @@ void Program::Execute() {
         stmt->Execute(env);
     }
 }
+
+int64_t Program::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    builder.Append(vm::OpCode::FILE, filename);
+    length += vm::OpCodeSize + vm::OpArgSize;
+
+    for(auto stmt : statements) {
+        length += stmt->GenByteCode(builder);
+    }
+
+    return length;
+}

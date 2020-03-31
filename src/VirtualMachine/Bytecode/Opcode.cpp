@@ -41,7 +41,8 @@ static const char * opNamesNoArg [] = {
     "endps",
     "immN",
     "immL",
-    "immD"
+    "immD",
+    "pop",
 };
 
 static const char * opNamesWithArg [] = {

@@ -48,6 +48,8 @@ namespace asl {
         virtual bool Execute(Environment & env);
 
         virtual bool InnerExecute(Environment & env) = 0;
+
+        virtual int64_t GenByteCode(vm::ByteCodeBuilder & builder);
     };
 
 
@@ -57,7 +59,7 @@ namespace asl {
 
         bool Execute(Environment & env, std::map<std::string, GeneralDataNode> * pour = nullptr);
 
-        int64_t GenByteCode(vm::ByteCodeBuilder & builder) { return 0; };
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder, bool forFunc = false);
     };
 
 } // namespace al

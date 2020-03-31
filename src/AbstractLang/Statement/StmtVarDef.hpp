@@ -16,6 +16,8 @@ namespace asl {
 
         bool InnerExecute(Environment & env) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     private:
         bool IsReservedWord();
         

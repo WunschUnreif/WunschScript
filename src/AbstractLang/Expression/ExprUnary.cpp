@@ -56,3 +56,21 @@ GeneralDataNode ExpressionUnaryPM::EvalForFloat(GeneralDataNode floatResult) {
 
     return result;
 }
+
+int64_t ExpressionUnaryPM::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += rhs->GenByteCode(builder);
+
+    switch(op) {
+    case UnaryPlus:
+        builder.Append(vm::OpCode::UADD);
+        break;
+    case UnaryMinus:
+        builder.Append(vm::OpCode::USUB);
+        break;
+    }
+    length += vm::OpCodeSize;
+    
+    return length;
+}

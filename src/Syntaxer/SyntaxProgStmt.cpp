@@ -16,6 +16,7 @@ antlrcpp::Any syn::ParseTreeVisitor::visitProgram(WunschParser::ProgramContext *
 
     program->rootScope = rootScope;
     program->env.currentScope = rootScope;
+    program->filename = filename;
 
     lexScopeStack.push(rootScope);
 
@@ -39,5 +40,5 @@ antlrcpp::Any syn::ParseTreeVisitor::visitStmt(WunschParser::StmtContext * ctx) 
     else if(ctx->condStmt())    {   return visit(ctx->condStmt());      }
     else if(ctx->whileStmt())   {   return visit(ctx->whileStmt());     }
     else if(ctx->forStmt())     {   return visit(ctx->forStmt());       }
-    else { return visit(ctx->returnStmt()); }
+    else                        {   return visit(ctx->returnStmt());    }
 }

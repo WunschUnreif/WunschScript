@@ -48,7 +48,7 @@ antlrcpp::Any syn::ParseTreeVisitor::visitMultdivExpr(WunschParser::MultdivExprC
 
         expr->lhs = visit(ctx->expr(0)).as<std::shared_ptr<ExpressionBase>>();
         expr->rhs = visit(ctx->expr(1)).as<std::shared_ptr<ExpressionBase>>();
-        expr->op = ctx->op->getText() == "/" ? ExpressionDivMod::OpDivide : ExpressionDivMod::opMod;
+        expr->op = ctx->op->getText() == "/" ? ExpressionDivMod::OpDivide : ExpressionDivMod::OpMod;
 
         return std::dynamic_pointer_cast<ExpressionBase>(expr);
     }

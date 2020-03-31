@@ -66,6 +66,30 @@ void ExpressionMemberAccess::SetValue(Environment & env, GeneralDataNode target)
     dictNode->value[id] = target;
 }
 
+int64_t ExpressionMemberAccess::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ACCID, id);
+    length += vm::OpCodeSize + vm::OpArgSize;
+
+    return length;
+}
+
+int64_t ExpressionMemberAccess::GenByteCodeLval(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ACCIDL, id);
+    length += vm::OpCodeSize + vm::OpArgSize;
+
+    return length;
+}
+
+
+
 GeneralDataNode ExpressionMemberAccessCalaulated::Eval(Environment & env, bool asLval) {
     /// first evaluated the left hand expression
     auto lhsResult = lhs->Eval(env);
@@ -243,4 +267,28 @@ void ExpressionMemberAccessCalaulated::SetValue(Environment & env, GeneralDataNo
     /// 3. otherwise, error
     env.ReportError(std::runtime_error("Cannor access member from non-dict/list value"));
     return;
+}
+
+int64_t ExpressionMemberAccessCalaulated::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ACCESS);
+    length += vm::OpCodeSize;
+
+    return length;
+}
+
+int64_t ExpressionMemberAccessCalaulated::GenByteCodeLval(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ACCESSL);
+    length += vm::OpCodeSize;
+
+    return length;
 }

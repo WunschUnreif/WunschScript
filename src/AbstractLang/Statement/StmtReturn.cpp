@@ -26,3 +26,14 @@ bool StatementReturn::InnerExecute(Environment & env) {
     /// forbid continue execution
     return false;
 }
+
+int64_t StatementReturn::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = StatementBase::GenByteCode(builder);
+
+    length += expr->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::RET);
+    length += vm::OpCodeSize;
+
+    return length;
+}

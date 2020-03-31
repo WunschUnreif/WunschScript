@@ -25,7 +25,7 @@ namespace asl {
             env.ReportError(std::runtime_error("Cannot set value to this expression"));
         }
 
-        virtual int64_t GenByteCode(vm::ByteCodeBuilder & builder) { return 0; };
+        virtual int64_t GenByteCode(vm::ByteCodeBuilder & builder) = 0;
 
         virtual int64_t GenByteCodeLval(vm::ByteCodeBuilder & builder) { 
             throw std::runtime_error("Cannot gen bytecode for this expression as lval");

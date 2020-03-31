@@ -55,7 +55,7 @@ std::shared_ptr<ExpressionBase> GenModExpr(std::shared_ptr<ExpressionBase> lhs, 
     auto expr = std::make_shared<ExpressionDivMod>();
     expr->lhs = lhs;
     expr->rhs = rhs;
-    expr->op = ExpressionDivMod::opMod;
+    expr->op = ExpressionDivMod::OpMod;
     return expr;
 }
 

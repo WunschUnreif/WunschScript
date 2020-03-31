@@ -15,6 +15,8 @@ namespace asl {
         std::shared_ptr<ExpressionBase> rhs;
 
         bool InnerExecute(Environment & env) override;
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
         
     };
 

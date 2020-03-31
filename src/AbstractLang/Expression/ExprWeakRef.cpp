@@ -24,6 +24,19 @@ GeneralDataNode ExpressionWeakRef::Eval(Environment & env, bool asLval) {
     return refGDN;
 }
 
+int64_t ExpressionWeakRef::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += ref->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::WREF);
+    length += vm::OpCodeSize;
+    
+    return length;
+}
+
+
+
 GeneralDataNode ExpressionOptionalDeref::Eval(Environment & env, bool asLval) {
     /// can only be right value 
     if(asLval) {
@@ -51,6 +64,19 @@ GeneralDataNode ExpressionOptionalDeref::Eval(Environment & env, bool asLval) {
 
     return result;
 }
+
+int64_t ExpressionOptionalDeref::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += expr->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::OPDEREF);
+    length += vm::OpCodeSize;
+    
+    return length;
+}
+
+
 
 GeneralDataNode ExpressionStrongDeref::Eval(Environment & env, bool asLval) {
     /// can only be right value 
@@ -80,4 +106,15 @@ GeneralDataNode ExpressionStrongDeref::Eval(Environment & env, bool asLval) {
     result.data = derefedNode;
 
     return result;
+}
+
+int64_t ExpressionStrongDeref::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += expr->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::FCDEREF);
+    length += vm::OpCodeSize;
+    
+    return length;
 }

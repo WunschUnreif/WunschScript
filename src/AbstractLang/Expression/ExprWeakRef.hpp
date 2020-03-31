@@ -19,6 +19,8 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     };
 
     /**
@@ -32,6 +34,8 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+
     };
 
     /**
@@ -44,6 +48,8 @@ namespace asl {
         std::shared_ptr<ExpressionBase> expr;
 
         GeneralDataNode Eval(Environment & env, bool asLval = false) override;
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
 
     };
 

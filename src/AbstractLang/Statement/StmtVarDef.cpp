@@ -24,3 +24,17 @@ bool StatementVariableDefine::IsReservedWord() {
     /// TODO: judge reserved word
     return false;
 }
+
+int64_t StatementVariableDefine::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = StatementBase::GenByteCode(builder);
+
+    builder.Append(vm::OpCode::NAME, id);
+    length += vm::OpCodeSize + vm::OpArgSize;
+
+    length += expr->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::SET, id);
+    length += vm::OpCodeSize + vm::OpArgSize;
+
+    return length;
+}

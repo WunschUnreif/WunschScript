@@ -13,3 +13,15 @@ bool StatementAssignment::InnerExecute(Environment & env) {
 
     return true;
 }
+
+int64_t StatementAssignment::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = StatementBase::GenByteCode(builder);
+
+    length += lhs->GenByteCodeLval(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::ASSIGN);
+    length += vm::OpCodeSize;
+
+    return length;
+}

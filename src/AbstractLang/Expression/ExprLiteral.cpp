@@ -143,7 +143,7 @@ int64_t ExpressionLiteral::GenByteCodeForFunc(vm::ByteCodeBuilder & builder) {
 
     auto funcNode = std::dynamic_pointer_cast<DataNodeFunc>(value.data);
 
-    length += funcNode->body->GenByteCode(builder); // gen code for body
+    length += funcNode->body->GenByteCode(builder, true); // gen code for body
 
     // register param names 
     for(auto & paramName : funcNode->paramNames) {

@@ -10,7 +10,7 @@ std::string Instruction::ToString(size_t codePointer) {
 
     // 1. Add instruction name, extend to 8 characters' width
     result << GetOpName(opcode);
-    while(result.str().length() < 8) result << ' ';
+    while(result.str().length() <= 8) result << ' ';
 
     // 2. Add argument string.
     switch(argumentType) {

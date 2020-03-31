@@ -22,6 +22,9 @@ namespace asl {
         GeneralDataNode Eval(Environment & env, bool asLval = false)  override;
         void SetValue(Environment & env, GeneralDataNode target) override;
 
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+        int64_t GenByteCodeLval(vm::ByteCodeBuilder & builder) override;
+
     };
 
     /**
@@ -36,6 +39,9 @@ namespace asl {
 
         GeneralDataNode Eval(Environment & env, bool asLval = false)  override;
         void SetValue(Environment & env, GeneralDataNode target) override;
+
+        int64_t GenByteCode(vm::ByteCodeBuilder & builder) override;
+        int64_t GenByteCodeLval(vm::ByteCodeBuilder & builder) override;
 
     };
 

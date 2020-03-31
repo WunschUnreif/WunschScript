@@ -88,6 +88,18 @@ GeneralDataNode ExpressionMultiply::EvalForList(GeneralDataNode lhsResult, Gener
     return result;
 }
 
+int64_t ExpressionMultiply::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    builder.Append(vm::OpCode::MUL);
+    length += vm::OpCodeSize;
+    
+    return length;
+}
+
 /* ---------------- Implelentation for mult ---------------- */
 
 /* ---------------- Implelentation for divmod ---------------- */
@@ -165,6 +177,25 @@ GeneralDataNode ExpressionDivMod::EvalForFloat(GeneralDataNode lhsResult, Genera
         /// float mod is not supported
         return GeneralDataNode();
     }
+}
+
+int64_t ExpressionDivMod::GenByteCode(vm::ByteCodeBuilder & builder) {
+    int64_t length = 0;
+
+    length += lhs->GenByteCode(builder);
+    length += rhs->GenByteCode(builder);
+
+    switch(op) {
+    case OpDivide:
+        builder.Append(vm::OpCode::DIV);
+        break;
+    case OpMod:
+        builder.Append(vm::OpCode::REM);
+        break;
+    }
+    length += vm::OpCodeSize;
+    
+    return length;
 }
 
 /* ---------------- Implelentation for divmod ---------------- */

@@ -20,7 +20,7 @@ int main(int argc, char * argv[]) {
     /// parser
     WunschParser parser(&tokens);
 
-    auto exprContext = parser.expr();
+    auto exprContext = parser.program();
 
     /// if error:
     auto errornum = parser.getNumberOfSyntaxErrors();
@@ -31,11 +31,13 @@ int main(int argc, char * argv[]) {
 
     /// syntaxer
     ws::syn::ParseTreeVisitor visitor;
-    auto expr = visitor.visit(exprContext).as<std::shared_ptr<ws::asl::ExpressionBase>>();
+    auto prog = visitor.visit(exprContext).as<std::shared_ptr<ws::asl::Program>>();
 
     ws::vm::ByteCodeBuilder builder;
 
-    expr->GenByteCode(builder);
+    auto len = prog->GenByteCode(builder);
+
+    std::cout << "Generated code length = " << len << " Bytes" << std::endl;
     std::cout << builder.bytecode.ToString() << std::endl;
 
     return 0;
