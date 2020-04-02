@@ -11,7 +11,13 @@ GeneralDataNode ExpressionDeepCopy::Eval(Environment & env, bool asLval) {
 
     /// evaluate and then copy. 
     auto copy = ref->Eval(env);
-    return copy.DeepCopy();
+    try {
+        copy = copy.DeepCopy();
+    } catch (std::runtime_error & e) {
+        env.ReportError(e);
+    }
+
+    return copy;
 }
 
 int64_t ExpressionDeepCopy::GenByteCode(vm::ByteCodeBuilder & builder) {
@@ -41,7 +47,11 @@ GeneralDataNode ExpressionDeepCopyModify::Eval(Environment & env, bool asLval) {
         return GeneralDataNode();
     }
 
-    copy = copy.DeepCopy();
+    try {
+        copy = copy.DeepCopy();
+    } catch (std::runtime_error & e) {
+        env.ReportError(e);
+    }
 
     /// apply the modifications
     auto dictNode = std::dynamic_pointer_cast<DataNodeDict>(copy.data);

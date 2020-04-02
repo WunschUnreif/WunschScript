@@ -23,7 +23,7 @@ target_link_libraries(wunsch PUBLIC
     WSSyntaxer
     WSTreeDiagram
     WSSupport
-    WSVirtualMachine
+    WSVM_ByteCode
     libantlr4-runtime.a
 )
 

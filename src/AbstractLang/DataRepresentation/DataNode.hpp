@@ -93,6 +93,9 @@ namespace asl {
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
         std::shared_ptr<DataNodeBase> DeepCopy() override;
+
+    private: 
+        bool underTraverse = false;
     };
 
     /**
@@ -105,6 +108,9 @@ namespace asl {
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
         std::shared_ptr<DataNodeBase> DeepCopy() override;
+
+    private: 
+        bool underTraverse = false;
     };
 
     /**

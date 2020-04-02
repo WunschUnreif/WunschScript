@@ -1,3 +1,5 @@
+#include <exception>
+
 #include <cassert>
 
 #include "DataNode.hpp"
@@ -110,6 +112,12 @@ std::shared_ptr<DataNodeBase> DataNodeStr::DeepCopy() {
 /* ---------------- Implementation for type list ---------------- */
 
 std::string DataNodeList::ToString() {
+    if(underTraverse) {
+        return "[...]";
+    }
+
+    underTraverse = true;
+
     std::string result = "[ ";
     bool first = true;
     for(auto gdn : value) {
@@ -118,11 +126,19 @@ std::string DataNodeList::ToString() {
     }
     result += " ]";
 
+    underTraverse = false;
+
     return result;
 }
 
 bool DataNodeList::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
     assert(typeid(*this) == typeid(*rhs));
+
+    if(underTraverse) {
+        return this == rhs.get();
+    }
+
+    underTraverse = true;
 
     auto & rhsList = std::dynamic_pointer_cast<DataNodeList>(rhs)->value;
 
@@ -138,18 +154,26 @@ bool DataNodeList::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
         }
     }
 
+    underTraverse = false;
+
     return true;
 }
 
 std::shared_ptr<DataNodeBase> DataNodeList::DeepCopy() {
+    if(underTraverse) {
+        throw std::runtime_error("Self contained list cannot be deepcopied.");
+    }
+
+    underTraverse = true;
+
     auto result = std::make_shared<DataNodeList>();
     
     for(auto gdn : value) {
-        /// ensure there is no loop (self containing) inside the list
-        assert(gdn.data.get() != this);
 
         result->value.push_back(gdn.DeepCopy());
     }
+
+    underTraverse = false;
 
     return result;
 }
@@ -159,6 +183,12 @@ std::shared_ptr<DataNodeBase> DataNodeList::DeepCopy() {
 /* ---------------- Implementation for type dict ---------------- */
 
 std::string DataNodeDict::ToString() {
+    if(underTraverse) {
+        return "{...}";
+    }
+
+    underTraverse = true;
+
     std::string result = "{ ";
     bool first = true;
     for(auto kv : value) {
@@ -167,11 +197,19 @@ std::string DataNodeDict::ToString() {
     }
     result += " }";
 
+    underTraverse = false;
+
     return result;
 }
 
 bool DataNodeDict::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
     assert(typeid(*this) == typeid(*rhs));
+
+    if(underTraverse) {
+        return this == rhs.get();
+    }
+
+    underTraverse = true;
 
     auto & rhsMap = std::dynamic_pointer_cast<DataNodeDict>(rhs)->value;
 
@@ -187,18 +225,26 @@ bool DataNodeDict::IsEqualTo(std::shared_ptr<DataNodeBase> rhs) {
         }
     }
 
+    underTraverse = false;
+
     return true;
 }
 
 std::shared_ptr<DataNodeBase> DataNodeDict::DeepCopy() {
+    if(underTraverse) {
+        throw std::runtime_error("Self contained dict cannot be deepcopied.");
+    }
+
+    underTraverse = true;
+
     auto result = std::make_shared<DataNodeDict>();
     
     for(auto kv : value) {
-        /// ensure there is no loop (self containing) inside the dict
-        assert(kv.second.data.get() != this);
 
         result->value[kv.first] = kv.second.DeepCopy();
     }
+
+    underTraverse = false;
 
     return result;
 }
