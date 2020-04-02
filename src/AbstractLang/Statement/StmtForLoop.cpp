@@ -60,32 +60,17 @@ int64_t StatementForLoop::GenByteCode(vm::ByteCodeBuilder & builder) {
 
     length += toIter->GenByteCode(builder);         // yield toIter.codegen
 
-    auto jmp = builder.Append(vm::JMP, 2 * (vm::OpCodeSize + vm::OpArgSize));   // yield `jmp -> loop body`
-    length += vm::OpCodeSize + vm::OpArgSize;
-
-    auto proc = builder.Append(vm::PROC, 0LL);      // yield `proc ...`
-    length += vm::OpCodeSize + vm::OpArgSize;
-
-    builder.Append(vm::SCOPE, loopBody->lexScope->GetPath()); // yield `scope /0/1/...`
-    length += vm::OpCodeSize + vm::OpArgSize;
-
     builder.Append(vm::ITER, iteratorName);         // yield `iter i`
     length += vm::OpCodeSize + vm::OpArgSize;
 
-    int64_t innerLength = 0;
-    for(auto stmt : loopBody->body) {               // gen code for inner stuff
-        innerLength += stmt->GenByteCode(builder);  
-    }
-    length += innerLength;
-
-    builder.Append(vm::NEXT, -innerLength);         // yield `next ...`
+    // jump through: 1. jmp ... 2. proc ...
+    auto jmp = builder.Append(vm::JMP, 2 * (vm::OpCodeSize + vm::OpArgSize));       // yield `jmp -> loop body`
     length += vm::OpCodeSize + vm::OpArgSize;
 
-    // proc contains: 1. proc... 2. scope... 3. iter ... 4. iterBody 5. next ... 6. endps
-    builder.ChangeArgumentForCode(proc, 4 * (vm::OpCodeSize + vm::OpArgSize) + vm::OpCodeSize + innerLength);
+    auto innerLength = loopBody->GenByteCode(builder);
 
-    builder.Append(vm::OpCode::ENDPS); // the ending
-    length += vm::OpCodeSize;
+    builder.Append(vm::NEXT, -(innerLength - (vm::OpCodeSize + vm::OpArgSize)));    // yield `next ...`
+    length += vm::OpCodeSize + vm::OpArgSize;
 
     return length;
 }

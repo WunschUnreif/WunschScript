@@ -28,8 +28,3 @@ var sqrt =
 } (3.0, 0.000000001)
 
 print(sqrt)
-
-
-var recur = (x, curr) => {
-
-}

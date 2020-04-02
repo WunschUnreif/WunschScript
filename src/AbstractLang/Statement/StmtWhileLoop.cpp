@@ -37,17 +37,18 @@ int64_t StatementWhileLoop::GenByteCode(vm::ByteCodeBuilder & builder) {
     auto jfalse = builder.Append(vm::OpCode::JFALSE, 0LL);                  // yield `jfalse ...`
     length += vm::OpCodeSize + vm::OpArgSize;
 
+    // jump through: 1. jmp ... 2. proc ...
     builder.Append(vm::OpCode::JMP, 2 * (vm::OpCodeSize + vm::OpArgSize));  // yield `jmp -> loop body`
     length += vm::OpCodeSize + vm::OpArgSize;
 
     auto bodyLength = loopBody->GenByteCode(builder);                       // proc ...(loop) ... endps
     length += bodyLength;
-
-    // jump through: 1. jfalse 2. jmp  2. body  3. jmp (back)
-    builder.ChangeArgumentForCode(jfalse, 3 * (vm::OpCodeSize + vm::OpArgSize) + bodyLength);
     
     builder.Append(vm::OpCode::JMP, -length);
     length += vm::OpCodeSize + vm::OpArgSize;
+
+    // jump through: 1. jfalse 2. jmp  2. body  3. jmp (back)
+    builder.ChangeArgumentForCode(jfalse, 3 * (vm::OpCodeSize + vm::OpArgSize) + bodyLength);
 
     return length;
 }

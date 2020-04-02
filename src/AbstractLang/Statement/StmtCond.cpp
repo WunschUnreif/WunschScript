@@ -37,22 +37,20 @@ int64_t StatementCondition::GenByteCode(vm::ByteCodeBuilder & builder) {
     auto thenBranchLength = thenBranch->GenByteCode(builder);               // proc ...(then) ... endps
     length += thenBranchLength;
 
-    // jfalse: 0. jfalse 1. jmp 2. then branch 3. jmp
-    builder.ChangeArgumentForCode(jfalse, 3 * (vm::OpCodeSize + vm::OpArgSize) + thenBranchLength);
-
     auto jmpAfterThen = builder.Append(vm::OpCode::JMP, 0LL);
     length += vm::OpCodeSize + vm::OpArgSize;
+
+    // jfalse: 0. jfalse 1. jmp 2. then branch 3. jmp
+    builder.ChangeArgumentForCode(jfalse, 3 * (vm::OpCodeSize + vm::OpArgSize) + thenBranchLength);
 
     auto lengthBeforeElse = length;
 
     if(elseBranch) {
-        auto jmp = builder.Append(vm::OpCode::JMP, 0LL);                    // yield `jmp -> else branch`
+        auto jmp = builder.Append(vm::OpCode::JMP, 2 * (vm::OpCodeSize + vm::OpArgSize));   // yield `jmp -> else branch`
         length += vm::OpCodeSize + vm::OpArgSize;
 
         auto elseBranchLength = elseBranch->GenByteCode(builder);           // proc ...(else) ... endps
         length += elseBranchLength;
-
-        builder.ChangeArgumentForCode(jmp, 2 * (vm::OpCodeSize + vm::OpArgSize));
     }
 
     // jmp after then: 0. jmp 1. generated for else

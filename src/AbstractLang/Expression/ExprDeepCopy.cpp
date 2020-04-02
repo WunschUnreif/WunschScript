@@ -65,7 +65,7 @@ int64_t ExpressionDeepCopyModify::GenByteCode(vm::ByteCodeBuilder & builder) {
     // 2. modifications:
     for(size_t i = 0; i < keyToMod.size(); ++i) {
         builder.Append(vm::OpCode::ACCIDL, keyToMod[i]);        // yield `accidL key`
-        length += vm::OpCodeSize + sizeof(int64_t);
+        length += vm::OpCodeSize + vm::OpArgSize;
 
         length += valToMod[i]->GenByteCode(builder);            // yield the expr to evaluate the value
 

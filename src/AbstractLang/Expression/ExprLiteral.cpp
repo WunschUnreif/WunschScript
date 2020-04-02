@@ -99,7 +99,7 @@ int64_t ExpressionLiteral::GenByteCodeForList(vm::ByteCodeBuilder & builder) {
     builder.Append(vm::OpCode::IMML);               // yield `immL`, top = []
     length += vm::OpCodeSize;
 
-    auto listGen = std::dynamic_pointer_cast<DataNodeList>(value.data)->generator;
+    auto & listGen = std::dynamic_pointer_cast<DataNodeList>(value.data)->generator;
 
     for(auto expr : listGen) {
         length += expr->GenByteCode(builder);       // push item to the top

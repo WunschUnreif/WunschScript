@@ -32,8 +32,8 @@
 *.app
 
 # Third-party files 
-third/antlr4-cpp-runtime-4/*
-!third/antlr4-cpp-runtime-4/README.md
+# third/antlr4-cpp-runtime-4/*
+# !third/antlr4-cpp-runtime-4/README.md
 
 # ANTLR generated
 grammar/.antlr/*

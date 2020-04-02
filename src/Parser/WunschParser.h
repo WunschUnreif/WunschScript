@@ -572,6 +572,8 @@ public:
     antlr4::tree::TerminalNode* ID(size_t i);
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> ENDL();
+    antlr4::tree::TerminalNode* ENDL(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

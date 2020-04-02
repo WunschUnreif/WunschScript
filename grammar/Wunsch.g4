@@ -60,7 +60,7 @@ floatLiteral  : FLOAT;
 boolLiteral   : BOOLEANLIT;
 stringLiteral : STRING+;
 listLiteral   : '[' br (expr ( br ',' br expr)*)? br ']';
-dictLiteral   : '{' br (ID br ':' br expr (br ',' br ID br ':' br expr)*)? br '}';
+dictLiteral   : '{' br (ID br ':' br expr ( ((br ',' br)|ENDL) ID br ':' br expr)*)? br '}';
 nilLiteral    : 'nil';
 
 /* Varible define and assignment */

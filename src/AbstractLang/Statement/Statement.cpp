@@ -61,17 +61,15 @@ int64_t StatementBlock::GenByteCode(vm::ByteCodeBuilder & builder, bool forFunc)
     builder.Append(vm::SCOPE, lexScope->GetPath()); // yield `scope /0/1/...`
     length += vm::OpCodeSize + vm::OpArgSize;
 
-    int64_t innerLength = 0;
     for(auto stmt : body) {                         // gen code for inner stuff
-        innerLength += stmt->GenByteCode(builder);  
+        length += stmt->GenByteCode(builder);  
     }
-    length += innerLength;
-
-    // proc contains: 1. proc... 2. scope... 3. iterBody 4. endp
-    builder.ChangeArgumentForCode(proc, 2 * (vm::OpCodeSize + vm::OpArgSize) + innerLength + vm::OpCodeSize);
 
     builder.Append(forFunc ? vm::OpCode::ENDP : vm::OpCode::ENDPS); // the ending
     length += vm::OpCodeSize;
+
+    // proc contains: 1. proc... 2. scope... 3. iterBody 4. endp ==> everything generated
+    builder.ChangeArgumentForCode(proc, length);
 
     return length;
 }

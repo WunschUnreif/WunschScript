@@ -27,10 +27,10 @@ void ExpressionID::SetValue(Environment & env, GeneralDataNode target) {
 
 int64_t ExpressionID::GenByteCode(vm::ByteCodeBuilder & builder) {
     builder.Append(vm::OpCode::GET, identifier);
-    return vm::OpCodeSize + sizeof(int64_t);
+    return vm::OpCodeSize + vm::OpArgSize;
 }
 
 int64_t ExpressionID::GenByteCodeLval(vm::ByteCodeBuilder & builder) {
     builder.Append(vm::OpCode::GETL, identifier);
-    return vm::OpCodeSize + sizeof(int64_t);
+    return vm::OpCodeSize + vm::OpArgSize;
 }
