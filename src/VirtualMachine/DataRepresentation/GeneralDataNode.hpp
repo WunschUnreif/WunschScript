@@ -44,10 +44,16 @@ namespace vm {
      */
     struct Value {
         bool isLval = false;
-        union _Value{
-            GeneralDataNode rval;
+        struct _Value {
             GeneralDataNode * lval;
+            GeneralDataNode rval;
         } value;
+
+        Value(GeneralDataNode rval)
+            { isLval = false; value.rval = rval; }
+
+        Value(GeneralDataNode * lval)
+            { isLval = true; value.lval = lval; }
     };
 
 } // namespace vm

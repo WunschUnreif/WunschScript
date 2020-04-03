@@ -15,7 +15,7 @@ message(${CMAKE_CXX_COMPILER})
 set(CMAKE_CXX_FLAGS "-O2 -g")
 
 # specify the C++ standard
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # build ut or not
