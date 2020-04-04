@@ -24,10 +24,12 @@ namespace vm {
         std::vector<uint8_t> codeBuffer;
         std::vector<uint8_t> dataBuffer;
 
-        Instruction GetInstructionAt(size_t offset);
+        Instruction&& GetInstructionAt(size_t offset);
 
         std::string ToString();
         void WriteToFile(std::ofstream & file);
+
+        size_t GetAddressUpperBound() { return codeBuffer.size(); }
 
     private:
 

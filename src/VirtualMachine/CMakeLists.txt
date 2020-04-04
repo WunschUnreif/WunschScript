@@ -1,6 +1,7 @@
 aux_source_directory(. SRC_VM)
 aux_source_directory(DataRepresentation SRC_VM_DR)
 aux_source_directory(Machine SRC_VM_M)
+aux_source_directory(Machine/InstructionExecutor SRC_VM_M_EXE)
 
 add_subdirectory(Bytecode/)
 
@@ -8,6 +9,7 @@ add_library(WSVirtualMachine
     ${SRC_VM}
     ${SRC_VM_DR}
     ${SRC_VM_M}
+    ${SRC_VM_M_EXE}
 )
 
 target_include_directories(WSVirtualMachine PUBLIC 

@@ -144,7 +144,7 @@ std::string ByteCode::GetConstAt(size_t offset) {
     return std::string(reinterpret_cast<char*>(&dataBuffer[offset]));
 }
 
-Instruction ByteCode::GetInstructionAt(size_t offset) {
+Instruction&& ByteCode::GetInstructionAt(size_t offset) {
     Instruction result;
     
     result.opcode = OpCode(codeBuffer[offset]);
@@ -195,7 +195,7 @@ Instruction ByteCode::GetInstructionAt(size_t offset) {
         }
     }
 
-    return result;
+    return std::move(result);
 }
 
 #undef REQUIRE_GET_PARAM_IMPL
