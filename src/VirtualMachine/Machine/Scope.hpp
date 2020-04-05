@@ -28,6 +28,7 @@ namespace vm {
         std::map<std::string, Scope, std::less<>> scopeMap;
 
         Value Access(const std::string & path, const std::string & name, bool asLval=false);
+        void Bind(const std::string & path, const std::string & name, GeneralDataNode & node);
         void PushScope(const std::string & path);
         void PopScope(const std::string & path);
         void InsertName(const std::string & path, const std::string & name);

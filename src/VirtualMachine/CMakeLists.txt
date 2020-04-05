@@ -35,5 +35,10 @@ if(GEN_UT)
     target_link_libraries(UTScopeDir PUBLIC WSVM_ByteCode WSVirtualMachine)
     target_include_directories(UTScopeDir PUBLIC ./)
 
+    add_executable(UTSingleStep UT/SingleStep.cpp)
+    add_dependencies(UTSingleStep WSVM_ByteCode WSVirtualMachine)
+    target_link_libraries(UTSingleStep PUBLIC WSVM_ByteCode WSVirtualMachine)
+    target_include_directories(UTSingleStep PUBLIC ./)
+
 endif()
 

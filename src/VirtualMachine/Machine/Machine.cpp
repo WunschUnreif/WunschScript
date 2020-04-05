@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 
 #include "Machine.hpp"
 
@@ -7,14 +8,34 @@ using namespace ws::vm;
 Machine::Machine(Executor & initialExecutor) {
     metaExecutors.emplace_back(initialExecutor);
     metaExecutors[0].executorID = 0;
+    metaExecutors[0].machine = this;
+    metaExecutors[0].codePointer = 0;
 
     workerExecutors.emplace(metaExecutors[0]);
 }
 
 void Machine::Run() {
     while(!workerExecutors.empty()) {
+        currentWorkerFinished = false;
         workerExecutors.top().Execute();
+        if(currentWorkerFinished) {
+            workerExecutors.pop();
+        }
     }
+}
+
+bool Machine::SingleStep() {
+    if(workerExecutors.empty()) {
+        return false;
+    }
+    
+    currentWorkerFinished = false;
+    workerExecutors.top().ExecuteSingleStep();
+    if(currentWorkerFinished) {
+        workerExecutors.pop();
+    }
+
+    return true;
 }
 
 void Machine::ReportError(const std::string & content) {

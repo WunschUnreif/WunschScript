@@ -18,10 +18,13 @@ namespace vm {
 
         std::stack<Value> valueStack;
 
+        bool currentWorkerFinished = false;
+
         Machine() {}
         Machine(Executor & initialExecutor);
 
         void Run();
+        bool SingleStep();
 
         size_t GetNextExecutorID() { return metaExecutors.size(); }
 

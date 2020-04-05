@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cassert>
 
 #include "Executor.hpp"
@@ -12,9 +13,10 @@ Executor::Executor(const Executor & exe):
     codePointer(exe.codePointer),
     filename(exe.filename),
     lineNoInFile(exe.lineNoInFile),
-    scopeDirectory(exe.scopeDirectory),
-    currentScopePath(exe.currentScopePath) 
-{}
+    scopeDirectory(exe.scopeDirectory)
+{
+    currentScopePathStack.push("/");
+}
 
 Executor Executor::operator=(const Executor & exe) {
     return Executor(exe);
@@ -41,94 +43,127 @@ void Executor::Execute() {
     }
 }
 
+void Executor::ExecuteSingleStep() {
+    auto inst = bytecode->GetInstructionAt(codePointer);
+    
+    std::cout << "->" << codePointer << "@" << executorID << " of " 
+                << filename << ":" << lineNoInFile << std::endl;
+    std::cout << "\t" << inst.ToString() << std::endl;
+
+    ExecuteInstruction(inst);
+
+    if(codePointer < 0) {
+        machine->ReportError("Negative code pointer.");
+    }
+
+    if(codePointer >= bytecode->GetAddressUpperBound()) {
+        auto & exe = machine->workerExecutors.top();
+
+        assert(&exe == this);
+        machine->workerExecutors.pop();
+    }
+}
+
 bool Executor::ExecuteInstruction(const Instruction & inst) {
     int64_t argI = inst.argument.argInt;
     bool argB    = inst.argument.argBool;
     double argF  = inst.argument.argFloat;
     const std::string & argS = inst.argString;
 
+    codePointerAlreadyMoved = false;
+
+    bool retval;
+
     switch(inst.opcode) {
-    case UADD: return uadd();
-    case USUB: return usub();
+    case UADD: retval = uadd(); break;
+    case USUB: retval = usub(); break;
 
-    case ADD: return add();
-    case SUB: return sub();
-    case MUL: return mul();
-    case DIV: return div();
-    case REM: return rem();
+    case ADD: retval = add(); break;
+    case SUB: retval = sub(); break;
+    case MUL: retval = mul(); break;
+    case DIV: retval = div(); break;
+    case REM: retval = rem(); break;
 
-    case LT: return lt();
-    case LTE: return lte();
-    case GT: return gt();
-    case GTE: return gte();
+    case LT: retval = lt(); break;
+    case LTE: retval = lte(); break;
+    case GT: retval = gt(); break;
+    case GTE: retval = gte(); break;
 
-    case EQ: return eq();
-    case NE: return ne();
+    case EQ: retval = eq(); break;
+    case NE: retval = ne(); break;
 
-    case BNOT: return bnot();
-    case BAND: return band();
-    case BXOR: return bxor();
-    case BOR: return bor();
+    case BNOT: retval = bnot(); break;
+    case BAND: retval = band(); break;
+    case BXOR: retval = bxor(); break;
+    case BOR: retval = bor(); break;
 
-    case LNOT: return lnot();
-    case LAND: return land();
-    case LOR: return lor();
+    case LNOT: retval = lnot(); break;
+    case LAND: retval = land(); break;
+    case LOR: retval = lor(); break;
 
-    case DCOPY: return dcopy();
-    case COPY: return copy();
-    case WREF: return wref();
-    case OPDEREF: return opderef();
-    case FCDEREF: return fcderef();
+    case DCOPY: retval = dcopy(); break;
+    case COPY: retval = copy(); break;
+    case WREF: retval = wref(); break;
+    case OPDEREF: retval = opderef(); break;
+    case FCDEREF: retval = fcderef(); break;
 
-    case ACCESS: return access();
-    case ACCESSL: return accessL();
-    case THIS: return ithis();
+    case ACCESS: retval = access(); break;
+    case ACCESSL: retval = accessL(); break;
+    case THIS: retval = ithis(); break;
 
-    case FUNC: return func();
-    case PRECALL: return precall();
-    case ARG: return arg();
-    case CALL: return call();
+    case FUNC: retval = func(); break;
+    case PRECALL: retval = precall(); break;
+    case ARG: retval = arg(); break;
+    case CALL: retval = call(); break;
 
-    case ASSIGN: return assign();
-    case RET: return ret();
-    case ENDP: return endp();
-    case ENDPS: return endps();
+    case ASSIGN: retval = assign(); break;
+    case RET: retval = ret(); break;
+    case ENDP: retval = endp(); break;
+    case ENDPS: retval = endps(); break;
 
-    case IMMN: return immN();
-    case IMML: return immL();
-    case IMMD: return immD();
+    case IMMN: retval = immN(); break;
+    case IMML: retval = immL(); break;
+    case IMMD: retval = immD(); break;
 
-    case POP: return pop();
+    case POP: retval = pop(); break;
 
 
-    case ACCID: return accid(argS);
-    case ACCIDL: return accidL(argS);
+    case ACCID: retval = accid(argS); break;
+    case ACCIDL: retval = accidL(argS); break;
 
-    case IMMI: return immI(argI);
-    case IMMF: return immF(argF);
-    case IMMB: return immB(argB);
-    case IMMS: return immS(argS);
+    case IMMI: retval = immI(argI); break;
+    case IMMF: retval = immF(argF); break;
+    case IMMB: retval = immB(argB); break;
+    case IMMS: retval = immS(argS); break;
 
-    case PROC: return proc(argI);
-    case PARAM: return param(argS);
-    case ARRPARAM: return arrparam(argS);
+    case PROC: retval = proc(argI); break;
+    case PARAM: retval = param(argS); break;
+    case ARRPARAM: retval = arrparam(argS); break;
 
-    case BIND: return bind(argS);
-    case NAME: return name(argS);
-    case GET: return get(argS);
-    case GETL: return getL(argS);
-    case SET: return set(argS);
+    case BIND: retval = bind(argS); break;
+    case NAME: retval = name(argS); break;
+    case GET: retval = get(argS); break;
+    case GETL: retval = getL(argS); break;
+    case SET: retval = set(argS); break;
 
-    case JFALSE: return jfalse(argI);
-    case JMP: return jmp(argI);
-    case NEXT: return next(argI);
-    case ITER: return iter(argS);
+    case JFALSE: retval = jfalse(argI); break;
+    case JMP: retval = jmp(argI); break;
+    case NEXT: retval = next(argI); break;
+    case ITER: retval = iter(argS); break;
 
-    case SCOPE: return scope(argS);
+    case SCOPE: retval = scope(argS); break;
 
-    case FILE: return file(argS);
-    case LINE: return line(argI);
+    case FILE: retval = file(argS); break;
+    case LINE: retval = line(argI); break;
 
-    default: machine->ReportError("Unknown opcode."); return false;
+    default: machine->ReportError("Unknown opcode."); retval = false; break;
     }
+
+    if(!codePointerAlreadyMoved) {
+        codePointer += OpCodeHasArgument(inst.opcode) ? 
+                        OpCodeSize + OpArgSize :
+                        OpCodeSize;
+    }
+
+    return retval;
 }

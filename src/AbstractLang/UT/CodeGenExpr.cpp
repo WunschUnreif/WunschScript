@@ -32,6 +32,7 @@ int main(int argc, char * argv[]) {
     /// syntaxer
     ws::syn::ParseTreeVisitor visitor;
     auto prog = visitor.visit(exprContext).as<std::shared_ptr<ws::asl::Program>>();
+    prog->filename = "testcode.ws";
 
     ws::vm::ByteCodeBuilder builder;
 
@@ -39,6 +40,9 @@ int main(int argc, char * argv[]) {
 
     std::cout << "Generated code length = " << len << " Bytes" << std::endl;
     std::cout << builder.bytecode.ToString() << std::endl;
+
+    auto outfile = std::ofstream("testcode.wsc");
+    builder.bytecode.WriteToFile(outfile);
 
     return 0;
 }

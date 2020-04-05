@@ -1,4 +1,5 @@
 #include <exception>
+#include <iostream>
 
 #include "Scope.hpp"
 
@@ -70,6 +71,16 @@ Value ScopeDirectory::Access(const std::string & path, const std::string & name,
     }
 
     return Value(GeneralDataNode());
+}
+
+void ScopeDirectory::Bind(const std::string & path, const std::string & name, GeneralDataNode & node) {
+    auto scopeIter = scopeMap.find(path);
+
+    if(scopeIter == scopeMap.end() || scopeIter->second.bindingStack.empty()) {
+        throw std::runtime_error("scope path doesn't exist.");
+    }
+
+    scopeIter->second.bindingStack.top()[name] = node;
 }
 
 std::string_view ScopeDirectory::GetParentPath(std::string_view path) {

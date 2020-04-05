@@ -17,6 +17,7 @@ namespace ws {
 namespace vm {
 
     struct Machine;
+    struct Executor;
 
     /**
      * @brief Data node for `nil` type
@@ -136,12 +137,12 @@ namespace vm {
      * interpreter, such as `print()`, `read()`.
      */
     struct DataNodeSystemFunc final : public DataNodeBase {
-        std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &)> impl;
+        std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &, Executor &)> impl;
 
         DataNodeSystemFunc() {}
 
         explicit DataNodeSystemFunc(
-            std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &)> impl
+            std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &, Executor &)> impl
         ) : impl(impl) {}
 
         std::string ToString() override;

@@ -44,7 +44,7 @@ namespace vm {
      */
     struct Value {
         bool isLval = false;
-        struct _Value {
+        struct StorageValue {
             GeneralDataNode * lval;
             GeneralDataNode rval;
         } value;
@@ -54,7 +54,10 @@ namespace vm {
 
         Value(GeneralDataNode * lval)
             { isLval = true; value.lval = lval; }
+
     };
+
+    typedef std::shared_ptr<Value> ValuePointer;
 
 } // namespace vm
 
