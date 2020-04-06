@@ -64,10 +64,11 @@ int64_t StatementForLoop::GenByteCode(vm::ByteCodeBuilder & builder) {
     length += vm::OpCodeSize + vm::OpArgSize;
 
     // jump through: 1. jmp ... 2. proc ...
-    auto jmp = builder.Append(vm::JMP, 2 * (vm::OpCodeSize + vm::OpArgSize));       // yield `jmp -> loop body`
+    builder.Append(vm::JFALSE, 2 * (vm::OpCodeSize + vm::OpArgSize));    // yield `jfalse -> loop body`
     length += vm::OpCodeSize + vm::OpArgSize;
 
     auto innerLength = loopBody->GenByteCode(builder);
+    length += innerLength;
 
     builder.Append(vm::NEXT, -(innerLength - (vm::OpCodeSize + vm::OpArgSize)));    // yield `next ...`
     length += vm::OpCodeSize + vm::OpArgSize;

@@ -30,13 +30,16 @@ bool Executor::next(int64_t arg) {
         machine->ReportError("next: Not in iterating mode.");
     }
 
-    auto frame = forloopStack.top();
+    auto & frame = forloopStack.top();
 
     if(frame.iteratingDict) {
+        frame.dictIterator++;
         if(frame.dictIterator != frame.dictEnding) {
             // advance iterator; binding iterator var; jump;
-            frame.dictIterator++;
-            bindingPour[frame.iteratorName] = frame.dictIterator->second;
+            bindingPour[frame.iteratorName] = 
+                GeneralDataNode(GeneralDataNode::TypeString,  
+                    std::make_shared<DataNodeStr>(frame.dictIterator->first)
+                );
             codePointer += arg;
             codePointerAlreadyMoved = true;
         } else {
@@ -44,9 +47,9 @@ bool Executor::next(int64_t arg) {
             forloopStack.pop();
         }
     } else if(frame.iteratingList) {
+        frame.listIterator++;
         if(frame.listIterator != frame.listEnding) {
             // advance iterator; binding iterator var; jump;
-            frame.listIterator++;
             bindingPour[frame.iteratorName] = *frame.listIterator;
             codePointer += arg;
             codePointerAlreadyMoved = true;

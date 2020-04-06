@@ -10,16 +10,28 @@ Executor::Executor(const Executor & exe):
     machine(exe.machine),
     executorID(exe.executorID),
     bytecode(exe.bytecode),
-    codePointer(exe.codePointer),
     filename(exe.filename),
-    lineNoInFile(exe.lineNoInFile),
     scopeDirectory(exe.scopeDirectory)
 {
     currentScopePathStack.push("/");
+    IdentifyFilename();
 }
 
 Executor Executor::operator=(const Executor & exe) {
     return Executor(exe);
+}
+
+void Executor::IdentifyFilename() {
+    if(!bytecode) {
+        filename = "<unknown>";
+    } else {
+        auto firstInst = bytecode->GetInstructionAt(0);
+        if(firstInst.opcode == FILE) {
+            filename = firstInst.argString;
+        } else {
+            filename = "<unknown>";
+        }
+    }
 }
 
 void Executor::Execute() {
@@ -48,7 +60,7 @@ void Executor::ExecuteSingleStep() {
     
     std::cout << "->" << codePointer << "@" << executorID << " of " 
                 << filename << ":" << lineNoInFile << std::endl;
-    std::cout << "\t" << inst.ToString() << std::endl;
+    std::cout << "\t" << inst.ToString(codePointer) << std::endl;
 
     ExecuteInstruction(inst);
 

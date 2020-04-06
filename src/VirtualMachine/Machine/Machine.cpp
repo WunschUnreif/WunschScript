@@ -43,8 +43,7 @@ void Machine::ReportError(const std::string & content) {
 
     size_t frameNum = 0;
     while(!workerExecutors.empty()) {
-        auto exe = workerExecutors.top();
-        workerExecutors.pop();
+        auto & exe = workerExecutors.top();
 
         error += "\tFrame " + std::to_string(frameNum) + ": ";
         error += exe.filename + ":" + std::to_string(exe.lineNoInFile) 
@@ -52,6 +51,7 @@ void Machine::ReportError(const std::string & content) {
         error += "\n";
 
         ++frameNum;
+        workerExecutors.pop();
     }
 
     throw std::runtime_error(error);
@@ -76,6 +76,6 @@ Value Machine::Pop() {
     return top;
 }
 
-void Machine::Push(Value & val) {
+void Machine::Push(const Value & val) {
     valueStack.emplace(val);
 }

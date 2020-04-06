@@ -40,6 +40,5 @@ int main() {
     test2();
 
     Executor exe;
-    exe.forloopStack.push(Executor::ForLoopFrame());
     std::cout << typeid(exe).name() << std::endl;
 }

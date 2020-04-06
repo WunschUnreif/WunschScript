@@ -32,7 +32,7 @@ namespace vm {
 
         const Value & Top();
         Value Pop();
-        void Push(Value & val);
+        void Push(const Value & val);
 
     };
 

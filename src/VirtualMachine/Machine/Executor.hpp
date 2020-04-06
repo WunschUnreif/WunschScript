@@ -35,8 +35,8 @@ namespace vm {
 
         // Environment for Function call
         std::map<std::string, GeneralDataNode> bindingPour;
-        std::weak_ptr<DataNodeDict> thisDict;
         std::stack<std::vector<GeneralDataNode>> precallStack;
+        std::weak_ptr<DataNodeDict> thisDict;
 
         // Environment for For-Loop
         struct ForLoopFrame {
@@ -50,18 +50,26 @@ namespace vm {
             bool iteratingList = false;
             decltype (DataNodeList::value)::iterator listIterator;
             decltype (DataNodeList::value)::iterator listEnding;
+
+            ForLoopFrame(const std::string & name, GeneralDataNode & iteratee)
+                : iteratorName(name), iteratee(iteratee) {}
         };
         std::stack<ForLoopFrame> forloopStack;
 
         void Execute();
         void ExecuteSingleStep();
 
-        Executor(): scopeDirectory(std::make_shared<ScopeDirectory>()) 
-            { currentScopePathStack.push("/"); }
+        Executor()
+            : scopeDirectory(std::make_shared<ScopeDirectory>()) { 
+                currentScopePathStack.push("/"); 
+                IdentifyFilename();
+            }
         Executor(const Executor & exe);
         Executor operator=(const Executor & exe);
 
     private:
+        void IdentifyFilename();
+
         bool ExecuteInstruction(const Instruction & inst);
 
         bool uadd()     {return true;}
@@ -98,14 +106,14 @@ namespace vm {
 
         bool access()   {return true;}
         bool accessL()  {return true;}
-        bool ithis()    {return true;}
+        bool ithis();                               // [x]
 
-        bool func()     {return true;}
-        bool precall()  {return true;}
-        bool arg()      {return true;}
-        bool call()     {return true;}
+        bool func();                                // [x]
+        bool precall();                             // [x]
+        bool arg();                                 // [x]
+        bool call();                                // [x]
 
-        bool assign()   {return true;}
+        bool assign();                              // [x]
         bool ret();                                 // [x]
         bool endp();                                // [x]
         bool endps();                               // [x]
@@ -125,10 +133,10 @@ namespace vm {
         bool immS(const std::string & arg);         // [x]
 
         bool proc(int64_t arg);                     // [x]
-        bool param(const std::string & arg){return true;}
-        bool arrparam(const std::string & arg){return true;}
+        bool param(const std::string & arg);        // [x]
+        bool arrparam(const std::string & arg);     // [x]
 
-        bool bind(const std::string & arg)  {return true;}
+        bool bind(const std::string & arg);         // [x]
         bool name(const std::string & arg);         // [x]
         bool get(const std::string & arg);          // [x]
         bool getL(const std::string & arg);         // [x]
@@ -137,7 +145,7 @@ namespace vm {
         bool jmp(int64_t arg);                      // [x]
         bool jfalse(int64_t arg);                   // [x]
         bool next(int64_t arg);                     // [x]
-        bool iter(const std::string & arg)  {return true;}        
+        bool iter(const std::string & arg);         // [x]
 
         bool scope(const std::string & arg);        // [x]
 

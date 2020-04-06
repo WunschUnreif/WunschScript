@@ -137,12 +137,12 @@ namespace vm {
      * interpreter, such as `print()`, `read()`.
      */
     struct DataNodeSystemFunc final : public DataNodeBase {
-        std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &, Executor &)> impl;
+        std::function<GeneralDataNode(const std::vector<GeneralDataNode> &, Machine &, Executor &)> impl;
 
         DataNodeSystemFunc() {}
 
         explicit DataNodeSystemFunc(
-            std::function<GeneralDataNode(std::vector<GeneralDataNode>, Machine &, Executor &)> impl
+            std::function<GeneralDataNode(const std::vector<GeneralDataNode> &, Machine &, Executor &)> impl
         ) : impl(impl) {}
 
         std::string ToString() override;
