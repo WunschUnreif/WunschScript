@@ -123,6 +123,9 @@ int64_t ExpressionLiteral::GenByteCodeForDict(vm::ByteCodeBuilder & builder) {
         auto & name = kv.first;
         auto   expr = kv.second;
 
+        builder.Append(vm::OpCode::COPY);           // yield `copy`
+        length += vm::OpCodeSize;
+
         builder.Append(vm::OpCode::ACCIDL, name);   // yield `accidL key`
         length += vm::OpCodeSize + vm::OpArgSize;
 

@@ -9,25 +9,26 @@ var sum = (n) => {
     return <s>;
 };
 
-var sumElems = ([elems]) => {
-    var ans = 0;
-    for x in elems {
-        ans = ans + x;
-    }
-    return <ans>;   # return deep copy of ans
-};
+# var sumElems = ([elems]) => {
+#     var ans = 0;
+#     for x in elems {
+#         ans = ans + x;
+#     }
+#     return <ans>;   # return deep copy of ans
+# };
 
-var x = sumElems(1, 2, 3);
+var x = sum(10000);
+print(x);
 
-var gcd = (a) => {
-    return (b)[a] => {
-        while b != 0 {
-            var t = a
-            a = b
-            b = t % b
-        }
-        return a
-    }
-}
+# var gcd = (a) => {
+#     return (b)[a] => {
+#         while b != 0 {
+#             var t = a
+#             a = b
+#             b = t % b
+#         }
+#         return a
+#     }
+# }
 
-print(gcd(34986)(3087))
+# print(gcd(34986)(3087))

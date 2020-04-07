@@ -79,3 +79,16 @@ Value Machine::Pop() {
 void Machine::Push(const Value & val) {
     valueStack.emplace(val);
 }
+
+void Machine::PrintStack() {
+    auto stackCopy = valueStack;
+    size_t i = 0;
+
+    while(!stackCopy.empty()) {
+        std::cout << "\t\tstack " << i++ << " | " << 
+            (stackCopy.top().isLval ? 
+            (stackCopy.top().value.lval->ToString()) : 
+            (stackCopy.top().value.rval.ToString())) << "| " << std::endl;
+        stackCopy.pop();
+    }
+}

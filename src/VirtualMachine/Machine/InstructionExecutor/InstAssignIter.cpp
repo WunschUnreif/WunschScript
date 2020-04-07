@@ -53,7 +53,7 @@ bool Executor::iter(const std::string & arg) {
     } else {
         bindingPour[arg] = topFrame.iteratee;
 
-        machine->Push(GeneralDataNode(GeneralDataNode::TypeBool, std::make_shared<DataNodeBool>(true)));
+        machine->Push(GeneralDataNode(GeneralDataNode::TypeBool, std::make_shared<DataNodeBool>(false)));
     }
 
     return true;

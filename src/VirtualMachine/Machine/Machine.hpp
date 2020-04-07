@@ -34,6 +34,8 @@ namespace vm {
         Value Pop();
         void Push(const Value & val);
 
+        void PrintStack();
+
     };
 
 }

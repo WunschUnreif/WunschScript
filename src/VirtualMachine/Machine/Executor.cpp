@@ -62,6 +62,8 @@ void Executor::ExecuteSingleStep() {
                 << filename << ":" << lineNoInFile << std::endl;
     std::cout << "\t" << inst.ToString(codePointer) << std::endl;
 
+    machine->PrintStack();
+
     ExecuteInstruction(inst);
 
     if(codePointer < 0) {

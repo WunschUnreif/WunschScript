@@ -98,13 +98,13 @@ namespace vm {
         bool land()     {return true;}
         bool lor()      {return true;}
 
-        bool dcopy()    {return true;}
-        bool copy()     {return true;}
-        bool wref()     {return true;}
-        bool opderef()  {return true;}
-        bool fcderef()  {return true;}
+        bool dcopy();                               // [x]
+        bool copy();                                // [x]
+        bool wref();                                // [x]
+        bool opderef();                             // [x]
+        bool fcderef();                             // [x]
 
-        bool access()   {return true;}
+        bool access();                              // [x]
         bool accessL()  {return true;}
         bool ithis();                               // [x]
 
@@ -124,8 +124,8 @@ namespace vm {
 
         bool pop();                                 // [x]
 
-        bool accid(const std::string & arg)     {return true;}
-        bool accidL(const std::string & arg)    {return true;}
+        bool accid(const std::string & arg);        // [x]
+        bool accidL(const std::string & arg);       // [x]
 
         bool immI(int64_t arg);                     // [x]
         bool immF(double arg);                      // [x]

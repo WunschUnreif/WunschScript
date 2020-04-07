@@ -157,6 +157,11 @@ namespace vm {
         std::weak_ptr<DataNodeBase> ptr;
         GeneralDataNode::DataType type;
 
+        DataNodeWeakReference() {}
+
+        DataNodeWeakReference(const GeneralDataNode & gdn)
+            : type(gdn.type), ptr(gdn.data) {}
+
         std::string ToString() override;
         bool IsEqualTo(std::shared_ptr<DataNodeBase> rhs) override;
         std::shared_ptr<DataNodeBase> DeepCopy() override;
