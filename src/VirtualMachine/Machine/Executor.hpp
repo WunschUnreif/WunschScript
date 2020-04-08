@@ -89,14 +89,14 @@ namespace vm {
         bool eq()       {return true;}
         bool ne()       {return true;}
 
-        bool bnot()     {return true;}
-        bool band()     {return true;}
-        bool bxor()     {return true;}
-        bool bor()      {return true;}
+        bool bnot();                                // [x]
+        bool band();                                // [x]
+        bool bxor();                                // [x]
+        bool bor();                                 // [x]
 
-        bool lnot()     {return true;}
-        bool land()     {return true;}
-        bool lor()      {return true;}
+        bool lnot();                                // [x]
+        bool land();                                // [x]
+        bool lor();                                 // [x]
 
         bool dcopy();                               // [x]
         bool copy();                                // [x]
@@ -105,7 +105,7 @@ namespace vm {
         bool fcderef();                             // [x]
 
         bool access();                              // [x]
-        bool accessL()  {return true;}
+        bool accessL();                             // [x]
         bool ithis();                               // [x]
 
         bool func();                                // [x]
