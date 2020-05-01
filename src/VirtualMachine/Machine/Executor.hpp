@@ -72,22 +72,22 @@ namespace vm {
 
         bool ExecuteInstruction(const Instruction & inst);
 
-        bool uadd()     {return true;}
-        bool usub()     {return true;}
+        bool uadd();                                // [x]
+        bool usub();                                // [x]
 
-        bool add()      {return true;}
-        bool sub()      {return true;}
+        bool add();                                 // [x]
+        bool sub();                                 // [x]
         bool mul()      {return true;}
-        bool div()      {return true;}
-        bool rem()      {return true;}
+        bool div();                                 // [x]
+        bool rem();                                 // [x]
 
         bool lt()       {return true;}
         bool lte()      {return true;}
         bool gt()       {return true;}
         bool gte()      {return true;}
 
-        bool eq()       {return true;}
-        bool ne()       {return true;}
+        bool eq();                                  // [x]
+        bool ne();                                  // [x]
 
         bool bnot();                                // [x]
         bool band();                                // [x]
