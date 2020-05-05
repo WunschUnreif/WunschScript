@@ -143,6 +143,56 @@ bool Executor::rem() {
     return true;
 }
 
+/**
+ * Multiplication:
+ *  1. list * int / int * list
+ *  2. int * int 
+ *  3. float * float 
+ */
+bool Executor::mul() {
+    auto rhs = machine->Pop();
+    auto lhs = machine->Pop();
+
+    AssertRVal(lhs, machine, "mul");
+    AssertRVal(rhs, machine, "mul");
+
+    if(TypeIs(lhs, GeneralDataNode::TypeInt) && TypeIs(rhs, GeneralDataNode::TypeList)) {
+        std::swap(lhs, rhs);
+    }
+
+    if(TypeIs(lhs, GeneralDataNode::TypeList) && TypeIs(rhs, GeneralDataNode::TypeInt)) {
+        auto listNode = std::dynamic_pointer_cast<DataNodeList>(lhs.value.rval.data);
+        auto repeatCount = std::dynamic_pointer_cast<DataNodeInt>(rhs.value.rval.data)->value;
+        
+        auto resultNode = std::make_shared<DataNodeList>();
+        for(int64_t i = 0; i < repeatCount; ++i) {
+            resultNode->value.insert(resultNode->value.end(), listNode->value.begin(), listNode->value.end());
+        }
+
+        machine->Push(GeneralDataNode(GeneralDataNode::TypeList, resultNode));
+        return true;
+    }
+
+    if(TypeIs(lhs, GeneralDataNode::TypeInt) && TypeIs(rhs, GeneralDataNode::TypeInt)) {
+        machine->Push(DoArithmeticCalculationOnInt(
+            lhs.value.rval, rhs.value.rval,
+            [](int64_t a, int64_t b) { return a * b; }
+        ));
+        return true;
+    }
+
+    if(TypeIs(lhs, GeneralDataNode::TypeFloat) && TypeIs(rhs, GeneralDataNode::TypeFloat)) {
+        machine->Push(DoArithmeticCalculationOnFloat(
+            lhs.value.rval, rhs.value.rval,
+            [](double a, double b) { return a * b; }
+        ));
+        return true;
+    }
+
+    machine->ReportError("mul: type error.");
+    return true;
+}
+
 // ----------------------------- Utility Functions -----------------------------
 
 static GeneralDataNode DoArithmeticCalculationOnInt(

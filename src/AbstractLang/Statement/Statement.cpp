@@ -16,8 +16,9 @@ bool StatementBase::Execute(Environment & env) {
 } 
 
 int64_t StatementBase::GenByteCode(vm::ByteCodeBuilder & builder) {
-    builder.Append(vm::OpCode::LINE, static_cast<int64_t>(info->line));
-    return vm::OpCodeSize + vm::OpArgSize;
+    // builder.Append(vm::OpCode::LINE, static_cast<int64_t>(info->line));
+    // return vm::OpCodeSize + vm::OpArgSize;
+    return 0;
 }
 
 bool StatementBlock::Execute(Environment & env, std::map<std::string, GeneralDataNode> * pour) {

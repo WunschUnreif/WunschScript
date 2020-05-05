@@ -16,6 +16,8 @@ namespace vm {
 
         std::stack<std::map<std::string, GeneralDataNode>> bindingStack;
 
+        std::string parentPath;
+
         Value GetRValue(const std::string & name);
         Value GetLValue(const std::string & name);
 

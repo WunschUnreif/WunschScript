@@ -2,9 +2,11 @@ aux_source_directory(. SRC_VM)
 aux_source_directory(DataRepresentation SRC_VM_DR)
 aux_source_directory(Machine SRC_VM_M)
 aux_source_directory(Machine/InstructionExecutor SRC_VM_M_EXE)
+aux_source_directory(Shell SRC_VM_SHELL)
 
 add_subdirectory(Bytecode/)
 
+# --------- static libs ---------
 add_library(WSVirtualMachine 
     ${SRC_VM}
     ${SRC_VM_DR}
@@ -18,6 +20,46 @@ target_include_directories(WSVirtualMachine PUBLIC
     Machine/
 )
 
+# --------- executable vm ---------
+add_executable(wsvm 
+    ${SRC_VM_SHELL}
+)
+
+add_dependencies(wsvm WSVirtualMachine)
+
+target_link_libraries(wsvm PUBLIC 
+    WSVirtualMachine
+    WSVM_ByteCode
+
+    WSParser
+    WSAbstractLang
+    WSSyntaxer
+    WSTreeDiagram
+    WSSupport
+
+    libantlr4-runtime.a
+)
+
+target_link_directories(wsvm PUBLIC 
+    ../../third/antlr4-cpp-runtime-4/dist
+)
+
+target_include_directories(wsvm PUBLIC 
+    ./
+    DataRepresentation/
+    Machine/
+    Shell/
+    Bytecode/
+
+    ../Syntaxer/
+    ../AbstractLang/
+    ../Parser/
+    ../TreeDiagram/
+
+    ../../third/antlr4-cpp-runtime-4/runtime/src
+)
+
+# --------- unit tests ---------
 if(GEN_UT)
     
     add_executable(UTCodePrint UT/BCPrint.cpp)

@@ -101,8 +101,6 @@ bool Executor::arg() {
 bool Executor::call() {
     auto top = machine->Pop();
 
-    std::cout << top.value.rval.ToString() << std::endl;
-
     AssertRVal(top, machine, "call");
     
     if(TypeIs(top, GeneralDataNode::TypeFunc)) {

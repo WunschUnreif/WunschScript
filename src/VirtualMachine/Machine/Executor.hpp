@@ -74,81 +74,81 @@ namespace vm {
 
         bool uadd();                                // [x]
         bool usub();                                // [x]
-
+ 
         bool add();                                 // [x]
         bool sub();                                 // [x]
-        bool mul()      {return true;}
+        bool mul();                                 // [x]
         bool div();                                 // [x]
         bool rem();                                 // [x]
-
-        bool lt()       {return true;}
-        bool lte()      {return true;}
-        bool gt()       {return true;}
-        bool gte()      {return true;}
-
+ 
+        bool lt() ;                                 // [x]
+        bool lte();                                 // [x]
+        bool gt() ;                                 // [x]
+        bool gte();                                 // [x]
+ 
         bool eq();                                  // [x]
         bool ne();                                  // [x]
-
+ 
         bool bnot();                                // [x]
         bool band();                                // [x]
         bool bxor();                                // [x]
         bool bor();                                 // [x]
-
+ 
         bool lnot();                                // [x]
         bool land();                                // [x]
         bool lor();                                 // [x]
-
+ 
         bool dcopy();                               // [x]
         bool copy();                                // [x]
         bool wref();                                // [x]
         bool opderef();                             // [x]
         bool fcderef();                             // [x]
-
+ 
         bool access();                              // [x]
         bool accessL();                             // [x]
         bool ithis();                               // [x]
-
+ 
         bool func();                                // [x]
         bool precall();                             // [x]
         bool arg();                                 // [x]
         bool call();                                // [x]
-
+ 
         bool assign();                              // [x]
         bool ret();                                 // [x]
         bool endp();                                // [x]
         bool endps();                               // [x]
-
+ 
         bool immN();                                // [x]
         bool immL();                                // [x]
         bool immD();                                // [x]
-
+ 
         bool pop();                                 // [x]
-
+ 
         bool accid(const std::string & arg);        // [x]
         bool accidL(const std::string & arg);       // [x]
-
+ 
         bool immI(int64_t arg);                     // [x]
         bool immF(double arg);                      // [x]
         bool immB(bool arg);                        // [x]
         bool immS(const std::string & arg);         // [x]
-
+ 
         bool proc(int64_t arg);                     // [x]
         bool param(const std::string & arg);        // [x]
         bool arrparam(const std::string & arg);     // [x]
-
+ 
         bool bind(const std::string & arg);         // [x]
         bool name(const std::string & arg);         // [x]
         bool get(const std::string & arg);          // [x]
         bool getL(const std::string & arg);         // [x]
         bool set(const std::string & arg);          // [x]
-
+ 
         bool jmp(int64_t arg);                      // [x]
         bool jfalse(int64_t arg);                   // [x]
         bool next(int64_t arg);                     // [x]
         bool iter(const std::string & arg);         // [x]
-
+ 
         bool scope(const std::string & arg);        // [x]
-
+ 
         bool file(const std::string & arg);         // [x]
         bool line(int64_t arg);                     // [x]
 

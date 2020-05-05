@@ -1,5 +1,7 @@
 #include <iostream>
+#include <chrono> 
 #include <cassert>
+#include <ctime>
 
 #include "Executor.hpp"
 #include "Machine.hpp"
@@ -37,7 +39,9 @@ void Executor::IdentifyFilename() {
 void Executor::Execute() {
     bool canContinue = true;
 
-    while(canContinue && codePointer >= 0 && codePointer < bytecode->GetAddressUpperBound()) {
+    auto upperBound = bytecode->GetAddressUpperBound();
+
+    while(canContinue && codePointer >= 0 && codePointer < upperBound) {
         auto inst = bytecode->GetInstructionAt(codePointer);
 
         canContinue = ExecuteInstruction(inst);
@@ -78,7 +82,12 @@ void Executor::ExecuteSingleStep() {
     }
 }
 
+std::map<OpCode, long> instTime;
+std::map<OpCode, long> instCount;
+
 bool Executor::ExecuteInstruction(const Instruction & inst) {
+    auto startClock = std::chrono::system_clock::now();
+
     int64_t argI = inst.argument.argInt;
     bool argB    = inst.argument.argBool;
     double argF  = inst.argument.argFloat;
@@ -178,6 +187,12 @@ bool Executor::ExecuteInstruction(const Instruction & inst) {
                         OpCodeSize + OpArgSize :
                         OpCodeSize;
     }
+
+    auto endClock = std::chrono::system_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(endClock - startClock);
+
+    instTime[inst.opcode] += duration.count();
+    instCount[inst.opcode] += 1;
 
     return retval;
 }

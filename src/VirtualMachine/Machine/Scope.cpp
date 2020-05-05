@@ -38,6 +38,7 @@ ScopeDirectory::ScopeDirectory() {
 
 void ScopeDirectory::PushScope(const std::string & path) {
     scopeMap[path].bindingStack.push(std::map<std::string, GeneralDataNode>());
+    scopeMap[path].parentPath = GetParentPath(path);
 }
 
 void ScopeDirectory::PopScope(const std::string & path) {
@@ -67,7 +68,7 @@ Value ScopeDirectory::Access(const std::string & path, const std::string & name,
         }
 
         // go to the parent scope
-        currentPath = GetParentPath(currentPath);
+        currentPath = scopeIter->second.parentPath;
     }
 
     return Value(GeneralDataNode());

@@ -2,7 +2,7 @@
 
 var sum = (n) => {
     var s = 0;
-    while n > 0 {
+    while n != 0 {
         s = s + n;
         n = n - 1;
     }
@@ -17,8 +17,8 @@ var sum = (n) => {
 #     return <ans>;   # return deep copy of ans
 # };
 
-var x = sum(10000);
-print(x);
+var x = sum(1000000);
+# print(x);
 
 # var gcd = (a) => {
 #     return (b)[a] => {
