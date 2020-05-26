@@ -13,6 +13,12 @@ void ByteCodeBuilder::PushImmediate(T imm) {
     }
 }
 
+void ByteCodeBuilder::PushOpcodePadding() {
+    for(int i = 0; i < 7; ++i) {
+        bytecode.codeBuffer.push_back(0);
+    }
+}
+
 int64_t ByteCodeBuilder::Append(OpCode code) {
     if(OpCodeHasArgument(code)) {
         throw std::runtime_error("Calling append(code) where code need argument.");
@@ -21,6 +27,7 @@ int64_t ByteCodeBuilder::Append(OpCode code) {
     int64_t address = bytecode.codeBuffer.size();
 
     bytecode.codeBuffer.push_back(static_cast<uint8_t>(code));
+    PushOpcodePadding();
 
     return address;
 }
@@ -33,6 +40,8 @@ int64_t ByteCodeBuilder::Append(OpCode code, int64_t argInt) {
     int64_t address = bytecode.codeBuffer.size();
 
     bytecode.codeBuffer.push_back(static_cast<uint8_t>(code));
+    PushOpcodePadding();
+
     PushImmediate(argInt);
 
     return address;
@@ -46,6 +55,8 @@ int64_t ByteCodeBuilder::Append(OpCode code, double argFloat) {
     int64_t address = bytecode.codeBuffer.size();
 
     bytecode.codeBuffer.push_back(static_cast<uint8_t>(code));
+    PushOpcodePadding();
+    
     PushImmediate(argFloat);
 
     return address;
@@ -59,6 +70,8 @@ int64_t ByteCodeBuilder::Append(OpCode code, bool argBool) {
     int64_t address = bytecode.codeBuffer.size();
 
     bytecode.codeBuffer.push_back(static_cast<uint8_t>(code));
+    PushOpcodePadding();
+    
     PushImmediate(static_cast<int64_t>(argBool));
 
     return address;
@@ -72,6 +85,8 @@ int64_t ByteCodeBuilder::Append(OpCode code, const std::string & argString) {
     int64_t address = bytecode.codeBuffer.size();
 
     bytecode.codeBuffer.push_back(static_cast<uint8_t>(code));
+    PushOpcodePadding();
+    
     PushImmediate(GetOffsetForConst(argString));
 
     return address;

@@ -12,9 +12,7 @@ bool Executor::immN() {
 }
 
 bool Executor::immI(int64_t arg) {
-    Value result(GeneralDataNode(GeneralDataNode::TypeInt, std::make_shared<DataNodeInt>(arg)));
-
-    machine->Push(result);
+    machine->Push(GeneralDataNode(GeneralDataNode::TypeInt, std::make_shared<DataNodeInt>(arg)));
 
     return true;
 }

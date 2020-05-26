@@ -100,7 +100,7 @@ enum OpCode : uint8_t {
     LINE                        = 148,
 };
 
-constexpr int64_t OpCodeSize = sizeof(OpCode);
+constexpr int64_t OpCodeSize = sizeof(OpCode) + 7;
 constexpr int64_t OpArgSize = sizeof(int64_t);
 bool OpCodeHasArgument(OpCode code);
 

@@ -125,7 +125,7 @@ std::string ByteCode::ToString() {
         // increment the code pointer
         codePointer += OpCodeSize;
         if(OpCodeHasArgument(instruction.opcode)) {
-            codePointer += sizeof(int64_t);
+            codePointer += OpArgSize;
         }
 
         // in case the indent shoule increase

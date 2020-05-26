@@ -32,6 +32,8 @@ namespace vm {
         template <typename T>
         void PushImmediate(T imm);
 
+        void PushOpcodePadding();
+
     };
 
 }
