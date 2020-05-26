@@ -4,8 +4,6 @@ aux_source_directory(Machine SRC_VM_M)
 aux_source_directory(Machine/InstructionExecutor SRC_VM_M_EXE)
 aux_source_directory(Shell SRC_VM_SHELL)
 
-add_subdirectory(Bytecode/)
-
 # --------- static libs ---------
 add_library(WSVirtualMachine 
     ${SRC_VM}
@@ -18,6 +16,7 @@ target_include_directories(WSVirtualMachine PUBLIC
     ./
     DataRepresentation/
     Machine/
+    ../Bytecode
 )
 
 # --------- executable vm ---------
@@ -49,7 +48,7 @@ target_include_directories(wsvm PUBLIC
     DataRepresentation/
     Machine/
     Shell/
-    Bytecode/
+    ../Bytecode/
 
     ../Syntaxer/
     ../AbstractLang/

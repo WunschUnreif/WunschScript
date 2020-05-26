@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "Bytecode/ByteCode.hpp"
-#include "Bytecode/Opcode.hpp"
+#include "ByteCode.hpp"
+#include "Opcode.hpp"
 
 using namespace ws::vm;
 ws::vm::ByteCode code;

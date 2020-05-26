@@ -7,8 +7,8 @@
 #include <deque>
 
 #include "DataNode.hpp"
-#include "ByteCode/ByteCode.hpp"
-#include "Bytecode/Instruction.hpp"
+#include "ByteCode.hpp"
+#include "Instruction.hpp"
 #include "Scope.hpp"
 
 namespace ws {

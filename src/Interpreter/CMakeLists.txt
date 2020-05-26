@@ -1,5 +1,7 @@
 aux_source_directory(. SRC_INTP)
 
+add_subdirectory(TreeDiagram)
+
 add_executable(wunsch ${SRC_INTP})
 
 target_include_directories(wunsch PUBLIC 
@@ -7,8 +9,8 @@ target_include_directories(wunsch PUBLIC
     ../Syntaxer/
     ../AbstractLang/
     ../Parser/
-    ../TreeDiagram/
-    ../VirtualMachine/ByteCode
+    ./TreeDiagram/
+    ../ByteCode
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )

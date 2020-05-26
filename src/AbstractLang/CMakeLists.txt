@@ -20,7 +20,7 @@ target_include_directories(WSAbstractLang PUBLIC
     Environment/
     Expression/
     "Program/"
-    ../VirtualMachine/Bytecode/
+    ../Bytecode/
 )
 
 
@@ -106,7 +106,7 @@ if(GEN_UT)
         ../Syntaxer/
         ../AbstractLang/
         ../Parser/
-        ../VirtualMachine/ByteCode
+        ../ByteCode
 
         ../../third/antlr4-cpp-runtime-4/runtime/src
     )

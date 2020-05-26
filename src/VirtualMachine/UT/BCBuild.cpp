@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "Bytecode/Opcode.hpp"
-#include "Bytecode/Instruction.hpp"
-#include "Bytecode/ByteCode.hpp"
-#include "Bytecode/CodeBuilder.hpp"
+#include "Opcode.hpp"
+#include "Instruction.hpp"
+#include "ByteCode.hpp"
+#include "CodeBuilder.hpp"
 
 using namespace ws::vm;
 

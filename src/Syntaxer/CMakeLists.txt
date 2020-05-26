@@ -7,7 +7,7 @@ target_include_directories(WSSyntaxer PUBLIC
     ../Parser/
     
     ../AbstractLang/
-    ../VirtualMachine/ByteCode
+    ../ByteCode
 
     ../../third/antlr4-cpp-runtime-4/runtime/src
 )

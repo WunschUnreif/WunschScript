@@ -6,13 +6,13 @@ add_library(WSTreeDiagram STATIC
 
 target_include_directories(WSTreeDiagram PUBLIC 
     ./ 
-    ../Syntaxer/
-    ../AbstractLang/
-    ../Parser/
+    ../../Syntaxer/
+    ../../AbstractLang/
+    ../../Parser/
     ./Support/
-    ../VirtualMachine/ByteCode
+    ../../ByteCode
 
-    ../../third/antlr4-cpp-runtime-4/runtime/src
+    ../../../third/antlr4-cpp-runtime-4/runtime/src
 )
 
 add_subdirectory(Support)
