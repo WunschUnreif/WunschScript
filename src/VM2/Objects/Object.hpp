@@ -91,6 +91,9 @@ namespace vm2 {
         template<class T>
         T* as() { T* r = dynamic_cast<T*>(this); if(!r) throw TypeError(); return r; }
 
+        template<class T>
+        bool is() { return dynamic_cast<T*>(this) != nullptr; }
+
         struct DefaultIterator: public Iterator {
             RValue self;
             bool availability = true;

@@ -18,6 +18,10 @@ BoolObject::RValue BoolObject::operator!() {
 }
 
 BoolObject::RValue BoolObject::operator==(RValue rhs) {
+    if(rhs->type != TypeBool) {
+        return std::make_shared<BoolObject>(false);
+    }
+
     return std::make_shared<BoolObject>(rhs->as<BoolObject>()->value == value);
 }
 

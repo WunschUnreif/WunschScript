@@ -70,7 +70,10 @@ FloatObject::RValue FloatObject::operator==(RValue rhs) {
     try { return std::make_shared<BoolObject>(value == rhs->as<FloatObject>()->value); } 
     catch (TypeError) {}
     
-    return std::make_shared<BoolObject>(value == rhs->as<IntObject>()->value);
+    try { return std::make_shared<BoolObject>(value == rhs->as<IntObject>()->value); }
+    catch (TypeError) {}
+
+    return std::make_shared<BoolObject>(false);
 }
 
 FloatObject::operator bool() {

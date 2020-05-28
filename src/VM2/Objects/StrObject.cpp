@@ -33,6 +33,10 @@ Object::RValue StrObject::operator<(RValue rhs) {
 }
 
 Object::RValue StrObject::operator==(RValue rhs) {
+    if(rhs->type != TypeStr) {
+        return std::make_shared<BoolObject>(false);
+    }
+
     return std::make_shared<BoolObject>(
         value == rhs->as<StrObject>()->value
     );

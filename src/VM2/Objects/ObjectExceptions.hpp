@@ -36,6 +36,9 @@ namespace vm2 {
 
     struct RecursiveTraverse: public std::exception {};
 
+    struct WeakRefExpired: public std::exception {};
+
+
 }
 
 }

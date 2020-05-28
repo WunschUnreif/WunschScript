@@ -78,7 +78,10 @@ IntObject::RValue IntObject::operator==(RValue rhs) {
     try { return std::make_shared<BoolObject>(value == rhs->as<IntObject>()->value); } 
     catch (TypeError) {}
     
-    return std::make_shared<BoolObject>(value == rhs->as<FloatObject>()->value);
+    try { std::make_shared<BoolObject>(value == rhs->as<FloatObject>()->value); }
+    catch (TypeError) {}
+
+    return std::make_shared<BoolObject>(false);
 }
 
 IntObject::RValue IntObject::operator&(RValue rhs) {

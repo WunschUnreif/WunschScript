@@ -104,6 +104,10 @@ Object::RValue ListObject::operator<(RValue rhs) {
 }
 
 Object::RValue ListObject::operator==(RValue rhs) {
+    if(rhs->type != TypeList) {
+        return std::make_shared<BoolObject>(false);
+    }
+
     // compare to self
     if(this == rhs.get()) {
         return std::make_shared<BoolObject>(true);
