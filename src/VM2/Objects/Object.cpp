@@ -42,7 +42,15 @@ Object::LValue Object::operator[](RValue index) {
     throw OperationNotAllowed();
 }
 
-Object::LValue Object::operator[](const std::string& index) {
+Object::LValue Object::operator[](std::string_view index) {
+    throw OperationNotAllowed();
+}
+
+Object::RValue Object::subscript(RValue index) {
+    throw OperationNotAllowed();
+}
+
+Object::RValue Object::subscript(std::string_view key) {
     throw OperationNotAllowed();
 }
 
@@ -120,4 +128,21 @@ Object::RValue Object::operator||(RValue rhs) {
 
 Object::operator bool() {
     return false;
+}
+
+bool Object::DefaultIterator::advance() {
+    availability = false;
+    return false;
+}
+
+bool Object::DefaultIterator::available() {
+    return availability;
+}
+
+Object::RValue Object::DefaultIterator::curr() {
+    return self;
+}
+
+std::shared_ptr<Object::Iterator> Object::iter() {
+    return std::make_shared<Object::DefaultIterator>(shared_from_this());
 }

@@ -30,6 +30,12 @@ namespace vm2 {
      */
     struct TypeError: public std::exception {};
 
+    struct DividedByZero: public std::exception {};
+    
+    struct IndexOutOfRange: public std::exception {};
+
+    struct RecursiveTraverse: public std::exception {};
+
 }
 
 }
