@@ -2,8 +2,8 @@
 cmake_minimum_required (VERSION 2.8)
 # 2.8 needed because of ExternalProject
 
-set(CMAKE_CXX_COMPILER "g++-9")
-set(CMAKE_C_COMPILER "gcc-9")
+set(CMAKE_CXX_COMPILER "g++-10")
+set(CMAKE_C_COMPILER "gcc-10")
 
 # Detect build type, fallback to release and throw a warning if use didn't specify any
 if(NOT CMAKE_BUILD_TYPE)

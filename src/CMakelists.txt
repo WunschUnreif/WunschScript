@@ -5,8 +5,8 @@ project(WunschScript VERSION 0.0.1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 # compiler toolchain
-set(CMAKE_CXX_COMPILER "/usr/local/bin/g++-9")
-set(CMAKE_C_COMPILER "/usr/local/bin/gcc-9")
+set(CMAKE_CXX_COMPILER "/usr/local/bin/g++-10")
+set(CMAKE_C_COMPILER "/usr/local/bin/gcc-10")
 # set(CMAKE_RANLIB "gcc-ranlib-9")
 # set(CMAKE_AR "gcc-ar-9")
 
